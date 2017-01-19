@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hisign.xcky.persist.mapper.system.SysXtdhMapper">
+
+	<resultMap type="com.hisign.xcky.api.model.system.SysXtdh" id="SysXtdhMap">
+		<result property="id" column="ID" />
+		<result property="rowNum" column="row_id" />
+		<result property="systemName" column="SYSTEM_NAME" />
+		<result property="systemCode" column="SYSTEM_CODE" />
+		<result property="systemUnit" column="SYSTEM_UNIT" />
+		<result property="systemCunit" column="SYSTEM_CUNIT" />
+		<result property="systemAddr" column="SYSTEM_ADDR" />
+		<result property="sort" column="SORT" />
+		<result property="photo" column="PHOTO" />
+		<result property="ifLogin" column="IF_LOGIN" />
+		<result property="ifJh" column="IF_JH" />
+		<result property="jhPara" column="JH_PARA" />
+		<result property="ifSfzh" column="IF_SFZH" />
+		<result property="sfzhPara" column="SFZH_PARA" />
+		<result property="deleteFlag" column="DELETE_FLAG" />
+		<result property="createUserId" column="CREATE_USER_ID" />
+		<result property="updateUserId" column="UPDATE_USER_ID" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+	</resultMap>
+	
+	<sql id="selectId">
+		ID,
+		SYSTEM_NAME,
+		SYSTEM_CODE,
+		SYSTEM_UNIT,
+		SYSTEM_CUNIT,
+		SYSTEM_ADDR,
+		SORT,
+		PHOTO,
+		IF_LOGIN,
+		IF_JH,
+		JH_PARA,
+		IF_SFZH,
+		SFZH_PARA,
+		DELETE_FLAG,
+		CREATE_USER_ID,
+		UPDATE_USER_ID,
+		CREATE_TIME,
+		UPDATE_TIME
+	</sql>
+  
+	<sql id="insertId">
+		#{id, jdbcType=CHAR},
+		#{systemName, jdbcType=VARCHAR},
+		#{systemCode, jdbcType=VARCHAR},
+		#{systemUnit, jdbcType=VARCHAR},
+		#{systemCunit, jdbcType=VARCHAR},
+		#{systemAddr, jdbcType=VARCHAR},
+		#{sort, jdbcType=VARCHAR},
+		#{photo, jdbcType=BLOB},
+		#{ifLogin, jdbcType=CHAR},
+		#{ifJh, jdbcType=CHAR},
+		#{jhPara, jdbcType=VARCHAR},
+		#{ifSfzh, jdbcType=CHAR},
+		#{sfzhPara, jdbcType=VARCHAR},
+		#{deleteFlag, jdbcType=CHAR},
+		#{createUserId, jdbcType=CHAR},
+		#{updateUserId, jdbcType=CHAR},
+		#{createTime, jdbcType=DATE},
+		#{updateTime, jdbcType=DATE}
+	</sql>
+
+	<sql id="updateId">
+		SYSTEM_NAME=#{systemName, jdbcType=VARCHAR},
+		SYSTEM_CODE=#{systemCode, jdbcType=VARCHAR},
+		SYSTEM_UNIT=#{systemUnit, jdbcType=VARCHAR},
+		SYSTEM_CUNIT=#{systemCunit, jdbcType=VARCHAR},
+		SYSTEM_ADDR=#{systemAddr, jdbcType=VARCHAR},
+		SORT=#{sort, jdbcType=VARCHAR},
+		PHOTO=#{photo, jdbcType=BLOB},
+		IF_LOGIN=#{ifLogin, jdbcType=CHAR},
+		IF_JH=#{ifJh, jdbcType=CHAR},
+		JH_PARA=#{jhPara, jdbcType=VARCHAR},
+		IF_SFZH=#{ifSfzh, jdbcType=CHAR},
+		SFZH_PARA=#{sfzhPara, jdbcType=VARCHAR},
+		CREATE_USER_ID=#{createUserId, jdbcType=VARCHAR},
+		CREATE_TIME=#{createTime, jdbcType=DATE},
+		UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR},
+		UPDATE_TIME=#{updateTime, jdbcType=DATE}
+	</sql>
+	
+</mapper>

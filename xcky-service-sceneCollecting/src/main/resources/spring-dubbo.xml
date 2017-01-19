@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jaxws="http://cxf.apache.org/jaxws" 
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://cxf.apache.org/jaxws
+		http://cxf.apache.org/schemas/jaxws.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.springframework.org/schema/context  
+      	http://www.springframework.org/schema/context/spring-context.xsd
+        ">
+	
+	<dubbo:application name="hisign-xcky-service-sceneCollecting" />
+
+	<!-- 去除默认的dubbo异常处理器 -->
+    <dubbo:provider filter="-exception"/>
+
+    <dubbo:reference id="sysLogService" interface="com.hisign.xcky.api.service.system.SysLogService" protocol="rmi" />
+    
+    <dubbo:reference id="sysDictService" interface="com.hisign.xcky.api.service.system.SysDictService" protocol="rmi"/>
+    
+    <dubbo:reference  id="sysSequenceService" interface="com.hisign.xcky.api.service.system.SysSequenceService" protocol="rmi" />
+    
+    <dubbo:reference  id="sysParameterService" interface="com.hisign.xcky.api.service.system.SysParameterService" protocol="rmi" />
+    
+    <!-- use tomcat server -->
+    <dubbo:protocol name="rest" threads="500" contextpath="xcky3/api/sceneCollecting" server="tomcat" accepts="500"
+                  extension="com.hisign.xcky.filter.TokenInterceptor,com.hisign.xcky.exception.XckyBusinessExceptionMapper,com.hisign.xcky.exception.CustomExceptionMapper"/>
+	
+	<!-- rest start -->
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.input.SceneInfoInputService" protocol="rest" ref="sceneInfoInputService" />
+
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.WitnessHistoryService" protocol="rest" ref="witnessHistoryService" />
+
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.TextTemplateService" protocol="rest" ref="textTemplateService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.ScenePicSummaryService" protocol="rest" ref="scenePicSummaryService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.ScenePictureService" protocol="rest" ref="scenePictureService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneOffenderService" protocol="rest" ref="sceneOffenderService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneMaterialEvidenceService" protocol="rest" ref="sceneMaterialEvidenceService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneLostGoodsService" protocol="rest" ref="sceneLostGoodsService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneInvestigatorService" protocol="rest" ref="sceneInvestigatorService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneInvestigationStatusService" protocol="rest" ref="sceneInvestigationStatusService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneInvestigationDispatchService" protocol="rest" ref="sceneInvestigationDispatchService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneInvestigationService" protocol="rest" ref="sceneInvestigationService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneCrimeToolsService" protocol="rest" ref="sceneCrimeToolsService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneConditionService" protocol="rest" ref="sceneConditionService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneCollectedPersonService" protocol="rest" ref="sceneCollectedPersonService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneCollectedGoodsService" protocol="rest" ref="sceneCollectedGoodsService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneBodySurfaceService" protocol="rest" ref="sceneBodySurfaceService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneBodyPhotoService" protocol="rest" ref="sceneBodyPhotoService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneBodyDissectionService" protocol="rest" ref="sceneBodyDissectionService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneBodyBasicService" protocol="rest" ref="sceneBodyBasicService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneAnalysisSuggestionService" protocol="rest" ref="sceneAnalysisSuggestionService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneAnalysisItemService" protocol="rest" ref="sceneAnalysisItemService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.InvestigatorHistoryService" protocol="rest" ref="investigatorHistoryService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.InputTemplateService" protocol="rest" ref="inputTemplateService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.DictCommService" protocol="rest" ref="dictCommService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.CommonPictureService" protocol="rest" ref="commonPictureService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.CommonBigtextService" protocol="rest" ref="commonBigtextService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.CommonAttachmentService" protocol="rest" ref="commonAttachmentService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.BasestationInfoService" protocol="rest" ref="basestationInfoService" />
+
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.AlarmInfoService" protocol="rest" ref="alarmInfoService" />	
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.BasestationInfoService" protocol="rest" ref="basestationInfoService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.QueryHistoryService" protocol="rest" ref="queryHistoryService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.SceneFollowService" protocol="rest" ref="sceneFollowService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.sceneCollecting.WordManagerService" protocol="rest" ref="wordManagerService" />
+	
+</beans>

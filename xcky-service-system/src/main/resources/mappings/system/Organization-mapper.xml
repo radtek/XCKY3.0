@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.system.OrganizationMapper">
+
+	<select id="findAllDictUnit" resultMap="organMap">
+        select
+            ID as key,
+            NVL2(SHORTENED_NAME,SHORTENED_NAME,ORGAN_NAME) as value,
+            PARENT_ID as parentKey
+        from T_ORGANIZATION
+        where DELETE_FLAG = '0'
+    </select>   
+	 
+	 <select id="getByRegionalism" resultMap="organMap" parameterType="String">
+        select
+            <include refid="selectId" />
+        from T_ORGANIZATION
+        where DELETE_FLAG = '0' AND REGIONALISM=#{value}
+    </select>   
+    
+    <select id="findListByParentRegionalism" resultMap="organMap" parameterType="String">
+        select
+            <include refid="selectId" />
+        from T_ORGANIZATION
+        where DELETE_FLAG = '0' AND PARENT_REGIONALISM=#{value}
+    </select>  
+</mapper>

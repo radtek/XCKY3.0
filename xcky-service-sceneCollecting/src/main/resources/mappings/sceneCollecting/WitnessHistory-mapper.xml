@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.WitnessHistoryMapper">
+
+	<select id="getById" resultMap="WitnessHistoryMap" parameterType="String">
+		SELECT
+			<include refid="selectContentId" />
+		FROM T_WITNESS_HISTORY
+		WHERE ID=#{id}
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.WitnessHistory">
+		INSERT INTO T_WITNESS_HISTORY (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_WITNESS_HISTORY WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.WitnessHistory">
+		UPDATE T_WITNESS_HISTORY 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.WitnessHistory">
+		UPDATE T_WITNESS_HISTORY
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="WitnessHistoryMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.WitnessHistory">
+		SELECT
+			<include refid="selectContentId" />
+		FROM T_WITNESS_HISTORY
+		where 1=1
+			<if test="name != null ">
+				and NAME = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="gender != null ">
+				and GENDER = #{gender,jdbcType=VARCHAR}
+			</if>
+			<if test="birthday != null ">
+				and BIRTHDAY = #{birthday,jdbcType=VARCHAR}
+			</if>
+			<if test="phone != null ">
+				and PHONE = #{phone,jdbcType=VARCHAR}
+			</if>
+			<if test="address != null ">
+				and ADDRESS = #{address,jdbcType=VARCHAR}
+			</if>
+			<if test="nativePlace != null ">
+				and NATIVE_PLACE = #{nativePlace,jdbcType=VARCHAR}
+			</if>
+			<if test="idCardNo != null ">
+				and ID_CARD_NO = #{idCardNo,jdbcType=VARCHAR}
+			</if>
+			<if test="organization != null ">
+				and ORGANIZATION = #{organization,jdbcType=VARCHAR}
+			</if>
+	</select>
+	
+</mapper>

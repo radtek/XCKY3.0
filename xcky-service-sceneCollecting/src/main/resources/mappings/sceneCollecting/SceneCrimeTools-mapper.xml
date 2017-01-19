@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.SceneCrimeToolsMapper">
+
+	<select id="getById" resultMap="SceneCrimeToolsMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_CRIME_TOOLS
+		WHERE ID=#{id}
+	</select>
+	<select id="findByInvestigationId" resultMap="SceneCrimeToolsMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_CRIME_TOOLS
+		WHERE DELETE_FLAG = '0' and INVESTIGATION_ID=#{investigationId}
+	</select>
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneCrimeTools">
+		INSERT INTO T_SCENE_CRIME_TOOLS (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_SCENE_CRIME_TOOLS WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneCrimeTools">
+		UPDATE T_SCENE_CRIME_TOOLS 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneCrimeTools">
+		UPDATE T_SCENE_CRIME_TOOLS
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="SceneCrimeToolsMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneCrimeTools">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_CRIME_TOOLS
+		WHERE DELETE_FLAG=#{deleteFlag}
+	</select>
+	
+</mapper>

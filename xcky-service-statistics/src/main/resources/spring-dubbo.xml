@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jaxws="http://cxf.apache.org/jaxws" 
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://cxf.apache.org/jaxws
+		http://cxf.apache.org/schemas/jaxws.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.springframework.org/schema/context  
+      	http://www.springframework.org/schema/context/spring-context.xsd
+        ">
+	
+	<dubbo:application name="hisign-xcky-service-statistics" />
+
+	<!-- 去除默认的dubbo异常处理器 -->
+    <dubbo:provider filter="-exception"/>
+
+    <dubbo:reference id="sysLogService" interface="com.hisign.xcky.api.service.system.SysLogService" protocol="rmi" />
+    
+    <dubbo:reference id="sysDictService" interface="com.hisign.xcky.api.service.system.SysDictService" protocol="rmi"/>
+    
+    <dubbo:reference  id="sysSequenceService" interface="com.hisign.xcky.api.service.system.SysSequenceService" protocol="rmi" />
+    
+    <dubbo:reference  id="sysParameterService" interface="com.hisign.xcky.api.service.system.SysParameterService" protocol="rmi" />
+    
+    <dubbo:reference  id="organizationService" interface="com.hisign.xcky.api.service.system.OrganizationService" protocol="rmi" />
+    <!-- use tomcat server -->
+    <dubbo:protocol name="rest" threads="500" contextpath="xcky3/api/statistics" server="tomcat" accepts="500"
+                  extension="com.hisign.xcky.filter.TokenInterceptor,com.hisign.xcky.exception.XckyBusinessExceptionMapper,com.hisign.xcky.exception.CustomExceptionMapper"/>
+	
+	<!-- rest start -->
+	<dubbo:service interface="com.hisign.xcky.api.service.statistics.TenSceneInputAmountService" protocol="rest" ref="tenSceneInputAmountService" />
+	
+</beans>

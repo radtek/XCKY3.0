@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.SceneMaterialEvidenceMapper">
+
+	<resultMap type="com.hisign.xcky.api.model.sceneCollecting.SceneMaterialEvidence" id="SceneMaterialEvidenceMap">
+		<result property="rowNum" column="ROW_ID" />
+		<result property="id" column="ID" />
+		<result property="investigationId" column="INVESTIGATION_ID" />
+		<result property="category" column="CATEGORY" />
+		<result property="pictureId" column="PICTURE_ID" />
+		<result property="attachmentId" column="ATTACHMENT_ID" />
+		<result property="materialEvidenceNo" column="MATERIAL_EVIDENCE_NO" />
+		<result property="materialEvidenceName" column="MATERIAL_EVIDENCE_NAME" />
+		<result property="materialEvidenceTypeDict" column="MATERIAL_EVIDENCE_TYPE_DICT" />
+		<result property="materialEvidenceType" column="MATERIAL_EVIDENCE_TYPE" />
+		<result property="materialEvidenceCode" column="MATERIAL_EVIDENCE_CODE" />
+		<result property="materialEvidenceJudgement" column="MATERIAL_EVIDENCE_JUDGEMENT" />
+		<result property="leftPosition" column="LEFT_POSITION" />
+		<result property="collectionModeDict" column="COLLECTION_MODE_DICT" />
+		<result property="collectionMode" column="COLLECTION_MODE" />
+		<result property="collectedTime" column="COLLECTED_TIME" />
+		<result property="feature" column="FEATURE" />
+		<result property="bulletModel" column="BULLET_MODEL" />
+		<result property="storageFlag" column="STORAGE_FLAG" />
+		<result property="storageStatus" column="STORAGE_STATUS" />
+		<result property="collectedFlag" column="COLLECTED_FLAG" />
+		<result property="source" column="SOURCE" />
+		<result property="version" column="VERSION" />
+		<result property="deleteFlag" column="DELETE_FLAG" />
+		<result property="createUserId" column="CREATE_USER_ID" />
+		<result property="updateUserId" column="UPDATE_USER_ID" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="bulletType" column="BULLET_TYPE" />
+		<result property="bulletType" column="BULLET_TYPE" />
+		<result property="modifyPictureId" column="MODIFY_PICTURE_ID" />
+		<result property="modifyAttachmentId" column="modify_attachment_id" />
+	</resultMap>
+	
+	<sql id="selectcloum">
+		T1.ID,
+		T1.INVESTIGATION_ID,
+		T1.CATEGORY,
+		T1.PICTURE_ID,
+		T2.FILE_SERVER_ADDR || T2.FILE_SERVER_PATH,
+		T1.MATERIAL_EVIDENCE_NO,
+		T1.MATERIAL_EVIDENCE_NAME,
+		T1.MATERIAL_EVIDENCE_TYPE_DICT,
+		T1.MATERIAL_EVIDENCE_TYPE,
+		T1.MATERIAL_EVIDENCE_CODE,
+		T1.MATERIAL_EVIDENCE_JUDGEMENT,
+		T1.LEFT_POSITION,
+		T1.COLLECTION_MODE_DICT,
+		T1.COLLECTION_MODE,
+		T1.COLLECTED_TIME,
+		T1.FEATURE,
+		T1.BULLET_MODEL,
+		T1.STORAGE_FLAG,
+		T1.STORAGE_STATUS,
+		T1.COLLECTED_FLAG,
+		T1.SOURCE,
+		T1.VERSION,
+		T1.DELETE_FLAG,
+		T1.CREATE_USER_ID,
+		T1.UPDATE_USER_ID,
+		T1.CREATE_TIME,
+		T1.UPDATE_TIME,
+		T1.BULLET_TYPE,
+		T1.MODIFY_PICTURE_ID,
+		t2.file_server_path            as attachment_id,
+        t3.file_server_path            as modify_attachment_id
+	</sql>
+	<sql id="selectId">
+		ID,
+		INVESTIGATION_ID,
+		CATEGORY,
+		PICTURE_ID,
+		MATERIAL_EVIDENCE_NO,
+		MATERIAL_EVIDENCE_NAME,
+		MATERIAL_EVIDENCE_TYPE_DICT,
+		MATERIAL_EVIDENCE_TYPE,
+		MATERIAL_EVIDENCE_CODE,
+		MATERIAL_EVIDENCE_JUDGEMENT,
+		LEFT_POSITION,
+		COLLECTION_MODE_DICT,
+		COLLECTION_MODE,
+		COLLECTED_TIME,
+		FEATURE,
+		BULLET_MODEL,
+		STORAGE_FLAG,
+		STORAGE_STATUS,
+		COLLECTED_FLAG,
+		SOURCE,
+		VERSION,
+		DELETE_FLAG,
+		CREATE_USER_ID,
+		UPDATE_USER_ID,
+		CREATE_TIME,
+		UPDATE_TIME,
+		BULLET_TYPE,
+		MODIFY_PICTURE_ID
+	</sql>
+  
+	<sql id="insertId">
+		#{id, jdbcType=CHAR},
+		#{investigationId, jdbcType=CHAR},
+		#{category, jdbcType=VARCHAR},
+		#{pictureId, jdbcType=CHAR},
+		#{materialEvidenceNo, jdbcType=VARCHAR},
+		#{materialEvidenceName, jdbcType=VARCHAR},
+		#{materialEvidenceTypeDict, jdbcType=VARCHAR},
+		#{materialEvidenceType, jdbcType=VARCHAR},
+		#{materialEvidenceCode, jdbcType=VARCHAR},
+		#{materialEvidenceJudgement, jdbcType=VARCHAR},
+		#{leftPosition, jdbcType=VARCHAR},
+		#{collectionModeDict, jdbcType=VARCHAR},
+		#{collectionMode, jdbcType=VARCHAR},
+		#{collectedTime, jdbcType=TIMESTAMP},
+		#{feature, jdbcType=VARCHAR},
+		#{bulletModel, jdbcType=VARCHAR},
+		#{storageFlag, jdbcType=CHAR},
+		#{storageStatus, jdbcType=VARCHAR},
+		#{collectedFlag, jdbcType=CHAR},
+		#{source, jdbcType=VARCHAR},
+		#{version, jdbcType=INTEGER},
+		#{deleteFlag, jdbcType=CHAR},
+		#{createUserId, jdbcType=CHAR},
+		#{updateUserId, jdbcType=CHAR},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP},
+		#{bulletType, jdbcType=VARCHAR},
+		#{modifyPictureId, jdbcType=VARCHAR}
+	</sql>
+
+	<sql id="updateId">
+			<if test="investigationId !=null and investigationId !=''">
+				INVESTIGATION_ID=#{investigationId, jdbcType=CHAR},
+			</if>
+			<if test="category !=null and category !=''">
+				CATEGORY=#{category, jdbcType=VARCHAR},
+			</if>
+			<if test="pictureId !=null and pictureId !=''">
+				PICTURE_ID=#{pictureId, jdbcType=CHAR},
+			</if>
+			<if test="modifyPictureId !=null and modifyPictureId !=''">
+				MODIFY_PICTURE_ID=#{modifyPictureId, jdbcType=CHAR},
+			</if>
+			<if test="materialEvidenceNo !=null and materialEvidenceNo !=''">
+				MATERIAL_EVIDENCE_NO=#{materialEvidenceNo, jdbcType=VARCHAR},
+			</if>
+			<if test="materialEvidenceName !=null and materialEvidenceName !=''">
+				MATERIAL_EVIDENCE_NAME=#{materialEvidenceName, jdbcType=VARCHAR},
+			</if>
+			<if test="materialEvidenceTypeDict !=null and materialEvidenceTypeDict !=''">
+				MATERIAL_EVIDENCE_TYPE_DICT=#{materialEvidenceTypeDict, jdbcType=VARCHAR},
+			</if>
+			<if test="materialEvidenceType !=null and materialEvidenceType !=''">
+				MATERIAL_EVIDENCE_TYPE=#{materialEvidenceType, jdbcType=VARCHAR},
+			</if>
+			<if test="materialEvidenceCode !=null and materialEvidenceCode !=''">
+				MATERIAL_EVIDENCE_CODE=#{materialEvidenceCode, jdbcType=VARCHAR},
+			</if>
+			<if test="materialEvidenceJudgement !=null and materialEvidenceJudgement !=''">
+				MATERIAL_EVIDENCE_JUDGEMENT=#{materialEvidenceJudgement, jdbcType=VARCHAR},
+			</if>
+			<if test="leftPosition !=null and leftPosition !=''">
+				LEFT_POSITION=#{leftPosition, jdbcType=VARCHAR},
+			</if>
+			<if test="collectionModeDict !=null and collectionModeDict !=''">
+				COLLECTION_MODE_DICT=#{collectionModeDict, jdbcType=VARCHAR},
+			</if>
+			<if test="collectionMode !=null and collectionMode !=''">
+				COLLECTION_MODE=#{collectionMode, jdbcType=VARCHAR},
+			</if>
+			<if test="collectedTime !=null and collectedTime !=''">
+				COLLECTED_TIME=#{collectedTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="feature !=null and feature !=''">
+				FEATURE=#{feature, jdbcType=VARCHAR},
+			</if>
+			<if test="bulletModel !=null and bulletModel !=''">
+				BULLET_MODEL=#{bulletModel, jdbcType=VARCHAR},
+			</if>
+			<if test="storageFlag !=null and storageFlag !=''">
+				STORAGE_FLAG=#{storageFlag, jdbcType=CHAR},
+			</if>
+			<if test="storageStatus !=null and storageStatus !=''">
+				STORAGE_STATUS=#{storageStatus, jdbcType=VARCHAR},
+			</if>
+			<if test="collectedFlag !=null and collectedFlag !=''">
+				COLLECTED_FLAG=#{collectedFlag, jdbcType=CHAR},
+			</if>
+			<if test="deleteFlag !=null and deleteFlag !=''">
+				DELETE_FLAG=#{deleteFlag, jdbcType=CHAR},
+			</if>
+			<if test="source !=null and source !=''">
+				SOURCE=#{source, jdbcType=VARCHAR},
+			</if>
+			<if test="version !=null and version !=''">
+				VERSION=#{version, jdbcType=INTEGER},
+			</if>
+			<if test="updateUserId !=null and updateUserId !=''">
+				UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR},
+			</if>
+			<if test="updateTime !=null and updateTime !=''">
+				UPDATE_TIME=#{updateTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="bulletType !=null and bulletType !=''">
+				BULLET_TYPE=#{bulletType, jdbcType=VARCHAR}
+			</if>
+	</sql>
+	
+</mapper>

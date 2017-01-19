@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.ScenePictureMapper">
+
+	<select id="getById" resultMap="ScenePictureMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_PICTURE
+		WHERE ID=#{id}
+	</select>
+	<select id="findListByFilter" resultMap="ScenePictureMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.ScenePicture">
+		select t1.id,
+		       t1.investigation_id,
+		       t1.category,
+		       t1.picture_id,
+		       t1.picture_type_dict,
+		       t1.picture_type,
+		       t1.attachment_id,
+		       t1.description,
+		       t2.dict_value as picture_type_cn
+		  from t_scene_picture t1,
+		       t_sys_dict t2
+		 where t1.delete_flag = '0'
+		   and t1.picture_type_dict=t2.root_key(+)
+		   and t1.picture_type=t2.dict_key(+)
+		   and t1.investigation_id = #{investigationId, jdbcType=CHAR}
+		   and t1.category = #{category, jdbcType=CHAR}	
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.ScenePicture">
+		INSERT INTO T_SCENE_PICTURE (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_SCENE_PICTURE WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.ScenePicture">
+		UPDATE T_SCENE_PICTURE 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.ScenePicture">
+		UPDATE T_SCENE_PICTURE
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="ScenePictureMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.ScenePicture">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_PICTURE
+		WHERE DELETE_FLAG=#{deleteFlag}
+	</select>
+	
+</mapper>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.system.SysUserMapper">
+
+	<select id="getById" resultMap="SysUserMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SYS_USER
+		WHERE ID=#{id}
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.system.SysUser">
+		INSERT INTO T_SYS_USER (
+					ID,
+					ORGAN_ID,
+					USERNAME,
+					PASSWORD,
+					TRUE_NAME,
+					GENDER,
+					<if test="idCardNo !=null and idCardNo !=''">
+						ID_CARD_NO,
+					</if>
+					<if test="policeNo !=null and policeNo !=''">
+						POLICE_NO,
+					</if>
+					<if test="telNo !=null and telNo !=''">
+						TEL_NO,
+					</if>
+					<if test="mobileNo !=null and mobileNo !=''">
+						MOBILE_NO,
+					</if>
+					<if test="userLevel !=null and userLevel !=''">
+						USER_LEVEL,
+					</if>
+					OPEN_FLAG,
+					VERSION,
+					DELETE_FLAG,
+					CREATE_USER_ID,
+					UPDATE_USER_ID,
+					CREATE_TIME,
+					UPDATE_TIME
+		) VALUES (
+					#{id, jdbcType=CHAR},
+					#{organId, jdbcType=CHAR},
+					#{username, jdbcType=VARCHAR},
+					#{password, jdbcType=VARCHAR},
+					#{trueName, jdbcType=VARCHAR},
+					#{gender, jdbcType=CHAR},
+					<if test="idCardNo !=null and idCardNo !=''">
+						#{idCardNo, jdbcType=VARCHAR},
+					</if>
+					<if test="policeNo !=null and policeNo !=''">
+						#{policeNo, jdbcType=VARCHAR},
+					</if>
+					<if test="telNo !=null and telNo !=''">
+						#{telNo, jdbcType=VARCHAR},
+					</if>
+					<if test="mobileNo !=null and mobileNo !=''">
+						#{mobileNo, jdbcType=VARCHAR},
+					</if>
+					<if test="userLevel !=null and userLevel !=''">
+						#{userLevel, jdbcType=VARCHAR},
+					</if>
+					#{openFlag, jdbcType=CHAR},
+					#{version, jdbcType=INTEGER},
+					#{deleteFlag, jdbcType=CHAR},
+					#{createUserId, jdbcType=CHAR},
+					#{updateUserId, jdbcType=CHAR},
+					#{createTime, jdbcType=DATE},
+					#{updateTime, jdbcType=DATE}
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_SYS_USER WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.system.SysUser">
+		UPDATE T_SYS_USER 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.system.SysUser">
+		UPDATE T_SYS_USER
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="SysUserMap" parameterType="com.hisign.xcky.api.model.system.SysUser">
+		select t1.id,
+		       t2.shortened_name as organName,
+		       t1.username as username,
+		       t1.true_name as trueName
+		  from t_sys_user     t1,
+		       t_organization t2
+		 where t1.delete_flag = '0'
+		   and t1.organ_id = t2.id(+)
+		  <if test="trueName !=null and trueName !=''">
+			   and t1.true_name like '%'||#{trueName, jdbcType=VARCHAR}||'%'
+		  </if>
+	</select>
+	
+	<select id="queryTree" resultType="com.hisign.xcky.api.model.system.SysUser" parameterType="com.hisign.xcky.api.model.system.SysUser">
+		select *
+		  from (select o.id         as key,
+		               o.parent_id  as parentKey,
+		               o.organ_name as value,
+		               '0' as personFlag
+		          from t_organization o
+		          where o.delete_flag='0'
+		          )
+		union all (select u.id        as key,
+		                  u.organ_id  as parentKey,
+		                  u.true_name as value,
+		                  '1' as personFlag
+		             from t_sys_user u
+		             where u.delete_flag='0'
+		             <if test="trueName !=null and trueName !=''">
+						and u.TRUE_NAME like '%'||#{trueName, jdbcType=VARCHAR}||'%'
+					</if> 
+		             )
+	</select>
+	
+	
+	
+	
+	
+</mapper>

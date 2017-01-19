@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.SceneCollectedGoodsMapper">
+
+	<select id="getById" resultMap="SceneCollectedGoodsMap" parameterType="String">
+		SELECT
+			<include refid="selectcloum" />
+		FROM T_SCENE_COLLECTED_GOODS T1,T_SCENE_PICTURE T2
+		WHERE T1.PICTURE_ID=T2.ID AND 	T1.ID=#{id}
+	</select>
+	<select id="findListByInvestigationId" resultMap="SceneCollectedGoodsMap" parameterType="String">
+		SELECT
+			<include refid="selectcloum" />
+		FROM T_SCENE_COLLECTED_GOODS T1,T_COMMON_PICTURE T2
+		WHERE T1.PICTURE_ID=T2.ID(+) AND T1.DELETE_FLAG = '0' and T1.INVESTIGATION_ID=#{investigationId}
+	</select>
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneCollectedGoods">
+		INSERT INTO T_SCENE_COLLECTED_GOODS (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_SCENE_COLLECTED_GOODS WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneCollectedGoods">
+		UPDATE T_SCENE_COLLECTED_GOODS 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneCollectedGoods">
+		UPDATE T_SCENE_COLLECTED_GOODS
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+
+</mapper>

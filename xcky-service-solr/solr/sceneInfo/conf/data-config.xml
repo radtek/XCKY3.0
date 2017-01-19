@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataConfig>
+    <dataSource name="xckyDataSource" type="JdbcDataSource" driver="oracle.jdbc.driver.OracleDriver"
+                url="jdbc:oracle:thin:@172.16.0.110:1521:xcky" user="xcky3" password="xcky3"/>
+    <document>
+        <!-- 现场基本信息 -->
+        <entity name="sceneInfo" pk="ID"
+                query="
+                    SELECT 
+                      T1.ID,
+                      T1.INVESTIGATION_NO,
+                      T1.INVESTIGATION_DATE_FROM,
+                      T1.INVESTIGATION_DATE_TO,
+                      T1.INVESTIGATION_PLACE,
+                      T1.CASE_LON,
+                      T1.CASE_LAT,
+                      T3.CONTENT AS INVEST_NOTE,
+                      T1.LOST_TOTAL_VALUE,
+                      T1.REMNANT_DESC,
+                      T1.SCENE_DISPOSAL,
+                      T1.SCENE_DISPOSAL_DESC,
+                      T1.VIDEO_TIME,
+                      T1.RECORD_TIME,
+                      T1.ORGAN_NO,
+                      T1.ORGAN_NAME,
+                      T1.OTHER_PERSONS,
+                      T1.CHANGE_REASON,
+                      T1.CHANGE_REASON_DESC,
+                      T1.WITNESS_REMARK,
+                      T1.SOURCE,
+                      T1.CREATE_USER_ID AS CREATE_USER,
+                      T1.CREATE_TIME,
+                      (SELECT WM_CONCAT(T.INVESTIGATOR_NAME) FROM T_SCENE_INVESTIGATOR T WHERE T.DELETE_FLAG='0' AND T.INVESTIGATION_ID=T1.ID) AS INVESTIGATOR_NAME,
+                      T2.ALARM_NO,
+                      T2.ALARM_ACCEPT_NO,
+                      T2.ALARM_TIME,
+                      T2.ALARM_RECEIVER,
+                      T2.ASSIGN_PERSON,
+                      T2.ASSIGN_METHOD,
+                      T2.ASSIGN_METHOD_DESC,
+                      T2.ASSIGN_REASON,
+                      T2.DISPATCH_TIME,
+                      T2.CASE_NO,
+                      T2.CASE_TYPE,
+                      T2.CASE_NATURE,
+                      T2.CASE_NAME,
+                      T2.CASE_BRIEF,
+                      T4.ORGAN_NAME AS CASE_REGIONALISM,
+                      T2.CASE_LOCATION,
+                      T2.CRIME_TIME_BEGIN,
+                      T2.CRIME_TIME_END,
+                      T2.MURDER_FLAG,
+                      T2.CRIMINAL_FLAG,
+                      T2.WOUNDED_AMOUNT,
+                      T2.DEAD_AMOUNT
+                    FROM T_SCENE_INVESTIGATION T1,
+                         T_SCENE_INVESTIGATION_DISPATCH T2,
+                         T_COMMON_BIGTEXT T3,
+                         T_ORGANIZATION T4
+                    WHERE 1=1
+                    AND T.ITERATION_NO=0
+                    AND T1.ID=T2.INVESTIGATION_ID
+                    AND T1.ID=T3.INVESTIGATION_ID(+)
+                    AND T2.CASE_REGIONALISM=T4.REGIONALISM(+)
+                    AND EXISTS (
+                        SELECT 1 FROM T_SCENE_INVESTIGATION_STATUS T
+                        WHERE T.DELETE_FLAG='0'
+                        AND T.SAVE_FLAG='1'
+                        AND T.INVESTIGATION_ID=T1.ID
+                    )"
+                deltaQuery="SELECT T.INVESTIGATION_ID AS ID FROM T_SCENE_INVESTIGATION_STATUS T WHERE T.SAVE_FLAG='1' AND T.LAST_SUBMIT_DATETIME>='${dataimporter.sceneInfo.last_index_time}'"
+                deletedPkQuery="SELECT T.INVESTIGATION_ID AS ID FROM T_SCENE_INVESTIGATION_STATUS T WHERE T.SAVE_FLAG='1' AND T.DELETE_FLAG='1' AND T.LAST_SUBMIT_DATETIME>='${dataimporter.sceneInfo.last_index_time}'"
+                deltaImportQuery="
+                    SELECT
+                      T1.ID,
+                      T1.INVESTIGATION_NO,
+                      T1.INVESTIGATION_DATE_FROM,
+                      T1.INVESTIGATION_DATE_TO,
+                      T1.INVESTIGATION_PLACE,
+                      T1.CASE_LON,
+                      T1.CASE_LAT,
+                      T3.CONTENT AS INVEST_NOTE,
+                      T1.LOST_TOTAL_VALUE,
+                      T1.REMNANT_DESC,
+                      T1.SCENE_DISPOSAL,
+                      T1.SCENE_DISPOSAL_DESC,
+                      T1.VIDEO_TIME,
+                      T1.RECORD_TIME,
+                      T1.ORGAN_NO,
+                      T1.ORGAN_NAME,
+                      T1.OTHER_PERSONS,
+                      T1.CHANGE_REASON,
+                      T1.CHANGE_REASON_DESC,
+                      T1.WITNESS_REMARK,
+                      T1.SOURCE,
+                      T1.CREATE_USER_ID AS CREATE_USER,
+                      T1.CREATE_TIME,
+                      (SELECT WM_CONCAT(T.INVESTIGATOR_NAME) FROM T_SCENE_INVESTIGATOR T WHERE T.DELETE_FLAG='0' AND T.INVESTIGATION_ID=T1.ID) AS INVESTIGATOR_NAME,
+                      T2.ALARM_NO,
+                      T2.ALARM_ACCEPT_NO,
+                      T2.ALARM_TIME,
+                      T2.ALARM_RECEIVER,
+                      T2.ASSIGN_PERSON,
+                      T2.ASSIGN_METHOD,
+                      T2.ASSIGN_METHOD_DESC,
+                      T2.ASSIGN_REASON,
+                      T2.DISPATCH_TIME,
+                      T2.CASE_NO,
+                      T2.CASE_TYPE,
+                      T2.CASE_NATURE,
+                      T2.CASE_NAME,
+                      T2.CASE_BRIEF,
+                      T4.ORGAN_NAME AS CASE_REGIONALISM,
+                      T2.CASE_LOCATION,
+                      T2.CRIME_TIME_BEGIN,
+                      T2.CRIME_TIME_END,
+                      T2.MURDER_FLAG,
+                      T2.CRIMINAL_FLAG,
+                      T2.WOUNDED_AMOUNT,
+                      T2.DEAD_AMOUNT
+                    FROM T_SCENE_INVESTIGATION T1,
+                         T_SCENE_INVESTIGATION_DISPATCH T2,
+                         T_COMMON_BIGTEXT T3,
+                         T_ORGANIZATION T4
+                    WHERE 1=1
+                    AND T.ITERATION_NO=0
+                    AND T1.ID=T2.INVESTIGATION_ID
+                    AND T1.ID=T3.INVESTIGATION_ID(+)
+                    AND T2.CASE_REGIONALISM=T4.REGIONALISM(+)
+                    AND T1.ID='${dataimporter.delta.ID}'"
+                transformer="ClobTransformer, com.hisign.business.solr.transformer.RowTransformer">
+
+            <field column="ID" name="ID"/>
+            <field column="INVESTIGATION_NO" name="INVESTIGATION_NO"/> <!--勘验号-->
+            <field column="INVESTIGATION_DATE_FROM" name="INVESTIGATION_DATE_FROM"/> <!--勘验开始时间-->
+            <field column="INVESTIGATION_DATE_TO" name="INVESTIGATION_DATE_TO"/> <!--勘验结束时间-->
+            <field column="INVESTIGATION_PLACE" name="INVESTIGATION_PLACE"/> <!--勘验地点-->
+            <field column="CASE_LON" name="CASE_LON"/> <!--经度-->
+            <field column="CASE_LAT" name="CASE_LAT"/> <!--纬度-->
+            <field column="INVEST_NOTE" name="INVEST_NOTE" clob="true"/> <!--现场勘验情况文本-->
+            <field column="LOST_TOTAL_VALUE" name="LOST_TOTAL_VALUE"/> <!--损失物品总价值-->
+            <field column="REMNANT_DESC" name="REMNANT_DESC"/> <!--现场遗留物描述-->
+            <field column="SCENE_DISPOSAL" name="SCENE_DISPOSAL" dictType="XCCZYJDM"/> <!--现场处置意见(XCCZYJDM)-->
+            <field column="SCENE_DISPOSAL_DESC" name="SCENE_DISPOSAL_DESC"/> <!--现场处置意见描述-->
+            <field column="VIDEO_TIME" name="VIDEO_TIME"/> <!--录像时间-->
+            <field column="RECORD_TIME" name="RECORD_TIME"/> <!--录音时间-->
+            <field column="ORGAN_NO" name="ORGAN_NO"/> <!--勘验单位代码-->
+            <field column="ORGAN_NAME" name="ORGAN_NAME"/> <!--勘验单位名称-->
+            <field column="OTHER_PERSONS" name="OTHER_PERSONS"/> <!--其他到达现场人员-->
+            <field column="CHANGE_REASON" name="CHANGE_REASON" dictType="BDYYDM"/> <!--现场变动原因(BDYYDM)-->
+            <field column="CHANGE_REASON_DESC" name="CHANGE_REASON_DESC"/> <!--现场变动原因描述-->
+            <field column="WITNESS_REMARK" name="WITNESS_REMARK"/> <!--见证人备注-->
+            <field column="SOURCE" name="SOURCE" dictType="SJLYDM"/> <!--数据来源(SJLYDM)-->
+            <field column="CREATE_USER" name="CREATE_USER"/> <!--创建人-->
+            <field column="CREATE_TIME" name="CREATE_TIME"/> <!--创建时间-->
+            <field column="INVESTIGATOR_NAME" name="INVESTIGATOR_NAME"/> <!--勘验人-->
+
+            <!-- 案件信息 -->
+            <field column="ALARM_NO" name="ALARM_NO"/> <!--接警编号-->
+            <field column="ALARM_ACCEPT_NO" name="ALARM_ACCEPT_NO"/> <!--接警受理号-->
+            <field column="ALARM_TIME" name="ALARM_TIME"/> <!--接警时间-->
+            <field column="ALARM_RECEIVER" name="ALARM_RECEIVER"/> <!--接警人-->
+            <field column="ASSIGN_PERSON" name="ASSIGN_PERSON"/> <!--指派/报告单位-->
+            <field column="ASSIGN_METHOD" name="ASSIGN_METHOD" dictType="XCKYJJFSDM"/> <!--指派方式(XCKYJJFSDM)-->
+            <field column="ASSIGN_METHOD_DESC" name="ASSIGN_METHOD_DESC"/> <!--指派方式描述-->
+            <field column="ASSIGN_REASON" name="ASSIGN_REASON"/> <!--勘验事由-->
+            <field column="DISPATCH_TIME" name="DISPATCH_TIME"/> <!--出警时间-->
+            <field column="CASE_NO" name="CASE_NO"/> <!--案件编号-->
+            <field column="CASE_TYPE" name="CASE_TYPE" dictType="AJLBDM"/> <!--案件类别(AJLBDM)-->
+            <field column="CASE_NATURE" name="CASE_NATURE" dictType="AJXZDM"/> <!--案件性质(AJXZDM)-->
+            <field column="CASE_NAME" name="CASE_NAME"/> <!--案件名称-->
+            <field column="CASE_BRIEF" name="CASE_BRIEF"/> <!--简要案情(案件发现过程)-->
+            <field column="CASE_REGIONALISM" name="CASE_REGIONALISM"/> <!--发案区划-->
+            <field column="CASE_LOCATION" name="CASE_LOCATION"/> <!--发案地点-->
+            <field column="CRIME_TIME_BEGIN" name="CRIME_TIME_BEGIN"/> <!--发案开始时间-->
+            <field column="CRIME_TIME_END" name="CRIME_TIME_END"/> <!--发案结束时间-->
+            <field column="MURDER_FLAG" name="MURDER_FLAG" dictType="SFDM"/> <!--是否命案-->
+            <field column="CRIMINAL_FLAG" name="CRIMINAL_FLAG" dictType="SFDM"/> <!--是否刑案-->
+            <field column="WOUNDED_AMOUNT" name="WOUNDED_AMOUNT"/> <!--受伤人数-->
+            <field column="DEAD_AMOUNT" name="DEAD_AMOUNT"/> <!--死亡人数-->
+        </entity>
+    </document>
+</dataConfig>

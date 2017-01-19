@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.system.SysLogMapper">
+
+	<select id="getById" resultMap="SysLogMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SYS_LOG
+		WHERE ID=#{id}
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.system.SysLog">
+		INSERT INTO T_SYS_LOG (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_SYS_LOG WHERE ID=#{id}
+	</delete>
+
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.system.SysLog">
+		UPDATE T_SYS_LOG
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.system.SysLog">
+		UPDATE T_SYS_LOG
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="SysLogMap" parameterType="com.hisign.xcky.api.model.system.SysLog">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SYS_LOG
+		<where>
+			<if test="optUser!=null and optUser!=''">
+				and OPT_USER=#{loginUser}
+			</if>
+			<if test="optTimeBegin !=null and optTimeBegin !=''">
+				and OPT_TIME <![CDATA[>=]]> #{optTimeBegin, jdbcType=DATE}
+			</if>
+			<if test="optTimeEnd !=null and optTimeEnd !=''">
+				and OPT_TIME <![CDATA[<]]> #{optTimeEnd, jdbcType=DATE}+1
+			</if>
+			<if test="optType !=null and optType != ''" >
+				and OPT_TYPE = #{optType}
+			</if>
+		</where>
+		order by OPT_TIME desc
+	</select>
+	
+</mapper>

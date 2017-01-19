@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.SceneBodyBasicMapper">
+
+	<select id="getById" resultMap="SceneBodyBasicMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_BODY_BASIC
+		WHERE ID=#{id}
+	</select>
+	<select id="findListByInvestigationId" resultMap="SceneBodyBasicMap" parameterType="String">
+		SELECT
+			<include refid="selectId1" />
+		  from t_scene_body_basic t1,
+		       t_common_attachment t2
+		 where t1.delete_flag = '0'
+		   and t1.reportid=t2.id(+)
+		   and t1.investigation_id = #{investigationId}			
+	</select>
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneBodyBasic">
+		INSERT INTO T_SCENE_BODY_BASIC (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_SCENE_BODY_BASIC WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneBodyBasic">
+		UPDATE T_SCENE_BODY_BASIC 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneBodyBasic">
+		UPDATE T_SCENE_BODY_BASIC
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="SceneBodyBasicMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneBodyBasic">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_BODY_BASIC
+		WHERE DELETE_FLAG=#{deleteFlag}
+			<if test="investigationId !=null and investigationId !=''">
+				and INVESTIGATION_ID=#{investigationId, jdbcType=CHAR}
+			</if>
+			<if test="examinationNo !=null and examinationNo !=''">
+				and EXAMINATION_NO=#{examinationNo, jdbcType=VARCHAR}
+			</if>
+			<if test="consignedAgency !=null and consignedAgency !=''">
+				and CONSIGNED_AGENCY=#{consignedAgency, jdbcType=VARCHAR}
+			</if>
+			<if test="consignedDate !=null and consignedDate !=''">
+				and CONSIGNED_DATE=#{consignedDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="consignedBy !=null and consignedBy !=''">
+				and CONSIGNED_BY=#{consignedBy, jdbcType=VARCHAR}
+			</if>
+			<if test="consignerPhone !=null and consignerPhone !=''">
+				and CONSIGNER_PHONE=#{consignerPhone, jdbcType=VARCHAR}
+			</if>
+			<if test="examinedAgency !=null and examinedAgency !=''">
+				and EXAMINED_AGENCY=#{examinedAgency, jdbcType=VARCHAR}
+			</if>
+			<if test="examinedDate !=null and examinedDate !=''">
+				and EXAMINED_DATE=#{examinedDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="examinedBy !=null and examinedBy !=''">
+				and EXAMINED_BY=#{examinedBy, jdbcType=VARCHAR}
+			</if>
+			<if test="examinedPlace !=null and examinedPlace !=''">
+				and EXAMINED_PLACE=#{examinedPlace, jdbcType=VARCHAR}
+			</if>
+			<if test="name !=null and name !=''">
+				and NAME=#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="originStatus !=null and originStatus !=''">
+				and ORIGIN_STATUS=#{originStatus, jdbcType=CHAR}
+			</if>
+			<if test="sex !=null and sex !=''">
+				and SEX=#{sex, jdbcType=VARCHAR}
+			</if>
+			<if test="birthDate !=null and birthDate !=''">
+				and BIRTH_DATE=#{birthDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="folk !=null and folk !=''">
+				and FOLK=#{folk, jdbcType=VARCHAR}
+			</if>
+			<if test="nationality !=null and nationality !=''">
+				and NATIONALITY=#{nationality, jdbcType=VARCHAR}
+			</if>
+			<if test="nativePlaceRegionalism !=null and nativePlaceRegionalism !=''">
+				and NATIVE_PLACE_REGIONALISM=#{nativePlaceRegionalism, jdbcType=VARCHAR}
+			</if>
+			<if test="nativePlace !=null and nativePlace !=''">
+				and NATIVE_PLACE=#{nativePlace, jdbcType=VARCHAR}
+			</if>
+			<if test="addressRegionalism !=null and addressRegionalism !=''">
+				and ADDRESS_REGIONALISM=#{addressRegionalism, jdbcType=VARCHAR}
+			</if>
+			<if test="address !=null and address !=''">
+				and ADDRESS=#{address, jdbcType=VARCHAR}
+			</if>
+			<if test="organization !=null and organization !=''">
+				and ORGANIZATION=#{organization, jdbcType=VARCHAR}
+			</if>
+			<if test="specialSign !=null and specialSign !=''">
+				and SPECIAL_SIGN=#{specialSign, jdbcType=VARCHAR}
+			</if>
+			<if test="deathDateFrom !=null and deathDateFrom !=''">
+				and DEATH_DATE_FROM=#{deathDateFrom, jdbcType=TIMESTAMP}
+			</if>
+			<if test="deathDateTo !=null and deathDateTo !=''">
+				and DEATH_DATE_TO=#{deathDateTo, jdbcType=TIMESTAMP}
+			</if>
+			<if test="caseSummary !=null and caseSummary !=''">
+				and CASE_SUMMARY=#{caseSummary, jdbcType=VARCHAR}
+			</if>
+			<if test="gesture !=null and gesture !=''">
+				and GESTURE=#{gesture, jdbcType=VARCHAR}
+			</if>
+			<if test="clothes !=null and clothes !=''">
+				and CLOTHES=#{clothes, jdbcType=VARCHAR}
+			</if>
+			<if test="takenWith !=null and takenWith !=''">
+				and TAKEN_WITH=#{takenWith, jdbcType=VARCHAR}
+			</if>
+			<if test="deathReason !=null and deathReason !=''">
+				and DEATH_REASON=#{deathReason, jdbcType=VARCHAR}
+			</if>
+			<if test="deathProperty !=null and deathProperty !=''">
+				and DEATH_PROPERTY=#{deathProperty, jdbcType=VARCHAR}
+			</if>
+			<if test="inflictManner !=null and inflictManner !=''">
+				and INFLICT_MANNER=#{inflictManner, jdbcType=VARCHAR}
+			</if>
+			<if test="strangleholdManner !=null and strangleholdManner !=''">
+				and STRANGLEHOLD_MANNER=#{strangleholdManner, jdbcType=VARCHAR}
+			</if>
+			<if test="chokeSymptom !=null and chokeSymptom !=''">
+				and CHOKE_SYMPTOM=#{chokeSymptom, jdbcType=VARCHAR}
+			</if>
+			<if test="encasedBy !=null and encasedBy !=''">
+				and ENCASED_BY=#{encasedBy, jdbcType=VARCHAR}
+			</if>
+			<if test="packagedBy !=null and packagedBy !=''">
+				and PACKAGED_BY=#{packagedBy, jdbcType=VARCHAR}
+			</if>
+			<if test="surfaceExamOpinion !=null and surfaceExamOpinion !=''">
+				and SURFACE_EXAM_OPINION=#{surfaceExamOpinion, jdbcType=VARCHAR}
+			</if>
+			<if test="dissectionExamOpinion !=null and dissectionExamOpinion !=''">
+				and DISSECTION_EXAM_OPINION=#{dissectionExamOpinion, jdbcType=VARCHAR}
+			</if>
+			<if test="remark !=null and remark !=''">
+				and REMARK=#{remark, jdbcType=VARCHAR}
+			</if>
+			<if test="examinedDateup !=null and examinedDateup !=''">
+				and EXAMINED_DATEUP=#{examinedDateup, jdbcType=TIMESTAMP}
+			</if>
+			<if test="examinedDatedown !=null and examinedDatedown !=''">
+				and EXAMINED_DATEDOWN=#{examinedDatedown, jdbcType=TIMESTAMP}
+			</if>
+			<if test="stfxddqk !=null and stfxddqk !=''">
+				and STFXDDQK=#{stfxddqk, jdbcType=VARCHAR}
+			</if>
+			<if test="stwz !=null and stwz !=''">
+				and STWZ=#{stwz, jdbcType=VARCHAR}
+			</if>
+			<if test="xcxjqk !=null and xcxjqk !=''">
+				and XCXJQK=#{xcxjqk, jdbcType=VARCHAR}
+			</if>
+			<if test="xczwhjgk !=null and xczwhjgk !=''">
+				and XCZWHJGK=#{xczwhjgk, jdbcType=VARCHAR}
+			</if>
+			<if test="familyComment !=null and familyComment !=''">
+				and FAMILY_COMMENT=#{familyComment, jdbcType=VARCHAR}
+			</if>
+			<if test="source !=null and source !=''">
+				and SOURCE=#{source, jdbcType=VARCHAR}
+			</if>
+			<if test="version !=null and version !=''">
+				and VERSION=#{version, jdbcType=INTEGER}
+			</if>
+			<if test="updateUserId !=null and updateUserId !=''">
+				and UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR}
+			</if>
+			<if test="updateTime !=null and updateTime !=''">
+				and UPDATE_TIME=#{updateTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="reportid !=null and reportid !=''">
+				and REPORTID=#{reportid, jdbcType=CHAR}
+			</if>
+
+	</select>
+	
+</mapper>

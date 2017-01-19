@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hisign.xcky.persist.mapper.system.SysLogMapper">
+
+	<resultMap type="com.hisign.xcky.api.model.system.SysLog" id="SysLogMap">
+		<result property="rowNum" column="ROW_ID" />
+		<result property="id" column="ID" />
+		<result property="optType" column="OPT_TYPE" />
+		<result property="optTime" column="OPT_TIME" />
+		<result property="optUser" column="OPT_USER" />
+		<result property="optUserId" column="OPT_USER_ID" />
+		<result property="optUserIp" column="OPT_USER_IP" />
+		<result property="optTable" column="OPT_TABLE" />
+		<result property="optDataId" column="OPT_DATA_ID" />
+		<result property="optDesc" column="OPT_DESC" />
+		<result property="optUrl" column="OPT_URL" />
+	</resultMap>
+	
+	<sql id="selectId">
+		ID,
+		OPT_TYPE,
+		OPT_TIME,
+		OPT_USER,
+		OPT_USER_ID,
+		OPT_USER_IP,
+		OPT_TABLE,
+		OPT_DATA_ID,
+		OPT_DESC,
+		OPT_URL
+	</sql>
+  
+	<sql id="insertId">
+		#{id, jdbcType=CHAR},
+		#{optType, jdbcType=VARCHAR},
+		#{optTime, jdbcType=TIMESTAMP},
+		#{optUser, jdbcType=VARCHAR},
+		#{optUserId, jdbcType=VARCHAR},
+		#{optUserIp, jdbcType=VARCHAR},
+		#{optTable, jdbcType=VARCHAR},
+		#{optDataId, jdbcType=VARCHAR},
+		#{optDesc, jdbcType=VARCHAR},
+		#{optUrl, jdbcType=VARCHAR}
+	</sql>
+
+	<sql id="updateId">
+			<if test="optType !=null and optType !=''">
+				OPT_TYPE=#{optType, jdbcType=VARCHAR},
+			</if>
+			<if test="optTime !=null and optTime !=''">
+				OPT_TIME=#{optTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="optUser !=null and optUser !=''">
+				OPT_USER=#{optUser, jdbcType=VARCHAR},
+			</if>
+			<if test="optUserId !=null and optUserId !=''">
+				OPT_USER_ID=#{optUserId, jdbcType=VARCHAR},
+			</if>
+			<if test="optUserIp !=null and optUserIp !=''">
+				OPT_USER_IP=#{optUserIp, jdbcType=VARCHAR},
+			</if>
+			<if test="optTable !=null and optTable !=''">
+				OPT_TABLE=#{optTable, jdbcType=VARCHAR},
+			</if>
+			<if test="optDataId !=null and optDataId !=''">
+				OPT_DATA_ID=#{optDataId, jdbcType=VARCHAR},
+			</if>
+			<if test="optDesc !=null and optDesc !=''">
+				OPT_DESC=#{optDesc, jdbcType=VARCHAR},
+			</if>
+			<if test="optUrl !=null and optUrl !=''">
+				OPT_URL=#{optUrl, jdbcType=VARCHAR}
+			</if>
+	</sql>
+	
+</mapper>
+

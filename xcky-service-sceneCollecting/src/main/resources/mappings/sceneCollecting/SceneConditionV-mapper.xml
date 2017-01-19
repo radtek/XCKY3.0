@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.SceneConditionMapper">
+
+	<resultMap type="com.hisign.xcky.api.model.sceneCollecting.SceneCondition" id="SceneConditionMap">
+		<result property="rowNum" column="ROW_ID" />
+		<result property="id" column="ID" />
+		<result property="investigationId" column="INVESTIGATION_ID" />
+		<result property="protector" column="PROTECTOR" />
+		<result property="protectorOrgan" column="PROTECTOR_ORGAN" />
+		<result property="protectorDuty" column="PROTECTOR_DUTY" />
+		<result property="protectionDate" column="PROTECTION_DATE" />
+		<result property="overturnDegree" column="OVERTURN_DEGREE" />
+		<result property="protectionMeasure" column="PROTECTION_MEASURE" />
+		<result property="protectionMeasureDesc" column="PROTECTION_MEASURE_DESC" />
+		<result property="envTemperature" column="ENV_TEMPERATURE" />
+		<result property="envMoistness" column="ENV_MOISTNESS" />
+		<result property="wind" column="WIND" />
+		<result property="weather" column="WEATHER" />
+		<result property="sceneCondition" column="SCENE_CONDITION" />
+		<result property="lighting" column="LIGHTING" />
+		<result property="source" column="SOURCE" />
+		<result property="version" column="VERSION" />
+		<result property="deleteFlag" column="DELETE_FLAG" />
+		<result property="createUserId" column="CREATE_USER_ID" />
+		<result property="updateUserId" column="UPDATE_USER_ID" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="changeReason" column="CHANG_REASON" />
+		<result property="changeReasonDesc" column="CHANG_REASON_DESC" />
+	</resultMap>
+	
+	<sql id="selectId">
+		ID,
+		INVESTIGATION_ID,
+		PROTECTOR,
+		PROTECTOR_ORGAN,
+		PROTECTOR_DUTY,
+		PROTECTION_DATE,
+		OVERTURN_DEGREE,
+		PROTECTION_MEASURE,
+		PROTECTION_MEASURE_DESC,
+		ENV_TEMPERATURE,
+		ENV_MOISTNESS,
+		WIND,
+		WEATHER,
+		SCENE_CONDITION,
+		LIGHTING,
+		SOURCE,
+		VERSION,
+		DELETE_FLAG,
+		CREATE_USER_ID,
+		UPDATE_USER_ID,
+		CREATE_TIME,
+		UPDATE_TIME,
+		CHANG_REASON,
+		CHANG_REASON_DESC
+	</sql>
+  
+	<sql id="insertId">
+		#{id, jdbcType=CHAR},
+		#{investigationId, jdbcType=CHAR},
+		#{protector, jdbcType=VARCHAR},
+		#{protectorOrgan, jdbcType=VARCHAR},
+		#{protectorDuty, jdbcType=VARCHAR},
+		#{protectionDate, jdbcType=TIMESTAMP},
+		#{overturnDegree, jdbcType=VARCHAR},
+		#{protectionMeasure, jdbcType=VARCHAR},
+		#{protectionMeasureDesc, jdbcType=VARCHAR},
+		#{envTemperature, jdbcType=INTEGER},
+		#{envMoistness, jdbcType=INTEGER},
+		#{wind, jdbcType=VARCHAR},
+		#{weather, jdbcType=VARCHAR},
+		#{sceneCondition, jdbcType=VARCHAR},
+		#{lighting, jdbcType=VARCHAR},
+		#{source, jdbcType=VARCHAR},
+		#{version, jdbcType=INTEGER},
+		#{deleteFlag, jdbcType=CHAR},
+		#{createUserId, jdbcType=CHAR},
+		#{updateUserId, jdbcType=CHAR},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP},
+		#{changeReason, jdbcType=VARCHAR},
+		#{changeReasonDesc, jdbcType=VARCHAR}
+	</sql>
+
+	<sql id="updateId">
+			<if test="investigationId !=null and investigationId !=''">
+				INVESTIGATION_ID=#{investigationId, jdbcType=CHAR},
+			</if>
+			<if test="protector !=null and protector !=''">
+				PROTECTOR=#{protector, jdbcType=VARCHAR},
+			</if>
+			<if test="protectorOrgan !=null and protectorOrgan !=''">
+				PROTECTOR_ORGAN=#{protectorOrgan, jdbcType=VARCHAR},
+			</if>
+			<if test="protectorDuty !=null and protectorDuty !=''">
+				PROTECTOR_DUTY=#{protectorDuty, jdbcType=VARCHAR},
+			</if>
+			<if test="protectionDate !=null and protectionDate !=''">
+				PROTECTION_DATE=#{protectionDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="overturnDegree !=null and overturnDegree !=''">
+				OVERTURN_DEGREE=#{overturnDegree, jdbcType=VARCHAR},
+			</if>
+			<if test="protectionMeasure !=null and protectionMeasure !=''">
+				PROTECTION_MEASURE=#{protectionMeasure, jdbcType=VARCHAR},
+			</if>
+			<if test="protectionMeasureDesc !=null and protectionMeasureDesc !=''">
+				PROTECTION_MEASURE_DESC=#{protectionMeasureDesc, jdbcType=VARCHAR},
+			</if>
+			<if test="envTemperature !=null and envTemperature !=''">
+				ENV_TEMPERATURE=#{envTemperature, jdbcType=INTEGER},
+			</if>
+			<if test="envMoistness !=null and envMoistness !=''">
+				ENV_MOISTNESS=#{envMoistness, jdbcType=INTEGER},
+			</if>
+			<if test="wind !=null and wind !=''">
+				WIND=#{wind, jdbcType=VARCHAR},
+			</if>
+			<if test="weather !=null and weather !=''">
+				WEATHER=#{weather, jdbcType=VARCHAR},
+			</if>
+			<if test="sceneCondition !=null and sceneCondition !=''">
+				SCENE_CONDITION=#{sceneCondition, jdbcType=VARCHAR},
+			</if>
+			<if test="lighting !=null and lighting !=''">
+				LIGHTING=#{lighting, jdbcType=VARCHAR},
+			</if>
+			<if test="changeReason !=null and changeReason !=''">
+				CHANG_REASON=#{changeReason, jdbcType=VARCHAR},
+			</if>
+			<if test="changeReasonDesc !=null and changeReasonDesc !=''">
+				CHANG_REASON_DESC=#{changeReasonDesc, jdbcType=VARCHAR},
+			</if>
+			<if test="source !=null and source !=''">
+				SOURCE=#{source, jdbcType=VARCHAR},
+			</if>
+			<if test="version !=null and version !=''">
+				VERSION=#{version, jdbcType=INTEGER},
+			</if>
+			<if test="updateUserId !=null and updateUserId !=''">
+				UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR},
+			</if>
+			<if test="deleteFlag !=null and deleteFlag !=''">
+				DELETE_FLAG=#{deleteFlag, jdbcType=CHAR},
+			</if>
+			<if test="updateTime !=null and updateTime !=''">
+				UPDATE_TIME=#{updateTime, jdbcType=TIMESTAMP}
+			</if>
+	</sql>
+	
+</mapper>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.WitnessHistoryMapper">
+
+	<resultMap type="com.hisign.xcky.api.model.sceneCollecting.WitnessHistory" id="WitnessHistoryMap">
+		<result property="rowNum" column="ROW_ID" />
+		<result property="id" column="ID" />
+		<result property="name" column="NAME" />
+		<result property="gender" column="GENDER" />
+		<result property="birthday" column="BIRTHDAY" />
+		<result property="phone" column="PHONE" />
+		<result property="address" column="ADDRESS" />
+		<result property="nativePlace" column="NATIVE_PLACE" />
+		<result property="idCardNo" column="ID_CARD_NO" />
+		<result property="organization" column="ORGANIZATION" />
+		<result property="createUserId" column="CREATE_USER_ID" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+	
+	<sql id="selectId">
+		ID,
+		NAME,
+		GENDER,
+		BIRTHDAY,
+		PHONE,
+		ADDRESS,
+		NATIVE_PLACE,
+		ID_CARD_NO,
+		ORGANIZATION,
+		CREATE_USER_ID,
+		CREATE_TIME
+	</sql>
+  	<!-- 关联字典表查询列 -->
+  	<sql id="selectContentId">
+		ID,
+		NAME,
+		GENDER,
+		BIRTHDAY,
+		PHONE,
+		ADDRESS,
+		NATIVE_PLACE,
+		ID_CARD_NO,
+		ORGANIZATION
+	</sql>
+	<sql id="insertId">
+		#{id, jdbcType=CHAR},
+		#{name, jdbcType=VARCHAR},
+		#{gender, jdbcType=CHAR},
+		#{birthday, jdbcType=TIMESTAMP},
+		#{phone, jdbcType=VARCHAR},
+		#{address, jdbcType=VARCHAR},
+		#{nativePlace, jdbcType=VARCHAR},
+		#{idCardNo, jdbcType=VARCHAR},
+		#{organization, jdbcType=VARCHAR},
+		#{createUserId, jdbcType=CHAR},
+		#{createTime, jdbcType=TIMESTAMP}
+	</sql>
+
+	<sql id="updateId">
+			<if test="name !=null and name !=''">
+				NAME=#{name, jdbcType=VARCHAR},
+			</if>
+			<if test="gender !=null and gender !=''">
+				GENDER=#{gender, jdbcType=CHAR},
+			</if>
+			<if test="birthday !=null and birthday !=''">
+				BIRTHDAY=#{birthday, jdbcType=TIMESTAMP},
+			</if>
+			<if test="phone !=null and phone !=''">
+				PHONE=#{phone, jdbcType=VARCHAR},
+			</if>
+			<if test="address !=null and address !=''">
+				ADDRESS=#{address, jdbcType=VARCHAR},
+			</if>
+			<if test="nativePlace !=null and nativePlace !=''">
+				NATIVE_PLACE=#{nativePlace, jdbcType=VARCHAR},
+			</if>
+			<if test="idCardNo !=null and idCardNo !=''">
+				ID_CARD_NO=#{idCardNo, jdbcType=VARCHAR},
+			</if>
+			<if test="deleteFlag !=null and deleteFlag !=''">
+				DELETE_FLAG=#{deleteFlag, jdbcType=CHAR},
+			</if>
+			<if test="organization !=null and organization !=''">
+				ORGANIZATION=#{organization, jdbcType=VARCHAR},
+			</if>
+	</sql>
+	
+</mapper>

@@ -1,0 +1,141 @@
+<table>
+    <tr my-head>
+      <td my-width="80">上级单位</td>
+	    <td my-width="80">统计单位</td>
+	    <td my-width="80">杀人</td>
+	    <td my-width="80">伤害</td>
+	    <td my-width="80">强奸</td>
+	    <td my-width="80">绑架</td>
+	    <td my-width="80">抢劫</td>
+	    <td my-width="80">放火</td>
+	    <td my-width="80">爆炸</td>
+	    <td my-width="80">劫持</td>
+	    <td my-width="80">投毒</td>
+	    <td my-width="80">入室盗窃</td>
+	    <td my-width="80">其他命案</td>
+	    <td my-width="80">破坏（危害）公共安全</td>
+    </tr>
+      #set ($killTotal=0)
+      #set ($injureTotal=0)
+      #set ($rapeTotal=0)
+      #set ($kidnapTotal=0)
+      #set ($robTotal=0)
+      #set ($fireTotal=0)
+      #set ($bombTotal=0)
+      #set ($hijackTotal=0)
+      #set ($poisoningTotal=0)
+      #set ($stealTotal=0)
+      #set ($otherTotal=0)
+      #set ($destroyTotal=0)
+      #foreach($o in $list)
+		  #set ($killTotal=$killTotal+$o.killCount)
+	      #set ($injureTotal=$sceneCountAll+$o.injureCount)
+	      #set ($rapeTotal=$injureTotal+$o.rapeCount)
+	      #set ($kidnapTotal=$kidnapTotal+$o.kidnapCount)
+	      #set ($robTotal=$robTotal+$o.robCount)
+	      #set ($fireTotal=$fireTotal+$o.fireCount)
+	      #set ($bombTotal=$bombTotal+$o.bombCount)
+	      #set ($hijackTotal=$hijackTotal+$o.hijackCount)
+	      #set ($poisoningTotal=$poisoningTotal+$o.poisoningCount)
+	      #set ($stealTotal=$stealTotal+$o.stealCount)
+	      #set ($otherTotal=$otherTotal+$o.otherCount)
+	      #set ($destroyTotal=$destroyTotal+$o.destroyCount)
+        <tr>
+        	#if($!o.rowSpan>=1)
+        	     #if($!o.sfhb==1)
+		        	<td rowspan="$o.rowSpan">
+		        		#if ($o.parentUnitName)
+								 	$o.parentUnitName
+								#end
+		        	</td>
+		        	#end
+	        #else
+	        	<td>
+	        		#if ($o.parentUnitName)
+							 	$o.parentUnitName
+							#end
+	        	</td>
+			#end
+        	<td>
+		        #if ($o.unitName)
+						 	$o.unitName
+						#end
+        	</td>
+        	<td>
+		        #if ($o.killCount)
+						 	$o.killCount
+						#end
+        	</td>
+        	<td>
+		        #if ($o.injureCount)
+						 	$o.injureCount
+						#end
+        	</td>
+        	<td>
+		        #if ($o.rapeCount)
+						 	$o.rapeCount
+						#end
+        	</td>
+        	<td>
+		        #if ($o.kidnapCount)
+						 	$o.kidnapCount
+						#end
+        	</td>
+        	<td>
+		        #if ($o.robCount)
+						 	$o.robCount
+						#end
+        	</td>
+        	<td>
+		        #if ($o.fireCount)
+						 	$o.fireCount
+						#end
+        	</td>
+        	<td>
+		        #if ($o.bombCount)
+						 	$o.bombCount
+						#end
+        	</td>
+        	<td>
+		        #if ($o.hijackCount)
+						 	$o.hijackCount
+						#end
+        	</td>
+        	<td>
+		        #if ($o.poisoningCount)
+						 	$o.poisoningCount
+						#end
+        	</td>
+        	<td>
+		        #if ($o.stealCount)
+						 	$o.stealCount
+						#end
+        	</td>
+        	<td>
+		        #if ($o.otherCount)
+						 	$o.otherCount
+						#end
+        	</td>
+        	<td>
+		        #if ($o.destroyCount)
+						 	$o.destroyCount
+						#end
+        	</td>
+        </tr>
+        #end
+            <tr>
+        	    <td colspan="2">合计</td>
+        	          <td>$killTotal</td>
+				      <td>$injureTotal</td>
+				      <td>$rapeTotal</td>
+				      <td>$kidnapTotal</td>
+				      <td>$robTotal</td>
+				      <td>$fireTotal</td>
+				      <td>$bombTotal</td>
+				      <td>$hijackTotal</td>
+				      <td>$poisoningTotal</td>
+				      <td>$stealTotal</td>
+				      <td>$otherTotal</td>
+				      <td>$destroyTotal</td>
+               </tr>
+</table>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.QueryHistoryMapper">
+
+	<resultMap type="com.hisign.xcky.api.model.sceneCollecting.QueryHistory" id="QueryHistoryMap">
+		<result property="rowNum" column="ROW_ID" />
+		<result property="id" column="ID" />
+		<result property="queryType" column="QUERY_TYPE" />
+		<result property="queryContent" column="QUERY_CONTENT" />
+		<result property="source" column="SOURCE" />
+		<result property="version" column="VERSION" />
+		<result property="deleteFlag" column="DELETE_FLAG" />
+		<result property="createUserId" column="CREATE_USER_ID" />
+		<result property="updateUserId" column="UPDATE_USER_ID" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="queryName" column="QUERY_NAME" />
+		<result property="remark" column="REMARK" />		
+	</resultMap>
+	
+	<sql id="selectId">
+		ID,
+		QUERY_TYPE,
+		QUERY_CONTENT,
+		QUERY_NAME,
+		REMARK,		
+		SOURCE,
+		VERSION,
+		DELETE_FLAG,
+		CREATE_USER_ID,
+		UPDATE_USER_ID,
+		CREATE_TIME,
+		UPDATE_TIME
+	</sql>
+  
+	<sql id="insertId">
+		#{id, jdbcType=CHAR},
+		#{queryType, jdbcType=VARCHAR},
+		#{queryContent, jdbcType=CLOB},
+		#{queryName, jdbcType=VARCHAR},
+		#{remark, jdbcType=VARCHAR},		
+		#{source, jdbcType=VARCHAR},
+		#{version, jdbcType=INTEGER},
+		#{deleteFlag, jdbcType=CHAR},
+		#{createUserId, jdbcType=CHAR},
+		#{updateUserId, jdbcType=CHAR},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	</sql>
+
+	<sql id="updateId">
+			<if test="queryType !=null and queryType !=''">
+				QUERY_TYPE=#{queryType, jdbcType=VARCHAR},
+			</if>
+			<if test="queryContent !=null and queryContent !=''">
+				QUERY_CONTENT=#{queryContent, jdbcType=CLOB},
+			</if>
+			<if test="queryName !=null and queryName !=''">
+				QUERY_NAME=#{queryName, jdbcType=VARCHAR},
+			</if>
+			<if test="remark !=null and remark !=''">
+				REMARK=#{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="source !=null and source !=''">
+				SOURCE=#{source, jdbcType=VARCHAR},
+			</if>
+			<if test="version !=null and version !=''">
+				VERSION=#{version, jdbcType=INTEGER},
+			</if>
+			<if test="updateUserId !=null and updateUserId !=''">
+				UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR},
+			</if>
+			<if test="deleteFlag !=null and deleteFlag !=''">
+				DELETE_FLAG=#{deleteFlag, jdbcType=CHAR},
+			</if>
+			<if test="updateTime !=null and updateTime !=''">
+				UPDATE_TIME=#{updateTime, jdbcType=TIMESTAMP}
+			</if>
+	</sql>
+	
+</mapper>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.SceneInvestigatorMapper">
+
+	<select id="getById" resultMap="SceneInvestigatorMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_INVESTIGATOR
+		WHERE ID=#{id}
+	</select>
+	
+	<select id="findListByInvestigationId" resultMap="SceneInvestigatorMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_INVESTIGATOR
+		WHERE DELETE_FLAG='0' and INVESTIGATION_ID = #{investigationId}
+	</select>
+	
+	<select id="findCommandListByInvestigationId" resultMap="SceneInvestigatorForBlMap" parameterType="String">
+		SELECT
+			T1.INVESTIGATOR_NAME as INVESTIGATOR_NAME,
+			T3.ORGAN_NAME        as ORGAN_NAME,
+			T2.TECHNOLOGY_JOB    as TECHNOLOGY_JOB
+		FROM T_SCENE_INVESTIGATOR T1,
+		     T_SYS_USER           T2,
+		     T_ORGANIZATION       T3
+		WHERE T1.DELETE_FLAG='0' 
+		AND  T1.INVESTIGATOR_ID = T2.ID
+		AND  T2.ORGAN_ID = T3.ID
+		AND  T1.DUTY='1'
+		AND  T1.INVESTIGATION_ID = #{investigationId}
+	</select>
+	
+	<select id="findIsNotCommandListByInvestigationId" resultMap="SceneInvestigatorForBlMap" parameterType="String">
+		SELECT
+			T1.INVESTIGATOR_NAME as INVESTIGATOR_NAME,
+			T3.ORGAN_NAME        as ORGAN_NAME,
+			T2.TECHNOLOGY_JOB    as TECHNOLOGY_JOB
+		FROM T_SCENE_INVESTIGATOR T1,
+		     T_SYS_USER           T2,
+		     T_ORGANIZATION       T3
+		WHERE T1.DELETE_FLAG='0' 
+		AND  T1.INVESTIGATOR_ID = T2.ID
+		AND  T2.ORGAN_ID = T3.ID
+		AND  T1.DUTY !='1'
+		AND  T1.INVESTIGATION_ID = #{investigationId}
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigator">
+		INSERT INTO T_SCENE_INVESTIGATOR (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_SCENE_INVESTIGATOR WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigator">
+		UPDATE T_SCENE_INVESTIGATOR 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigator">
+		UPDATE T_SCENE_INVESTIGATOR
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="SceneInvestigatorMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigator">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_INVESTIGATOR
+		WHERE DELETE_FLAG=#{deleteFlag}
+	</select>
+	
+</mapper>

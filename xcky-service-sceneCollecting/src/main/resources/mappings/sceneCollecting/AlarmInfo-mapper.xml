@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.AlarmInfoMapper">
+
+	<select id="getById" resultMap="AlarmInfoMap" parameterType="String">
+		select t1.id,
+			       t1.alarm_no,
+			       t1.alarm_accept_no,
+			       t1.alarm_time,
+			       t1.alarm_receiver,
+			       t1.assign_person,
+			       t1.assign_method,
+			       t1.assign_method_desc,
+			       t1.assign_reason,
+			       t1.dispatch_time,
+			       t1.case_no,
+			       t2.dict_value as case_type_cn,
+			       t3.dict_value as case_nature_cn,
+			       t1.case_type,
+			       t1.case_nature,
+			       t1.case_name,
+			       t1.case_brief,
+			       t1.case_regionalism,
+			       t1.case_location,
+			       t1.case_lon,
+			       t1.case_lat,
+			       t1.crime_time_begin,
+			       t1.crime_time_end,
+			       t1.murder_flag,
+			       t1.criminal_flag,
+			       t1.wounded_amount,
+			       t1.dead_amount
+			  from t_alarm_info t1,
+				       t_sys_dict   t2,
+				       t_sys_dict   t3
+			 where t1.id = #{value}
+				   and t2.root_key(+) = 'AJLBDM'
+				   and t1.case_type = t2.dict_key(+)
+				   and t3.root_key(+) = 'AJXZDM'
+				   and t1.case_nature = t3.dict_key(+)
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.AlarmInfo">
+		INSERT INTO T_ALARM_INFO (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_ALARM_INFO WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.AlarmInfo">
+		UPDATE T_ALARM_INFO 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.AlarmInfo">
+		UPDATE T_ALARM_INFO
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="AlarmInfoMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.AlarmInfo">
+		select t1.id,
+			       t1.alarm_no,
+			       t1.alarm_accept_no,
+			       t1.alarm_time,
+			       t1.alarm_receiver,
+			       t1.assign_person,
+			       t1.assign_method,
+			       t1.assign_method_desc,
+			       t1.assign_reason,
+			       t1.dispatch_time,
+			       t1.case_no,
+			       t2.dict_value as case_type_cn,
+			       t3.dict_value as case_nature_cn,
+			       t1.case_type,
+			       t1.case_nature,
+			       t1.case_name,
+			       t1.case_brief,
+			       t1.case_regionalism,
+			       t1.case_location,
+			       t1.case_lon,
+			       t1.case_lat,
+			       t1.crime_time_begin,
+			       t1.crime_time_end,
+			       t1.murder_flag,
+			       t1.criminal_flag,
+			       t1.wounded_amount,
+			       t1.dead_amount
+			  from t_alarm_info t1,
+				       t_sys_dict   t2,
+				       t_sys_dict   t3
+		WHERE t1.DELETE_FLAG=#{deleteFlag}
+				   and t2.root_key(+) = 'AJLBDM'
+				   and t1.case_type = t2.dict_key(+)
+				   and t3.root_key(+) = 'AJXZDM'
+				   and t1.case_nature = t3.dict_key(+)		
+			<if test="alarmNo !=null and alarmNo !=''">
+				and t1.ALARM_NO=#{alarmNo, jdbcType=VARCHAR}
+			</if>
+			<if test="alarmAcceptNo !=null and alarmAcceptNo !=''">
+				and t1.ALARM_ACCEPT_NO=#{alarmAcceptNo, jdbcType=VARCHAR}
+			</if>
+			<if test="alarmTime !=null and alarmTime !=''">
+				and t1.ALARM_TIME <![CDATA[>=]]> #{alarmTime, jdbcType=DATE}
+			</if>
+			<if test="alarmReceiver !=null and alarmReceiver !=''">
+				and t1.ALARM_RECEIVER=#{alarmReceiver, jdbcType=VARCHAR}
+			</if>
+			<if test="assignPerson !=null and assignPerson !=''">
+				and t1.ASSIGN_PERSON=#{assignPerson, jdbcType=VARCHAR}
+			</if>
+			<if test="assignMethod !=null and assignMethod !=''">
+				and t1.ASSIGN_METHOD=#{assignMethod, jdbcType=VARCHAR}
+			</if>
+			<if test="assignMethodDesc !=null and assignMethodDesc !=''">
+				and t1.ASSIGN_METHOD_DESC=#{assignMethodDesc, jdbcType=VARCHAR}
+			</if>
+			<if test="assignReason !=null and assignReason !=''">
+				and t1.ASSIGN_REASON=#{assignReason, jdbcType=VARCHAR}
+			</if>
+			<if test="dispatchTime !=null and dispatchTime !=''">
+				and t1.DISPATCH_TIME=#{dispatchTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="caseNo !=null and caseNo !=''">
+				and t1.CASE_NO=#{caseNo, jdbcType=VARCHAR}
+			</if>
+			<if test="caseType !=null and caseType !=''">
+				and t1.CASE_TYPE=#{caseType, jdbcType=VARCHAR}
+			</if>
+			<if test="caseNature !=null and caseNature !=''">
+				and t1.CASE_NATURE=#{caseNature, jdbcType=VARCHAR}
+			</if>
+			<if test="caseName !=null and caseName !=''">
+				and t1.CASE_NAME=#{caseName, jdbcType=VARCHAR}
+			</if>
+			<if test="caseBrief !=null and caseBrief !=''">
+				and t1.CASE_BRIEF=#{caseBrief, jdbcType=VARCHAR}
+			</if>
+			<if test="caseRegionalism !=null and caseRegionalism !=''">
+				and t1.CASE_REGIONALISM=#{caseRegionalism, jdbcType=VARCHAR}
+			</if>
+			<if test="caseLocation !=null and caseLocation !=''">
+				and t1.CASE_LOCATION=#{caseLocation, jdbcType=VARCHAR}
+			</if>
+			<if test="caseLon !=null and caseLon !=''">
+				and t1.CASE_LON=#{caseLon, jdbcType=INTEGER}
+			</if>
+			<if test="caseLat !=null and caseLat !=''">
+				and t1.CASE_LAT=#{caseLat, jdbcType=INTEGER}
+			</if>
+			<if test="crimeTimeBegin !=null and crimeTimeBegin !=''">
+				and t1.CRIME_TIME_BEGIN <![CDATA[>=]]> #{crimeTimeBegin, jdbcType=DATE}
+			</if>
+			<if test="crimeTimeEnd !=null and crimeTimeEnd !=''">
+				and t1.CRIME_TIME_END <![CDATA[<]]> #{crimeTimeEnd, jdbcType=DATE}+1
+			</if>
+			<if test="murderFlag !=null and murderFlag !=''">
+				and t1.MURDER_FLAG=#{murderFlag, jdbcType=CHAR}
+			</if>
+			<if test="criminalFlag !=null and criminalFlag !=''">
+				and t1.CRIMINAL_FLAG=#{criminalFlag, jdbcType=CHAR}
+			</if>
+			<if test="woundedAmount !=null and woundedAmount !=''">
+				and t1.WOUNDED_AMOUNT=#{woundedAmount, jdbcType=INTEGER}
+			</if>
+			<if test="deadAmount !=null and deadAmount !=''">
+				and t1.DEAD_AMOUNT=#{deadAmount, jdbcType=INTEGER}
+			</if>
+	</select>
+	
+	<update id="updateSceneInvestigationDispatch" parameterType="com.hisign.xcky.api.model.sceneCollecting.AlarmInfo">
+		UPDATE T_SCENE_INVESTIGATION_DISPATCH
+			SET
+			<if test="alarmNo !=null and alarmNo !=''">
+				ALARM_NO=#{alarmNo, jdbcType=VARCHAR},
+			</if>
+			<if test="alarmAcceptNo !=null and alarmAcceptNo !=''">
+				ALARM_ACCEPT_NO=#{alarmAcceptNo, jdbcType=VARCHAR},
+			</if>
+			<if test="alarmTime !=null and alarmTime !=''">
+				ALARM_TIME=#{alarmTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="alarmReceiver !=null and alarmReceiver !=''">
+				ALARM_RECEIVER=#{alarmReceiver, jdbcType=VARCHAR},
+			</if>
+			<if test="assignPerson !=null and assignPerson !=''">
+				ASSIGN_PERSON=#{assignPerson, jdbcType=VARCHAR},
+			</if>
+			<if test="assignMethod !=null and assignMethod !=''">
+				ASSIGN_METHOD=#{assignMethod, jdbcType=VARCHAR},
+			</if>
+			<if test="assignMethodDesc !=null and assignMethodDesc !=''">
+				ASSIGN_METHOD_DESC=#{assignMethodDesc, jdbcType=VARCHAR},
+			</if>
+			<if test="assignReason !=null and assignReason !=''">
+				ASSIGN_REASON=#{assignReason, jdbcType=VARCHAR},
+			</if>
+			<if test="dispatchTime !=null and dispatchTime !=''">
+				DISPATCH_TIME=#{dispatchTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="caseNo !=null and caseNo !=''">
+				CASE_NO=#{caseNo, jdbcType=VARCHAR},
+			</if>
+			<if test="caseType !=null and caseType !=''">
+				CASE_TYPE=#{caseType, jdbcType=VARCHAR},
+			</if>
+			<if test="caseNature !=null and caseNature !=''">
+				CASE_NATURE=#{caseNature, jdbcType=VARCHAR},
+			</if>
+			<if test="caseName !=null and caseName !=''">
+				CASE_NAME=#{caseName, jdbcType=VARCHAR},
+			</if>
+			<if test="caseBrief !=null and caseBrief !=''">
+				CASE_BRIEF=#{caseBrief, jdbcType=VARCHAR},
+			</if>
+			<if test="caseRegionalism !=null and caseRegionalism !=''">
+				CASE_REGIONALISM=#{caseRegionalism, jdbcType=VARCHAR},
+			</if>
+			<if test="caseLocation !=null and caseLocation !=''">
+				CASE_LOCATION=#{caseLocation, jdbcType=VARCHAR},
+			</if>
+			<if test="caseLon !=null and caseLon !=''">
+				CASE_LON=#{caseLon, jdbcType=INTEGER},
+			</if>
+			<if test="caseLat !=null and caseLat !=''">
+				CASE_LAT=#{caseLat, jdbcType=INTEGER},
+			</if>
+			<if test="crimeTimeBegin !=null and crimeTimeBegin !=''">
+				CRIME_TIME_BEGIN=#{crimeTimeBegin, jdbcType=TIMESTAMP},
+			</if>
+			<if test="crimeTimeEnd !=null and crimeTimeEnd !=''">
+				CRIME_TIME_END=#{crimeTimeEnd, jdbcType=TIMESTAMP},
+			</if>
+			<if test="murderFlag !=null and murderFlag !=''">
+				MURDER_FLAG=#{murderFlag, jdbcType=CHAR},
+			</if>
+			<if test="criminalFlag !=null and criminalFlag !=''">
+				CRIMINAL_FLAG=#{criminalFlag, jdbcType=CHAR},
+			</if>
+			<if test="woundedAmount !=null and woundedAmount !=''">
+				WOUNDED_AMOUNT=#{woundedAmount, jdbcType=INTEGER},
+			</if>
+			<if test="deadAmount !=null and deadAmount !=''">
+				DEAD_AMOUNT=#{deadAmount, jdbcType=INTEGER},
+			</if>
+			<if test="version !=null and version !=''">
+				VERSION=#{version, jdbcType=INTEGER},
+			</if>
+			<if test="updateUserId !=null and updateUserId !=''">
+				UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR},
+			</if>
+			<if test="updateTime !=null and updateTime !=''">
+				UPDATE_TIME=#{updateTime, jdbcType=TIMESTAMP}
+			</if>
+		WHERE DELETE_FLAG='0' 
+			and INVESTIGATION_ID=#{investigationId, jdbcType=CHAR}
+	</update>
+	
+	
+	
+</mapper>

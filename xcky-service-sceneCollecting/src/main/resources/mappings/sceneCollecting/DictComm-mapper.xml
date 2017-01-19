@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.DictCommMapper">
+
+	<select id="getById" resultMap="DictCommMap" parameterType="String">
+		SELECT
+			<include refid="selectContentId" />
+		FROM T_DICT_COMM c,T_SYS_DICT t
+		WHERE c.DICT_ID=t.id and c.ID=#{id}
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.DictComm">
+		INSERT INTO T_DICT_COMM (
+			ID,
+			DICT_ID,
+			DICT_TYPE,
+			SORT,
+			<if test="caseType !=null and caseType !=''">
+				CASE_TYPE,
+			</if>
+			CREATE_USER_ID,
+			CREATE_TIME
+		) VALUES (
+			#{id, jdbcType=CHAR},
+			#{dictId, jdbcType=VARCHAR},
+			#{dictType, jdbcType=VARCHAR},
+			#{sort, jdbcType=INTEGER},
+			<if test="caseType !=null and caseType !=''">
+				#{caseType, jdbcType=VARCHAR},
+			</if>			
+			#{createUserId, jdbcType=CHAR},
+			#{createTime, jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_DICT_COMM WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.DictComm">
+		UPDATE T_DICT_COMM 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.DictComm">
+		UPDATE T_DICT_COMM
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="DictCommMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.DictComm">
+		SELECT
+			<include refid="selectContentId" />
+		FROM T_DICT_COMM c,T_SYS_DICT t
+		WHERE c.DICT_ID=t.id
+		  <if test="dictType != null and dictType !=''">
+			and c.DICT_TYPE = #{dictType,jdbcType=VARCHAR}
+		  </if> 
+		  <if test="dictValue != null and dictValue !=''">
+			and t.DICT_VALUE = #{dictValue,jdbcType=VARCHAR}
+		  </if>
+		  <if test="caseType !=null and caseType !=''">
+		    and c.CASE_TYPE=#{caseType, jdbcType=VARCHAR}
+  		  </if>
+          <if test="createUserId != null and createUserId !=''">
+			and (c.CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR} or c.CREATE_USER_ID is null)
+		  </if>		   
+	</select>
+	
+	<delete id="deleteBy" parameterType="com.hisign.xcky.api.model.sceneCollecting.DictComm">
+		DELETE FROM T_DICT_COMM 
+		WHERE DICT_TYPE = #{dictType,jdbcType=VARCHAR} 
+		AND  CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR}
+	</delete>	
+	
+
+	<select id="queryCaseReg" resultMap="DictCommMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.DictComm">
+		select t1.id,
+		       t1.dict_id,
+		       t1.dict_type,
+		       t1.sort,
+		       t2.organ_name as DICT_VALUE,
+		       t2.regionalism as DICT_KEY,
+		       t1.create_user_id
+		  from t_dict_comm    t1,
+		       t_organization t2
+		 where t1.dict_id = t2.id(+)
+		   and t1.dict_type = 'caseRegionalism'
+		   <if test="createUserId != null and createUserId !=''">
+			and (t1.CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR} or t1.CREATE_USER_ID is null)
+		  </if>	
+	</select>	
+	
+</mapper>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.CommonAttachmentMapper">
+
+	<select id="getById" resultMap="CommonAttachmentMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_COMMON_ATTACHMENT
+		WHERE ID=#{id}
+	</select>
+	
+	<select id="findByInvestigationIdAndCategory" resultMap="CommonAttachmentMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.CommonAttachment">
+		SELECT
+			<include refid="selectId" />
+		FROM T_COMMON_ATTACHMENT
+		WHERE INVESTIGATION_ID=#{investigationId} AND CATEGORY=#{category}
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.CommonAttachment">
+		INSERT INTO T_COMMON_ATTACHMENT (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_COMMON_ATTACHMENT WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.CommonAttachment">
+		UPDATE T_COMMON_ATTACHMENT 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.CommonAttachment">
+		UPDATE T_COMMON_ATTACHMENT
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="CommonAttachmentMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.CommonAttachment">
+		SELECT
+			<include refid="selectId" />
+		FROM T_COMMON_ATTACHMENT
+		WHERE DELETE_FLAG=#{deleteFlag}
+				<if test="investigationId !=null and investigationId !=''">
+					and INVESTIGATION_ID=#{investigationId, jdbcType=CHAR}
+				</if>
+				<if test="category !=null and category !=''">
+					and CATEGORY=#{category, jdbcType=VARCHAR}
+				</if>
+				<if test="fileName !=null and fileName !=''">
+					and FILE_NAME=#{fileName, jdbcType=VARCHAR}
+				</if>
+				<if test="fileSuffix !=null and fileSuffix !=''">
+					and FILE_SUFFIX=#{fileSuffix, jdbcType=VARCHAR}
+				</if>
+				<if test="fileMd5 !=null and fileMd5 !=''">
+					and FILE_MD5=#{fileMd5, jdbcType=VARCHAR}
+				</if>
+				<if test="fileSize !=null and fileSize !=''">
+					and FILE_SIZE=#{fileSize, jdbcType=INTEGER}
+				</if>
+				<if test="fileServerAddr !=null and fileServerAddr !=''">
+					and FILE_SERVER_ADDR=#{fileServerAddr, jdbcType=VARCHAR}
+				</if>
+				<if test="fileServerPath !=null and fileServerPath !=''">
+					and FILE_SERVER_PATH=#{fileServerPath, jdbcType=VARCHAR}
+				</if>
+				<if test="source !=null and source !=''">
+					and SOURCE=#{source, jdbcType=VARCHAR}
+				</if>
+				<if test="version !=null and version !=''">
+					and VERSION=#{version, jdbcType=INTEGER}
+				</if>
+				<if test="updateUserId !=null and updateUserId !=''">
+					and UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR}
+				</if>
+				<if test="updateTime !=null and updateTime !=''">
+					and UPDATE_TIME=#{updateTime, jdbcType=TIMESTAMP}
+				</if>		
+	</select>
+	
+</mapper>

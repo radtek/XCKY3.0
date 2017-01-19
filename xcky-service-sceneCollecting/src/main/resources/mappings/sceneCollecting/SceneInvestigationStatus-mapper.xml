@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.SceneInvestigationStatusMapper">
+
+	<select id="getById" resultMap="SceneInvestigationStatusMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_INVESTIGATION_STATUS
+		WHERE ID=#{id}
+	</select>
+	<select id="findByInvestigationId" resultMap="SceneInvestigationStatusMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_INVESTIGATION_STATUS
+		WHERE INVESTIGATION_ID=#{investigationId}
+	</select>
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigationStatus">
+		INSERT INTO T_SCENE_INVESTIGATION_STATUS (
+			ID,
+			INVESTIGATION_ID,
+			SAVE_FLAG,
+			FIRST_SUBMIT_DATETIME,
+			DELETE_REASON,
+			SOURCE,
+			VERSION,
+			DELETE_FLAG,
+			CREATE_USER_ID,
+			UPDATE_USER_ID,
+			CREATE_TIME,
+			UPDATE_TIME,
+			QUALITY_FLAG
+		) VALUES (
+			#{id, jdbcType=CHAR},
+			#{investigationId, jdbcType=CHAR},
+			#{saveFlag, jdbcType=CHAR},
+			#{firstSubmitDatetime, jdbcType=TIMESTAMP},
+			#{deleteReason, jdbcType=VARCHAR},
+			#{source, jdbcType=VARCHAR},
+			#{version, jdbcType=INTEGER},
+			#{deleteFlag, jdbcType=CHAR},
+			#{createUserId, jdbcType=CHAR},
+			#{updateUserId, jdbcType=CHAR},
+			#{createTime, jdbcType=TIMESTAMP},
+			#{updateTime, jdbcType=TIMESTAMP},
+			#{qualityFlag, jdbcType=CHAR}
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_SCENE_INVESTIGATION_STATUS WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigationStatus">
+		UPDATE T_SCENE_INVESTIGATION_STATUS 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigationStatus">
+		UPDATE T_SCENE_INVESTIGATION_STATUS
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	<update id="updateByInvestigationId" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigationStatus">
+		UPDATE T_SCENE_INVESTIGATION_STATUS
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE INVESTIGATION_ID=#{investigationId}
+	</update>
+	<select id="query" resultMap="SceneInvestigationStatusMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigationStatus">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_INVESTIGATION_STATUS
+		WHERE DELETE_FLAG=#{deleteFlag}
+			<if test="investigationId !=null and investigationId !=''">
+				and INVESTIGATION_ID=#{investigationId, jdbcType=CHAR}
+			</if>
+			<if test="saveFlag !=null and saveFlag !=''">
+				and SAVE_FLAG=#{saveFlag, jdbcType=CHAR}
+			</if>
+			<if test="firstSubmitDatetime !=null and firstSubmitDatetime !=''">
+				and FIRST_SUBMIT_DATETIME=#{firstSubmitDatetime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="lastSubmitDatetime !=null and lastSubmitDatetime !=''">
+				and LAST_SUBMIT_DATETIME=#{lastSubmitDatetime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="noteMadeFlag !=null and noteMadeFlag !=''">
+				and NOTE_MADE_FLAG=#{noteMadeFlag, jdbcType=CHAR}
+			</if>
+			<if test="noteMadeTime !=null and noteMadeTime !=''">
+				and NOTE_MADE_TIME=#{noteMadeTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="bsCollectFlag !=null and bsCollectFlag !=''">
+				and BS_COLLECT_FLAG=#{bsCollectFlag, jdbcType=CHAR}
+			</if>
+			<if test="allowModify !=null and allowModify !=''">
+				and ALLOW_MODIFY=#{allowModify, jdbcType=CHAR}
+			</if>
+			<if test="allowModifyTime !=null and allowModifyTime !=''">
+				and ALLOW_MODIFY_TIME=#{allowModifyTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="modifyReason !=null and modifyReason !=''">
+				and MODIFY_REASON=#{modifyReason, jdbcType=VARCHAR}
+			</if>
+			<if test="deleteReason !=null and deleteReason !=''">
+				and DELETE_REASON=#{deleteReason, jdbcType=VARCHAR}
+			</if>
+			<if test="source !=null and source !=''">
+				and SOURCE=#{source, jdbcType=VARCHAR}
+			</if>
+			<if test="version !=null and version !=''">
+				and VERSION=#{version, jdbcType=INTEGER}
+			</if>
+			<if test="updateUserId !=null and updateUserId !=''">
+				and UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR}
+			</if>
+			<if test="updateTime !=null and updateTime !=''">
+				and UPDATE_TIME=#{updateTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="qualityFlag !=null and qualityFlag !=''">
+				and QUALITY_FLAG=#{qualityFlag, jdbcType=CHAR}
+			</if>
+			<if test="alarmNoFlag !=null and alarmNoFlag !=''">
+				and ALARM_NO_FLAG=#{alarmNoFlag, jdbcType=CHAR}
+			</if>
+			<if test="caseNoFlag !=null and caseNoFlag !=''">
+				and CASE_NO_FLAG=#{caseNoFlag, jdbcType=CHAR}
+			</if>
+			<if test="relateTime !=null and relateTime !=''">
+				and RELATE_TIME=#{relateTime, jdbcType=TIMESTAMP}
+			</if>
+
+	</select>
+	
+</mapper>

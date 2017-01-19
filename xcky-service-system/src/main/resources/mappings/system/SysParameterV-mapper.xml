@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hisign.xcky.persist.mapper.system.SysParameterMapper">
+
+	<resultMap type="com.hisign.xcky.api.model.system.SysParameter" id="SysParameterMap">
+		<result property="rowNum" column="ROW_ID" />
+		<result property="id" column="ID" />
+		<result property="name" column="NAME" />
+		<result property="type" column="TYPE" />
+		<result property="key" column="KEY" />
+		<result property="value" column="VALUE" />
+		<result property="remark" column="REMARK" />
+		<result property="sort" column="SORT" />
+		<result property="showFlag" column="SHOW_FLAG" />
+		<result property="allowModify" column="ALLOW_MODIFY" />
+		<result property="version" column="VERSION" />
+		<result property="deleteFlag" column="DELETE_FLAG" />
+		<result property="createUserId" column="CREATE_USER_ID" />
+		<result property="updateUserId" column="UPDATE_USER_ID" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="paramType" column="PARAM_TYPE" />
+		<result property="dictType" column="DICT_TYPE" />		
+	</resultMap>
+	
+	<sql id="selectId">
+		ID,
+		NAME,
+		TYPE,
+		KEY,
+		VALUE,
+		REMARK,
+		SORT,
+		SHOW_FLAG,
+		ALLOW_MODIFY,
+		VERSION,
+		DELETE_FLAG,
+		CREATE_USER_ID,
+		UPDATE_USER_ID,
+		CREATE_TIME,
+		UPDATE_TIME,
+		PARAM_TYPE,
+		DICT_TYPE
+	</sql>
+  
+	<sql id="insertId">
+		#{id, jdbcType=CHAR},
+		#{name, jdbcType=VARCHAR},
+		#{type, jdbcType=VARCHAR},
+		#{key, jdbcType=VARCHAR},
+		#{value, jdbcType=VARCHAR},
+		#{remark, jdbcType=VARCHAR},
+		#{sort, jdbcType=INTEGER},
+		#{showFlag, jdbcType=CHAR},
+		#{allowModify, jdbcType=CHAR},
+		#{version, jdbcType=INTEGER},
+		#{deleteFlag, jdbcType=CHAR},
+		#{createUserId, jdbcType=CHAR},
+		#{updateUserId, jdbcType=CHAR},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP},
+		#{paramType, jdbcType=VARCHAR}
+	</sql>
+
+	<sql id="updateId">
+			<if test="name !=null and name !=''">
+				NAME=#{name, jdbcType=VARCHAR},
+			</if>
+			<if test="type !=null and type !=''">
+				TYPE=#{type, jdbcType=VARCHAR},
+			</if>
+			<if test="key !=null and key !=''">
+				KEY=#{key, jdbcType=VARCHAR},
+			</if>
+			<if test="value !=null and value !=''">
+				VALUE=#{value, jdbcType=VARCHAR},
+			</if>
+				REMARK=#{remark, jdbcType=VARCHAR},
+			<if test="sort !=null and sort !=''">
+				SORT=#{sort, jdbcType=INTEGER},
+			</if>
+			<if test="showFlag !=null and showFlag !=''">
+				SHOW_FLAG=#{showFlag, jdbcType=CHAR},
+			</if>
+			<if test="allowModify !=null and allowModify !=''">
+				ALLOW_MODIFY=#{allowModify, jdbcType=CHAR},
+			</if>
+			<if test="paramType !=null and paramType !=''">
+				PARAM_TYPE=#{paramType, jdbcType=VARCHAR},
+			</if>
+			<if test="dictType !=null and dictType !=''">
+				DICT_TYPE=#{dictType, jdbcType=VARCHAR},
+			</if>
+			<if test="version !=null and version !=''">
+				VERSION=#{version, jdbcType=INTEGER},
+			</if>
+			<if test="updateUserId !=null and updateUserId !=''">
+				UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR},
+			</if>
+			<if test="updateTime !=null and updateTime !=''">
+				UPDATE_TIME=#{updateTime, jdbcType=TIMESTAMP}
+			</if>						
+	</sql>
+	
+</mapper>

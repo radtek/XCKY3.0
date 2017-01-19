@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.system.SysParameterMapper">
+
+	<select id="getById" resultMap="SysParameterMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SYS_PARAMETER
+		WHERE ID=#{id}
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.system.SysParameter">
+		INSERT INTO T_SYS_PARAMETER (
+					ID,
+					NAME,
+					TYPE,
+					KEY,
+					<if test="value !=null and value !=''">
+						VALUE,
+					</if>					
+					<if test="remark!=null and remark !=''">
+						REMARK,
+					</if>
+					<if test="sort!=null and sort !=''">
+						SORT,
+					</if>
+					<if test="paramType !=null and paramType !=''">
+						PARAM_TYPE,
+					</if>					
+					<if test="dictType!=null and dictType !=''">
+						DICT_TYPE,
+					</if>
+					<if test="showFlag !=null and showFlag !=''">
+						SHOW_FLAG,
+					</if>					
+					VERSION,
+					DELETE_FLAG,
+					CREATE_USER_ID,
+					UPDATE_USER_ID,
+					CREATE_TIME,
+					UPDATE_TIME
+		) VALUES (
+					#{id, jdbcType=CHAR},
+					#{name, jdbcType=VARCHAR},
+					#{type, jdbcType=VARCHAR},
+					#{key, jdbcType=VARCHAR},
+					<if test="value !=null and value !=''">
+						#{value, jdbcType=VARCHAR},
+					</if>					
+					<if test="remark!=null and remark !=''">
+						#{remark, jdbcType=VARCHAR},
+					</if>
+					<if test="sort!=null and sort !=''">
+						#{sort, jdbcType=INTEGER},
+					</if>
+					<if test="paramType !=null and paramType !=''">
+						#{paramType, jdbcType=CHAR},
+					</if>						
+					<if test="dictType!=null and dictType !=''">
+						#{dictType, jdbcType=CHAR},
+					</if>		
+					<if test="showFlag !=null and showFlag !=''">
+						#{showFlag, jdbcType=CHAR},
+					</if>									
+					#{version, jdbcType=INTEGER},
+					#{deleteFlag, jdbcType=CHAR},
+					#{createUserId, jdbcType=CHAR},
+					#{updateUserId, jdbcType=CHAR},
+					#{createTime, jdbcType=DATE},
+					#{updateTime, jdbcType=DATE}
+		)
+	</insert>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.system.SysParameter">
+		UPDATE T_SYS_PARAMETER 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.system.SysParameter">
+		UPDATE T_SYS_PARAMETER
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="SysParameterMap" parameterType="com.hisign.xcky.api.model.system.SysParameter">
+		SELECT
+			ID,
+			NAME,
+			TYPE,
+			KEY,
+			VALUE,
+			REMARK,
+			SORT,
+			SHOW_FLAG,
+			ALLOW_MODIFY,
+			PARAM_TYPE,
+			DICT_TYPE
+		FROM T_SYS_PARAMETER
+		WHERE DELETE_FLAG=#{deleteFlag}
+		order by type asc,sort asc
+	</select>
+	
+	<select id="getByKey" resultMap="SysParameterMap" parameterType="String">
+		SELECT
+			ID,
+			NAME,
+			TYPE,
+			KEY,
+			VALUE
+		FROM T_SYS_PARAMETER
+		WHERE KEY=#{value}
+		and DELETE_FLAG='0'
+	</select>
+
+	<update id="updateByKey" parameterType="com.hisign.xcky.api.model.system.SysParameter">
+		UPDATE T_SYS_PARAMETER
+		SET
+			    VALUE=#{value, jdbcType=VARCHAR},
+				VERSION=#{version, jdbcType=INTEGER},
+				UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR},
+				UPDATE_TIME=#{updateTime, jdbcType=TIMESTAMP}
+		WHERE KEY=#{name}
+	</update>		
+	
+	
+</mapper>

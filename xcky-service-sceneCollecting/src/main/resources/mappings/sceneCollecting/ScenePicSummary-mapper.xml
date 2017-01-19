@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.ScenePicSummaryMapper">
+
+	<select id="getById" resultMap="ScenePicSummaryMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_PIC_SUMMARY
+		WHERE ID=#{id}
+	</select>
+	<select id="findByInvestigationId" resultMap="ScenePicSummaryMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_PIC_SUMMARY
+		WHERE DELETE_FLAG = '0' and INVESTIGATION_ID=#{investigationId}
+	</select>
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.ScenePicSummary">
+		INSERT INTO T_SCENE_PIC_SUMMARY (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_SCENE_PIC_SUMMARY WHERE INVESTIGATION_ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.ScenePicSummary">
+		UPDATE T_SCENE_PIC_SUMMARY 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.ScenePicSummary">
+		UPDATE T_SCENE_PIC_SUMMARY
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="ScenePicSummaryMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.ScenePicSummary">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_PIC_SUMMARY
+		WHERE DELETE_FLAG=#{deleteFlag}
+	</select>
+	
+	<!-- 统计图片数量表 -->
+	<select id="totlePictureSum" resultMap="ScenePicSummaryMap" parameterType="String">
+		SELECT
+			INVESTIGATION_ID as INVESTIGATION_ID,
+			sum(case when CATEGORY ='3' then 1 else 0 end) AS HANDPRINT_AMOUNT,
+			sum(case when CATEGORY ='4' then 1 else 0 end) AS FOOTPRINT_AMOUNT,
+			sum(case when CATEGORY ='5' then 1 else 0 end) AS TOOLMARK_AMOUNT,
+			sum(case when CATEGORY ='6' then 1 else 0 end) AS BULLETPRINT_AMOUNT,
+			sum(case when CATEGORY ='7' then 1 else 0 end) AS SPECIALPRINT_AMOUNT,
+			sum(case when CATEGORY ='8' then 1 else 0 end) AS BIO_EVIDENCE_AMOUNT,
+			sum(case when CATEGORY ='9' then 1 else 0 end) AS TOXIC_EVIDENCE_AMOUNT,
+			sum(case when CATEGORY ='10' then 1 else 0 end) AS PHYSICAL_EVIDENCE_AMOUNT,
+			sum(case when CATEGORY ='11' then 1 else 0 end) AS FILE_EVIDENCE_AMOUNT,
+			sum(case when CATEGORY ='12' then 1 else 0 end) AS ELECTRO_EVIDENCE_AMOUNT,
+			sum(case when CATEGORY ='13' then 1 else 0 end) AS VIDEO_EVIDENCE_AMOUNT,
+			sum(case when CATEGORY ='14' then 1 else 0 end) AS OTHER_EVIDENCE_AMOUNT,
+			sum(case when CATEGORY ='2' then 1 else 0 end) AS SCENE_PHOTO_AMOUNT,
+			sum(case when CATEGORY ='1' then 1 else 0 end) AS SCENE_PICTURE_AMOUNT
+		FROM T_SCENE_PICTURE
+		WHERE DELETE_FLAG = '0' and INVESTIGATION_ID=#{investigationId} group by INVESTIGATION_ID
+	</select>
+</mapper>

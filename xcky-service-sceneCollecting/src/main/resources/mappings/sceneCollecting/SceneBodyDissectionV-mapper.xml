@@ -1,0 +1,851 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.SceneBodyDissectionMapper">
+
+	<resultMap type="com.hisign.xcky.api.model.sceneCollecting.SceneBodyDissection" id="SceneBodyDissectionMap">
+		<result property="rowNum" column="ROW_ID" />
+		<result property="id" column="ID" />
+		<result property="investigationId" column="INVESTIGATION_ID" />
+		<result property="bodyId" column="BODY_ID" />
+		<result property="examinationTimeFrom" column="EXAMINATION_TIME_FROM" />
+		<result property="examinationTimeTo" column="EXAMINATION_TIME_TO" />
+		<result property="examinationPlace" column="EXAMINATION_PLACE" />
+		<result property="scalp" column="SCALP" />
+		<result property="niejiLeft" column="NIEJI_LEFT" />
+		<result property="niejiRight" column="NIEJI_RIGHT" />
+		<result property="mzjm" column="MZJM" />
+		<result property="cranialUp" column="CRANIAL_UP" />
+		<result property="cranialDown" column="CRANIAL_DOWN" />
+		<result property="cranialFace" column="CRANIAL_FACE" />
+		<result property="cranialBone" column="CRANIAL_BONE" />
+		<result property="meningo" column="MENINGO" />
+		<result property="meningoOut" column="MENINGO_OUT" />
+		<result property="meningoIn" column="MENINGO_IN" />
+		<result property="meningoZwmxq" column="MENINGO_ZWMXQ" />
+		<result property="brainZl" column="BRAIN_ZL" />
+		<result property="brainGh" column="BRAIN_GH" />
+		<result property="brainXg" column="BRAIN_XG" />
+		<result property="brainGns" column="BRAIN_GNS" />
+		<result property="brainDn" column="BRAIN_DN" />
+		<result property="brainXn" column="BRAIN_XN" />
+		<result property="brainNg" column="BRAIN_NG" />
+		<result property="brainNct" column="BRAIN_NCT" />
+		<result property="brainTissue" column="BRAIN_TISSUE" />
+		<result property="neckPxzz" column="NECK_PXZZ" />
+		<result property="neckJr" column="NECK_JR" />
+		<result property="neckDxg" column="NECK_DXG" />
+		<result property="neckJzx" column="NECK_JZX" />
+		<result property="neckHxx" column="NECK_HXX" />
+		<result property="neckSg" column="NECK_SG" />
+		<result property="neckJzrg" column="NECK_JZRG" />
+		<result property="neckHzrg" column="NECK_HZRG" />
+		<result property="neckHy" column="NECK_HY" />
+		<result property="neckYhnm" column="NECK_YHNM" />
+		<result property="neckHt" column="NECK_HT" />
+		<result property="neckBtt" column="NECK_BTT" />
+		<result property="neckZqjm" column="NECK_ZQJM" />
+		<result property="neckJz" column="NECK_JZ" />
+		<result property="chestWall" column="CHEST_WALL" />
+		<result property="chestBone" column="CHEST_BONE" />
+		<result property="chestNg" column="CHEST_NG" />
+		<result property="chestPleura" column="CHEST_PLEURA" />
+		<result property="chestLeft" column="CHEST_LEFT" />
+		<result property="chestRight" column="CHEST_RIGHT" />
+		<result property="chestXxzl" column="CHEST_XXZL" />
+		<result property="heartSac" column="HEART_SAC" />
+		<result property="heartSacq" column="HEART_SACQ" />
+		<result property="heartZl" column="HEART_ZL" />
+		<result property="heartWg" column="HEART_WG" />
+		<result property="heartWm" column="HEART_WM" />
+		<result property="heartNm" column="HEART_NM" />
+		<result property="heartLefth" column="HEART_LEFTH" />
+		<result property="heartRighth" column="HEART_RIGHTH" />
+		<result property="heartBetwh" column="HEART_BETWH" />
+		<result property="heartXj" column="HEART_XJ" />
+		<result property="heartXq" column="HEART_XQ" />
+		<result property="heartSjbzj" column="HEART_SJBZJ" />
+		<result property="heartSjbm" column="HEART_SJBM" />
+		<result property="heartFdmbzj" column="HEART_FDMBZJ" />
+		<result property="heartFdmbm" column="HEART_FDMBM" />
+		<result property="heartEjbzj" column="HEART_EJBZJ" />
+		<result property="heartEjbm" column="HEART_EJBM" />
+		<result property="heartZdmbzj" column="HEART_ZDMBZJ" />
+		<result property="heartZdmbm" column="HEART_ZDMBM" />
+		<result property="heartDxg" column="HEART_DXG" />
+		<result property="heartGzdmkz" column="HEART_GZDMKZ" />
+		<result property="heartGzdmky" column="HEART_GZDMKY" />
+		<result property="heartGzdm" column="HEART_GZDM" />
+		<result property="tracheaQg" column="TRACHEA_QG" />
+		<result property="tracheaZqgz" column="TRACHEA_ZQGZ" />
+		<result property="tracheaZqgy" column="TRACHEA_ZQGY" />
+		<result property="lungLeftzl" column="LUNG_LEFTZL" />
+		<result property="lungLeftbm" column="LUNG_LEFTBM" />
+		<result property="lungLeftzd" column="LUNG_LEFTZD" />
+		<result property="lungLeftqm" column="LUNG_LEFTQM" />
+		<result property="lungRightzl" column="LUNG_RIGHTZL" />
+		<result property="lungRightbm" column="LUNG_RIGHTBM" />
+		<result property="lungRightzd" column="LUNG_RIGHTZD" />
+		<result property="lungRightqm" column="LUNG_RIGHTQM" />
+		<result property="abdominalWall" column="ABDOMINAL_WALL" />
+		<result property="abdominalCavity" column="ABDOMINAL_CAVITY" />
+		<result property="abdominalRetina" column="ABDOMINAL_RETINA" />
+		<result property="abdominalFm" column="ABDOMINAL_FM" />
+		<result property="abdominalQgwz" column="ABDOMINAL_QGWZ" />
+		<result property="gullet" column="GULLET" />
+		<result property="stomachObjectProperty" column="STOMACH_OBJECT_PROPERTY" />
+		<result property="stomachObjectAmount" column="STOMACH_OBJECT_AMOUNT" />
+		<result property="stomachObjectUnit" column="STOMACH_OBJECT_UNIT" />
+		<result property="stomachObjectComponent" column="STOMACH_OBJECT_COMPONENT" />
+		<result property="gastricMucosa" column="GASTRIC_MUCOSA" />
+		<result property="intestinalCanal" column="INTESTINAL_CANAL" />
+		<result property="mesenterium" column="MESENTERIUM" />
+		<result property="pancreasZl" column="PANCREAS_ZL" />
+		<result property="pancreasYs" column="PANCREAS_YS" />
+		<result property="pancreasQm" column="PANCREAS_QM" />
+		<result property="liverZl" column="LIVER_ZL" />
+		<result property="liverYzbm" column="LIVER_YZBM" />
+		<result property="liverBm" column="LIVER_BM" />
+		<result property="liverQm" column="LIVER_QM" />
+		<result property="lienZl" column="LIEN_ZL" />
+		<result property="lienYzbm" column="LIEN_YZBM" />
+		<result property="lienBm" column="LIEN_BM" />
+		<result property="lienQm" column="LIEN_QM" />
+		<result property="kidneyLeftZl" column="KIDNEY_LEFT_ZL" />
+		<result property="kidneyLeftYzbm" column="KIDNEY_LEFT_YZBM" />
+		<result property="kidneyLeftBm" column="KIDNEY_LEFT_BM" />
+		<result property="kidneyLeftQm" column="KIDNEY_LEFT_QM" />
+		<result property="kidneyRightZl" column="KIDNEY_RIGHT_ZL" />
+		<result property="kidneyRightYzbm" column="KIDNEY_RIGHT_YZBM" />
+		<result property="kidneyRightBm" column="KIDNEY_RIGHT_BM" />
+		<result property="kidneyRightQm" column="KIDNEY_RIGHT_QM" />
+		<result property="kidneySng" column="KIDNEY_SNG" />
+		<result property="adrenalLeftzl" column="ADRENAL_LEFTZL" />
+		<result property="adrenalLeftxz" column="ADRENAL_LEFTXZ" />
+		<result property="adrenalRightzl" column="ADRENAL_RIGHTZL" />
+		<result property="adrenalRightxz" column="ADRENAL_RIGHTXZ" />
+		<result property="bladder" column="BLADDER" />
+		<result property="bladderNl" column="BLADDER_NL" />
+		<result property="bladderNys" column="BLADDER_NYS" />
+		<result property="bladderNzd" column="BLADDER_NZD" />
+		<result property="uterus" column="UTERUS" />
+		<result property="uterusDx" column="UTERUS_DX" />
+		<result property="uterusGj" column="UTERUS_GJ" />
+		<result property="uterusGq" column="UTERUS_GQ" />
+		<result property="uterusNm" column="UTERUS_NM" />
+		<result property="ovaryOviduct" column="OVARY_OVIDUCT" />
+		<result property="spermary" column="SPERMARY" />
+		<result property="spondyle" column="SPONDYLE" />
+		<result property="specialRemark" column="SPECIAL_REMARK" />
+		<result property="other" column="OTHER" />
+		<result property="source" column="SOURCE" />
+		<result property="version" column="VERSION" />
+		<result property="deleteFlag" column="DELETE_FLAG" />
+		<result property="createUserId" column="CREATE_USER_ID" />
+		<result property="updateUserId" column="UPDATE_USER_ID" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+	</resultMap>
+	
+	<sql id="selectId">
+		ID,
+		INVESTIGATION_ID,
+		BODY_ID,
+		EXAMINATION_TIME_FROM,
+		EXAMINATION_TIME_TO,
+		EXAMINATION_PLACE,
+		SCALP,
+		NIEJI_LEFT,
+		NIEJI_RIGHT,
+		MZJM,
+		CRANIAL_UP,
+		CRANIAL_DOWN,
+		CRANIAL_FACE,
+		CRANIAL_BONE,
+		MENINGO,
+		MENINGO_OUT,
+		MENINGO_IN,
+		MENINGO_ZWMXQ,
+		BRAIN_ZL,
+		BRAIN_GH,
+		BRAIN_XG,
+		BRAIN_GNS,
+		BRAIN_DN,
+		BRAIN_XN,
+		BRAIN_NG,
+		BRAIN_NCT,
+		BRAIN_TISSUE,
+		NECK_PXZZ,
+		NECK_JR,
+		NECK_DXG,
+		NECK_JZX,
+		NECK_HXX,
+		NECK_SG,
+		NECK_JZRG,
+		NECK_HZRG,
+		NECK_HY,
+		NECK_YHNM,
+		NECK_HT,
+		NECK_BTT,
+		NECK_ZQJM,
+		NECK_JZ,
+		CHEST_WALL,
+		CHEST_BONE,
+		CHEST_NG,
+		CHEST_PLEURA,
+		CHEST_LEFT,
+		CHEST_RIGHT,
+		CHEST_XXZL,
+		HEART_SAC,
+		HEART_SACQ,
+		HEART_ZL,
+		HEART_WG,
+		HEART_WM,
+		HEART_NM,
+		HEART_LEFTH,
+		HEART_RIGHTH,
+		HEART_BETWH,
+		HEART_XJ,
+		HEART_XQ,
+		HEART_SJBZJ,
+		HEART_SJBM,
+		HEART_FDMBZJ,
+		HEART_FDMBM,
+		HEART_EJBZJ,
+		HEART_EJBM,
+		HEART_ZDMBZJ,
+		HEART_ZDMBM,
+		HEART_DXG,
+		HEART_GZDMKZ,
+		HEART_GZDMKY,
+		HEART_GZDM,
+		TRACHEA_QG,
+		TRACHEA_ZQGZ,
+		TRACHEA_ZQGY,
+		LUNG_LEFTZL,
+		LUNG_LEFTBM,
+		LUNG_LEFTZD,
+		LUNG_LEFTQM,
+		LUNG_RIGHTZL,
+		LUNG_RIGHTBM,
+		LUNG_RIGHTZD,
+		LUNG_RIGHTQM,
+		ABDOMINAL_WALL,
+		ABDOMINAL_CAVITY,
+		ABDOMINAL_RETINA,
+		ABDOMINAL_FM,
+		ABDOMINAL_QGWZ,
+		GULLET,
+		STOMACH_OBJECT_PROPERTY,
+		STOMACH_OBJECT_AMOUNT,
+		STOMACH_OBJECT_UNIT,
+		STOMACH_OBJECT_COMPONENT,
+		GASTRIC_MUCOSA,
+		INTESTINAL_CANAL,
+		MESENTERIUM,
+		PANCREAS_ZL,
+		PANCREAS_YS,
+		PANCREAS_QM,
+		LIVER_ZL,
+		LIVER_YZBM,
+		LIVER_BM,
+		LIVER_QM,
+		LIEN_ZL,
+		LIEN_YZBM,
+		LIEN_BM,
+		LIEN_QM,
+		KIDNEY_LEFT_ZL,
+		KIDNEY_LEFT_YZBM,
+		KIDNEY_LEFT_BM,
+		KIDNEY_LEFT_QM,
+		KIDNEY_RIGHT_ZL,
+		KIDNEY_RIGHT_YZBM,
+		KIDNEY_RIGHT_BM,
+		KIDNEY_RIGHT_QM,
+		KIDNEY_SNG,
+		ADRENAL_LEFTZL,
+		ADRENAL_LEFTXZ,
+		ADRENAL_RIGHTZL,
+		ADRENAL_RIGHTXZ,
+		BLADDER,
+		BLADDER_NL,
+		BLADDER_NYS,
+		BLADDER_NZD,
+		UTERUS,
+		UTERUS_DX,
+		UTERUS_GJ,
+		UTERUS_GQ,
+		UTERUS_NM,
+		OVARY_OVIDUCT,
+		SPERMARY,
+		SPONDYLE,
+		SPECIAL_REMARK,
+		OTHER,
+		SOURCE,
+		VERSION,
+		DELETE_FLAG,
+		CREATE_USER_ID,
+		UPDATE_USER_ID,
+		CREATE_TIME,
+		UPDATE_TIME
+	</sql>
+  
+	<sql id="insertId">
+		#{id, jdbcType=CHAR},
+		#{investigationId, jdbcType=CHAR},
+		#{bodyId, jdbcType=CHAR},
+		#{examinationTimeFrom, jdbcType=TIMESTAMP},
+		#{examinationTimeTo, jdbcType=TIMESTAMP},
+		#{examinationPlace, jdbcType=VARCHAR},
+		#{scalp, jdbcType=VARCHAR},
+		#{niejiLeft, jdbcType=VARCHAR},
+		#{niejiRight, jdbcType=VARCHAR},
+		#{mzjm, jdbcType=VARCHAR},
+		#{cranialUp, jdbcType=VARCHAR},
+		#{cranialDown, jdbcType=VARCHAR},
+		#{cranialFace, jdbcType=VARCHAR},
+		#{cranialBone, jdbcType=VARCHAR},
+		#{meningo, jdbcType=VARCHAR},
+		#{meningoOut, jdbcType=VARCHAR},
+		#{meningoIn, jdbcType=VARCHAR},
+		#{meningoZwmxq, jdbcType=VARCHAR},
+		#{brainZl, jdbcType=VARCHAR},
+		#{brainGh, jdbcType=VARCHAR},
+		#{brainXg, jdbcType=VARCHAR},
+		#{brainGns, jdbcType=VARCHAR},
+		#{brainDn, jdbcType=VARCHAR},
+		#{brainXn, jdbcType=VARCHAR},
+		#{brainNg, jdbcType=VARCHAR},
+		#{brainNct, jdbcType=VARCHAR},
+		#{brainTissue, jdbcType=VARCHAR},
+		#{neckPxzz, jdbcType=VARCHAR},
+		#{neckJr, jdbcType=VARCHAR},
+		#{neckDxg, jdbcType=VARCHAR},
+		#{neckJzx, jdbcType=VARCHAR},
+		#{neckHxx, jdbcType=VARCHAR},
+		#{neckSg, jdbcType=VARCHAR},
+		#{neckJzrg, jdbcType=VARCHAR},
+		#{neckHzrg, jdbcType=VARCHAR},
+		#{neckHy, jdbcType=VARCHAR},
+		#{neckYhnm, jdbcType=VARCHAR},
+		#{neckHt, jdbcType=VARCHAR},
+		#{neckBtt, jdbcType=VARCHAR},
+		#{neckZqjm, jdbcType=VARCHAR},
+		#{neckJz, jdbcType=VARCHAR},
+		#{chestWall, jdbcType=VARCHAR},
+		#{chestBone, jdbcType=VARCHAR},
+		#{chestNg, jdbcType=VARCHAR},
+		#{chestPleura, jdbcType=VARCHAR},
+		#{chestLeft, jdbcType=VARCHAR},
+		#{chestRight, jdbcType=VARCHAR},
+		#{chestXxzl, jdbcType=VARCHAR},
+		#{heartSac, jdbcType=VARCHAR},
+		#{heartSacq, jdbcType=VARCHAR},
+		#{heartZl, jdbcType=VARCHAR},
+		#{heartWg, jdbcType=VARCHAR},
+		#{heartWm, jdbcType=VARCHAR},
+		#{heartNm, jdbcType=VARCHAR},
+		#{heartLefth, jdbcType=VARCHAR},
+		#{heartRighth, jdbcType=VARCHAR},
+		#{heartBetwh, jdbcType=VARCHAR},
+		#{heartXj, jdbcType=VARCHAR},
+		#{heartXq, jdbcType=VARCHAR},
+		#{heartSjbzj, jdbcType=VARCHAR},
+		#{heartSjbm, jdbcType=VARCHAR},
+		#{heartFdmbzj, jdbcType=VARCHAR},
+		#{heartFdmbm, jdbcType=VARCHAR},
+		#{heartEjbzj, jdbcType=VARCHAR},
+		#{heartEjbm, jdbcType=VARCHAR},
+		#{heartZdmbzj, jdbcType=VARCHAR},
+		#{heartZdmbm, jdbcType=VARCHAR},
+		#{heartDxg, jdbcType=VARCHAR},
+		#{heartGzdmkz, jdbcType=VARCHAR},
+		#{heartGzdmky, jdbcType=VARCHAR},
+		#{heartGzdm, jdbcType=VARCHAR},
+		#{tracheaQg, jdbcType=VARCHAR},
+		#{tracheaZqgz, jdbcType=VARCHAR},
+		#{tracheaZqgy, jdbcType=VARCHAR},
+		#{lungLeftzl, jdbcType=VARCHAR},
+		#{lungLeftbm, jdbcType=VARCHAR},
+		#{lungLeftzd, jdbcType=VARCHAR},
+		#{lungLeftqm, jdbcType=VARCHAR},
+		#{lungRightzl, jdbcType=VARCHAR},
+		#{lungRightbm, jdbcType=VARCHAR},
+		#{lungRightzd, jdbcType=VARCHAR},
+		#{lungRightqm, jdbcType=VARCHAR},
+		#{abdominalWall, jdbcType=VARCHAR},
+		#{abdominalCavity, jdbcType=VARCHAR},
+		#{abdominalRetina, jdbcType=VARCHAR},
+		#{abdominalFm, jdbcType=VARCHAR},
+		#{abdominalQgwz, jdbcType=VARCHAR},
+		#{gullet, jdbcType=VARCHAR},
+		#{stomachObjectProperty, jdbcType=VARCHAR},
+		#{stomachObjectAmount, jdbcType=INTEGER},
+		#{stomachObjectUnit, jdbcType=VARCHAR},
+		#{stomachObjectComponent, jdbcType=VARCHAR},
+		#{gastricMucosa, jdbcType=VARCHAR},
+		#{intestinalCanal, jdbcType=VARCHAR},
+		#{mesenterium, jdbcType=VARCHAR},
+		#{pancreasZl, jdbcType=VARCHAR},
+		#{pancreasYs, jdbcType=VARCHAR},
+		#{pancreasQm, jdbcType=VARCHAR},
+		#{liverZl, jdbcType=VARCHAR},
+		#{liverYzbm, jdbcType=VARCHAR},
+		#{liverBm, jdbcType=VARCHAR},
+		#{liverQm, jdbcType=VARCHAR},
+		#{lienZl, jdbcType=VARCHAR},
+		#{lienYzbm, jdbcType=VARCHAR},
+		#{lienBm, jdbcType=VARCHAR},
+		#{lienQm, jdbcType=VARCHAR},
+		#{kidneyLeftZl, jdbcType=VARCHAR},
+		#{kidneyLeftYzbm, jdbcType=VARCHAR},
+		#{kidneyLeftBm, jdbcType=VARCHAR},
+		#{kidneyLeftQm, jdbcType=VARCHAR},
+		#{kidneyRightZl, jdbcType=VARCHAR},
+		#{kidneyRightYzbm, jdbcType=VARCHAR},
+		#{kidneyRightBm, jdbcType=VARCHAR},
+		#{kidneyRightQm, jdbcType=VARCHAR},
+		#{kidneySng, jdbcType=VARCHAR},
+		#{adrenalLeftzl, jdbcType=VARCHAR},
+		#{adrenalLeftxz, jdbcType=VARCHAR},
+		#{adrenalRightzl, jdbcType=VARCHAR},
+		#{adrenalRightxz, jdbcType=VARCHAR},
+		#{bladder, jdbcType=VARCHAR},
+		#{bladderNl, jdbcType=VARCHAR},
+		#{bladderNys, jdbcType=VARCHAR},
+		#{bladderNzd, jdbcType=VARCHAR},
+		#{uterus, jdbcType=VARCHAR},
+		#{uterusDx, jdbcType=VARCHAR},
+		#{uterusGj, jdbcType=VARCHAR},
+		#{uterusGq, jdbcType=VARCHAR},
+		#{uterusNm, jdbcType=VARCHAR},
+		#{ovaryOviduct, jdbcType=VARCHAR},
+		#{spermary, jdbcType=VARCHAR},
+		#{spondyle, jdbcType=VARCHAR},
+		#{specialRemark, jdbcType=VARCHAR},
+		#{other, jdbcType=VARCHAR},
+		#{source, jdbcType=VARCHAR},
+		#{version, jdbcType=INTEGER},
+		#{deleteFlag, jdbcType=CHAR},
+		#{createUserId, jdbcType=CHAR},
+		#{updateUserId, jdbcType=CHAR},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	</sql>
+
+	<sql id="updateId">
+			<if test="investigationId !=null and investigationId !=''">
+				INVESTIGATION_ID=#{investigationId, jdbcType=CHAR},
+			</if>
+			<if test="bodyId !=null and bodyId !=''">
+				BODY_ID=#{bodyId, jdbcType=CHAR},
+			</if>
+			<if test="examinationTimeFrom !=null and examinationTimeFrom !=''">
+				EXAMINATION_TIME_FROM=#{examinationTimeFrom, jdbcType=TIMESTAMP},
+			</if>
+			<if test="examinationTimeTo !=null and examinationTimeTo !=''">
+				EXAMINATION_TIME_TO=#{examinationTimeTo, jdbcType=TIMESTAMP},
+			</if>
+			<if test="examinationPlace !=null and examinationPlace !=''">
+				EXAMINATION_PLACE=#{examinationPlace, jdbcType=VARCHAR},
+			</if>
+			<if test="scalp !=null and scalp !=''">
+				SCALP=#{scalp, jdbcType=VARCHAR},
+			</if>
+			<if test="niejiLeft !=null and niejiLeft !=''">
+				NIEJI_LEFT=#{niejiLeft, jdbcType=VARCHAR},
+			</if>
+			<if test="niejiRight !=null and niejiRight !=''">
+				NIEJI_RIGHT=#{niejiRight, jdbcType=VARCHAR},
+			</if>
+			<if test="mzjm !=null and mzjm !=''">
+				MZJM=#{mzjm, jdbcType=VARCHAR},
+			</if>
+			<if test="cranialUp !=null and cranialUp !=''">
+				CRANIAL_UP=#{cranialUp, jdbcType=VARCHAR},
+			</if>
+			<if test="cranialDown !=null and cranialDown !=''">
+				CRANIAL_DOWN=#{cranialDown, jdbcType=VARCHAR},
+			</if>
+			<if test="cranialFace !=null and cranialFace !=''">
+				CRANIAL_FACE=#{cranialFace, jdbcType=VARCHAR},
+			</if>
+			<if test="cranialBone !=null and cranialBone !=''">
+				CRANIAL_BONE=#{cranialBone, jdbcType=VARCHAR},
+			</if>
+			<if test="meningo !=null and meningo !=''">
+				MENINGO=#{meningo, jdbcType=VARCHAR},
+			</if>
+			<if test="meningoOut !=null and meningoOut !=''">
+				MENINGO_OUT=#{meningoOut, jdbcType=VARCHAR},
+			</if>
+			<if test="meningoIn !=null and meningoIn !=''">
+				MENINGO_IN=#{meningoIn, jdbcType=VARCHAR},
+			</if>
+			<if test="meningoZwmxq !=null and meningoZwmxq !=''">
+				MENINGO_ZWMXQ=#{meningoZwmxq, jdbcType=VARCHAR},
+			</if>
+			<if test="brainZl !=null and brainZl !=''">
+				BRAIN_ZL=#{brainZl, jdbcType=VARCHAR},
+			</if>
+			<if test="brainGh !=null and brainGh !=''">
+				BRAIN_GH=#{brainGh, jdbcType=VARCHAR},
+			</if>
+			<if test="brainXg !=null and brainXg !=''">
+				BRAIN_XG=#{brainXg, jdbcType=VARCHAR},
+			</if>
+			<if test="brainGns !=null and brainGns !=''">
+				BRAIN_GNS=#{brainGns, jdbcType=VARCHAR},
+			</if>
+			<if test="brainDn !=null and brainDn !=''">
+				BRAIN_DN=#{brainDn, jdbcType=VARCHAR},
+			</if>
+			<if test="brainXn !=null and brainXn !=''">
+				BRAIN_XN=#{brainXn, jdbcType=VARCHAR},
+			</if>
+			<if test="brainNg !=null and brainNg !=''">
+				BRAIN_NG=#{brainNg, jdbcType=VARCHAR},
+			</if>
+			<if test="brainNct !=null and brainNct !=''">
+				BRAIN_NCT=#{brainNct, jdbcType=VARCHAR},
+			</if>
+			<if test="brainTissue !=null and brainTissue !=''">
+				BRAIN_TISSUE=#{brainTissue, jdbcType=VARCHAR},
+			</if>
+			<if test="neckPxzz !=null and neckPxzz !=''">
+				NECK_PXZZ=#{neckPxzz, jdbcType=VARCHAR},
+			</if>
+			<if test="neckJr !=null and neckJr !=''">
+				NECK_JR=#{neckJr, jdbcType=VARCHAR},
+			</if>
+			<if test="neckDxg !=null and neckDxg !=''">
+				NECK_DXG=#{neckDxg, jdbcType=VARCHAR},
+			</if>
+			<if test="neckJzx !=null and neckJzx !=''">
+				NECK_JZX=#{neckJzx, jdbcType=VARCHAR},
+			</if>
+			<if test="neckHxx !=null and neckHxx !=''">
+				NECK_HXX=#{neckHxx, jdbcType=VARCHAR},
+			</if>
+			<if test="neckSg !=null and neckSg !=''">
+				NECK_SG=#{neckSg, jdbcType=VARCHAR},
+			</if>
+			<if test="neckJzrg !=null and neckJzrg !=''">
+				NECK_JZRG=#{neckJzrg, jdbcType=VARCHAR},
+			</if>
+			<if test="neckHzrg !=null and neckHzrg !=''">
+				NECK_HZRG=#{neckHzrg, jdbcType=VARCHAR},
+			</if>
+			<if test="neckHy !=null and neckHy !=''">
+				NECK_HY=#{neckHy, jdbcType=VARCHAR},
+			</if>
+			<if test="neckYhnm !=null and neckYhnm !=''">
+				NECK_YHNM=#{neckYhnm, jdbcType=VARCHAR},
+			</if>
+			<if test="neckHt !=null and neckHt !=''">
+				NECK_HT=#{neckHt, jdbcType=VARCHAR},
+			</if>
+			<if test="neckBtt !=null and neckBtt !=''">
+				NECK_BTT=#{neckBtt, jdbcType=VARCHAR},
+			</if>
+			<if test="neckZqjm !=null and neckZqjm !=''">
+				NECK_ZQJM=#{neckZqjm, jdbcType=VARCHAR},
+			</if>
+			<if test="neckJz !=null and neckJz !=''">
+				NECK_JZ=#{neckJz, jdbcType=VARCHAR},
+			</if>
+			<if test="chestWall !=null and chestWall !=''">
+				CHEST_WALL=#{chestWall, jdbcType=VARCHAR},
+			</if>
+			<if test="chestBone !=null and chestBone !=''">
+				CHEST_BONE=#{chestBone, jdbcType=VARCHAR},
+			</if>
+			<if test="chestNg !=null and chestNg !=''">
+				CHEST_NG=#{chestNg, jdbcType=VARCHAR},
+			</if>
+			<if test="chestPleura !=null and chestPleura !=''">
+				CHEST_PLEURA=#{chestPleura, jdbcType=VARCHAR},
+			</if>
+			<if test="chestLeft !=null and chestLeft !=''">
+				CHEST_LEFT=#{chestLeft, jdbcType=VARCHAR},
+			</if>
+			<if test="chestRight !=null and chestRight !=''">
+				CHEST_RIGHT=#{chestRight, jdbcType=VARCHAR},
+			</if>
+			<if test="chestXxzl !=null and chestXxzl !=''">
+				CHEST_XXZL=#{chestXxzl, jdbcType=VARCHAR},
+			</if>
+			<if test="heartSac !=null and heartSac !=''">
+				HEART_SAC=#{heartSac, jdbcType=VARCHAR},
+			</if>
+			<if test="heartSacq !=null and heartSacq !=''">
+				HEART_SACQ=#{heartSacq, jdbcType=VARCHAR},
+			</if>
+			<if test="heartZl !=null and heartZl !=''">
+				HEART_ZL=#{heartZl, jdbcType=VARCHAR},
+			</if>
+			<if test="heartWg !=null and heartWg !=''">
+				HEART_WG=#{heartWg, jdbcType=VARCHAR},
+			</if>
+			<if test="heartWm !=null and heartWm !=''">
+				HEART_WM=#{heartWm, jdbcType=VARCHAR},
+			</if>
+			<if test="heartNm !=null and heartNm !=''">
+				HEART_NM=#{heartNm, jdbcType=VARCHAR},
+			</if>
+			<if test="heartLefth !=null and heartLefth !=''">
+				HEART_LEFTH=#{heartLefth, jdbcType=VARCHAR},
+			</if>
+			<if test="heartRighth !=null and heartRighth !=''">
+				HEART_RIGHTH=#{heartRighth, jdbcType=VARCHAR},
+			</if>
+			<if test="heartBetwh !=null and heartBetwh !=''">
+				HEART_BETWH=#{heartBetwh, jdbcType=VARCHAR},
+			</if>
+			<if test="heartXj !=null and heartXj !=''">
+				HEART_XJ=#{heartXj, jdbcType=VARCHAR},
+			</if>
+			<if test="heartXq !=null and heartXq !=''">
+				HEART_XQ=#{heartXq, jdbcType=VARCHAR},
+			</if>
+			<if test="heartSjbzj !=null and heartSjbzj !=''">
+				HEART_SJBZJ=#{heartSjbzj, jdbcType=VARCHAR},
+			</if>
+			<if test="heartSjbm !=null and heartSjbm !=''">
+				HEART_SJBM=#{heartSjbm, jdbcType=VARCHAR},
+			</if>
+			<if test="heartFdmbzj !=null and heartFdmbzj !=''">
+				HEART_FDMBZJ=#{heartFdmbzj, jdbcType=VARCHAR},
+			</if>
+			<if test="heartFdmbm !=null and heartFdmbm !=''">
+				HEART_FDMBM=#{heartFdmbm, jdbcType=VARCHAR},
+			</if>
+			<if test="heartEjbzj !=null and heartEjbzj !=''">
+				HEART_EJBZJ=#{heartEjbzj, jdbcType=VARCHAR},
+			</if>
+			<if test="heartEjbm !=null and heartEjbm !=''">
+				HEART_EJBM=#{heartEjbm, jdbcType=VARCHAR},
+			</if>
+			<if test="heartZdmbzj !=null and heartZdmbzj !=''">
+				HEART_ZDMBZJ=#{heartZdmbzj, jdbcType=VARCHAR},
+			</if>
+			<if test="heartZdmbm !=null and heartZdmbm !=''">
+				HEART_ZDMBM=#{heartZdmbm, jdbcType=VARCHAR},
+			</if>
+			<if test="heartDxg !=null and heartDxg !=''">
+				HEART_DXG=#{heartDxg, jdbcType=VARCHAR},
+			</if>
+			<if test="heartGzdmkz !=null and heartGzdmkz !=''">
+				HEART_GZDMKZ=#{heartGzdmkz, jdbcType=VARCHAR},
+			</if>
+			<if test="heartGzdmky !=null and heartGzdmky !=''">
+				HEART_GZDMKY=#{heartGzdmky, jdbcType=VARCHAR},
+			</if>
+			<if test="heartGzdm !=null and heartGzdm !=''">
+				HEART_GZDM=#{heartGzdm, jdbcType=VARCHAR},
+			</if>
+			<if test="tracheaQg !=null and tracheaQg !=''">
+				TRACHEA_QG=#{tracheaQg, jdbcType=VARCHAR},
+			</if>
+			<if test="tracheaZqgz !=null and tracheaZqgz !=''">
+				TRACHEA_ZQGZ=#{tracheaZqgz, jdbcType=VARCHAR},
+			</if>
+			<if test="tracheaZqgy !=null and tracheaZqgy !=''">
+				TRACHEA_ZQGY=#{tracheaZqgy, jdbcType=VARCHAR},
+			</if>
+			<if test="lungLeftzl !=null and lungLeftzl !=''">
+				LUNG_LEFTZL=#{lungLeftzl, jdbcType=VARCHAR},
+			</if>
+			<if test="lungLeftbm !=null and lungLeftbm !=''">
+				LUNG_LEFTBM=#{lungLeftbm, jdbcType=VARCHAR},
+			</if>
+			<if test="lungLeftzd !=null and lungLeftzd !=''">
+				LUNG_LEFTZD=#{lungLeftzd, jdbcType=VARCHAR},
+			</if>
+			<if test="lungLeftqm !=null and lungLeftqm !=''">
+				LUNG_LEFTQM=#{lungLeftqm, jdbcType=VARCHAR},
+			</if>
+			<if test="lungRightzl !=null and lungRightzl !=''">
+				LUNG_RIGHTZL=#{lungRightzl, jdbcType=VARCHAR},
+			</if>
+			<if test="lungRightbm !=null and lungRightbm !=''">
+				LUNG_RIGHTBM=#{lungRightbm, jdbcType=VARCHAR},
+			</if>
+			<if test="lungRightzd !=null and lungRightzd !=''">
+				LUNG_RIGHTZD=#{lungRightzd, jdbcType=VARCHAR},
+			</if>
+			<if test="lungRightqm !=null and lungRightqm !=''">
+				LUNG_RIGHTQM=#{lungRightqm, jdbcType=VARCHAR},
+			</if>
+			<if test="abdominalWall !=null and abdominalWall !=''">
+				ABDOMINAL_WALL=#{abdominalWall, jdbcType=VARCHAR},
+			</if>
+			<if test="abdominalCavity !=null and abdominalCavity !=''">
+				ABDOMINAL_CAVITY=#{abdominalCavity, jdbcType=VARCHAR},
+			</if>
+			<if test="abdominalRetina !=null and abdominalRetina !=''">
+				ABDOMINAL_RETINA=#{abdominalRetina, jdbcType=VARCHAR},
+			</if>
+			<if test="abdominalFm !=null and abdominalFm !=''">
+				ABDOMINAL_FM=#{abdominalFm, jdbcType=VARCHAR},
+			</if>
+			<if test="abdominalQgwz !=null and abdominalQgwz !=''">
+				ABDOMINAL_QGWZ=#{abdominalQgwz, jdbcType=VARCHAR},
+			</if>
+			<if test="gullet !=null and gullet !=''">
+				GULLET=#{gullet, jdbcType=VARCHAR},
+			</if>
+			<if test="stomachObjectProperty !=null and stomachObjectProperty !=''">
+				STOMACH_OBJECT_PROPERTY=#{stomachObjectProperty, jdbcType=VARCHAR},
+			</if>
+			<if test="stomachObjectAmount !=null and stomachObjectAmount !=''">
+				STOMACH_OBJECT_AMOUNT=#{stomachObjectAmount, jdbcType=INTEGER},
+			</if>
+			<if test="stomachObjectUnit !=null and stomachObjectUnit !=''">
+				STOMACH_OBJECT_UNIT=#{stomachObjectUnit, jdbcType=VARCHAR},
+			</if>
+			<if test="stomachObjectComponent !=null and stomachObjectComponent !=''">
+				STOMACH_OBJECT_COMPONENT=#{stomachObjectComponent, jdbcType=VARCHAR},
+			</if>
+			<if test="gastricMucosa !=null and gastricMucosa !=''">
+				GASTRIC_MUCOSA=#{gastricMucosa, jdbcType=VARCHAR},
+			</if>
+			<if test="intestinalCanal !=null and intestinalCanal !=''">
+				INTESTINAL_CANAL=#{intestinalCanal, jdbcType=VARCHAR},
+			</if>
+			<if test="mesenterium !=null and mesenterium !=''">
+				MESENTERIUM=#{mesenterium, jdbcType=VARCHAR},
+			</if>
+			<if test="pancreasZl !=null and pancreasZl !=''">
+				PANCREAS_ZL=#{pancreasZl, jdbcType=VARCHAR},
+			</if>
+			<if test="pancreasYs !=null and pancreasYs !=''">
+				PANCREAS_YS=#{pancreasYs, jdbcType=VARCHAR},
+			</if>
+			<if test="pancreasQm !=null and pancreasQm !=''">
+				PANCREAS_QM=#{pancreasQm, jdbcType=VARCHAR},
+			</if>
+			<if test="liverZl !=null and liverZl !=''">
+				LIVER_ZL=#{liverZl, jdbcType=VARCHAR},
+			</if>
+			<if test="liverYzbm !=null and liverYzbm !=''">
+				LIVER_YZBM=#{liverYzbm, jdbcType=VARCHAR},
+			</if>
+			<if test="liverBm !=null and liverBm !=''">
+				LIVER_BM=#{liverBm, jdbcType=VARCHAR},
+			</if>
+			<if test="liverQm !=null and liverQm !=''">
+				LIVER_QM=#{liverQm, jdbcType=VARCHAR},
+			</if>
+			<if test="lienZl !=null and lienZl !=''">
+				LIEN_ZL=#{lienZl, jdbcType=VARCHAR},
+			</if>
+			<if test="lienYzbm !=null and lienYzbm !=''">
+				LIEN_YZBM=#{lienYzbm, jdbcType=VARCHAR},
+			</if>
+			<if test="lienBm !=null and lienBm !=''">
+				LIEN_BM=#{lienBm, jdbcType=VARCHAR},
+			</if>
+			<if test="lienQm !=null and lienQm !=''">
+				LIEN_QM=#{lienQm, jdbcType=VARCHAR},
+			</if>
+			<if test="kidneyLeftZl !=null and kidneyLeftZl !=''">
+				KIDNEY_LEFT_ZL=#{kidneyLeftZl, jdbcType=VARCHAR},
+			</if>
+			<if test="kidneyLeftYzbm !=null and kidneyLeftYzbm !=''">
+				KIDNEY_LEFT_YZBM=#{kidneyLeftYzbm, jdbcType=VARCHAR},
+			</if>
+			<if test="kidneyLeftBm !=null and kidneyLeftBm !=''">
+				KIDNEY_LEFT_BM=#{kidneyLeftBm, jdbcType=VARCHAR},
+			</if>
+			<if test="kidneyLeftQm !=null and kidneyLeftQm !=''">
+				KIDNEY_LEFT_QM=#{kidneyLeftQm, jdbcType=VARCHAR},
+			</if>
+			<if test="kidneyRightZl !=null and kidneyRightZl !=''">
+				KIDNEY_RIGHT_ZL=#{kidneyRightZl, jdbcType=VARCHAR},
+			</if>
+			<if test="kidneyRightYzbm !=null and kidneyRightYzbm !=''">
+				KIDNEY_RIGHT_YZBM=#{kidneyRightYzbm, jdbcType=VARCHAR},
+			</if>
+			<if test="kidneyRightBm !=null and kidneyRightBm !=''">
+				KIDNEY_RIGHT_BM=#{kidneyRightBm, jdbcType=VARCHAR},
+			</if>
+			<if test="kidneyRightQm !=null and kidneyRightQm !=''">
+				KIDNEY_RIGHT_QM=#{kidneyRightQm, jdbcType=VARCHAR},
+			</if>
+			<if test="kidneySng !=null and kidneySng !=''">
+				KIDNEY_SNG=#{kidneySng, jdbcType=VARCHAR},
+			</if>
+			<if test="adrenalLeftzl !=null and adrenalLeftzl !=''">
+				ADRENAL_LEFTZL=#{adrenalLeftzl, jdbcType=VARCHAR},
+			</if>
+			<if test="adrenalLeftxz !=null and adrenalLeftxz !=''">
+				ADRENAL_LEFTXZ=#{adrenalLeftxz, jdbcType=VARCHAR},
+			</if>
+			<if test="adrenalRightzl !=null and adrenalRightzl !=''">
+				ADRENAL_RIGHTZL=#{adrenalRightzl, jdbcType=VARCHAR},
+			</if>
+			<if test="adrenalRightxz !=null and adrenalRightxz !=''">
+				ADRENAL_RIGHTXZ=#{adrenalRightxz, jdbcType=VARCHAR},
+			</if>
+			<if test="bladder !=null and bladder !=''">
+				BLADDER=#{bladder, jdbcType=VARCHAR},
+			</if>
+			<if test="bladderNl !=null and bladderNl !=''">
+				BLADDER_NL=#{bladderNl, jdbcType=VARCHAR},
+			</if>
+			<if test="bladderNys !=null and bladderNys !=''">
+				BLADDER_NYS=#{bladderNys, jdbcType=VARCHAR},
+			</if>
+			<if test="bladderNzd !=null and bladderNzd !=''">
+				BLADDER_NZD=#{bladderNzd, jdbcType=VARCHAR},
+			</if>
+			<if test="uterus !=null and uterus !=''">
+				UTERUS=#{uterus, jdbcType=VARCHAR},
+			</if>
+			<if test="uterusDx !=null and uterusDx !=''">
+				UTERUS_DX=#{uterusDx, jdbcType=VARCHAR},
+			</if>
+			<if test="uterusGj !=null and uterusGj !=''">
+				UTERUS_GJ=#{uterusGj, jdbcType=VARCHAR},
+			</if>
+			<if test="uterusGq !=null and uterusGq !=''">
+				UTERUS_GQ=#{uterusGq, jdbcType=VARCHAR},
+			</if>
+			<if test="uterusNm !=null and uterusNm !=''">
+				UTERUS_NM=#{uterusNm, jdbcType=VARCHAR},
+			</if>
+			<if test="ovaryOviduct !=null and ovaryOviduct !=''">
+				OVARY_OVIDUCT=#{ovaryOviduct, jdbcType=VARCHAR},
+			</if>
+			<if test="spermary !=null and spermary !=''">
+				SPERMARY=#{spermary, jdbcType=VARCHAR},
+			</if>
+			<if test="spondyle !=null and spondyle !=''">
+				SPONDYLE=#{spondyle, jdbcType=VARCHAR},
+			</if>
+			<if test="specialRemark !=null and specialRemark !=''">
+				SPECIAL_REMARK=#{specialRemark, jdbcType=VARCHAR},
+			</if>
+			<if test="other !=null and other !=''">
+				OTHER=#{other, jdbcType=VARCHAR},
+			</if>
+			<if test="source !=null and source !=''">
+				SOURCE=#{source, jdbcType=VARCHAR},
+			</if>
+			<if test="version !=null and version !=''">
+				VERSION=#{version, jdbcType=INTEGER},
+			</if>
+			<if test="updateUserId !=null and updateUserId !=''">
+				UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR},
+			</if>
+			<if test="deleteFlag !=null and deleteFlag !=''">
+				DELETE_FLAG=#{deleteFlag, jdbcType=CHAR},
+			</if>
+			<if test="updateTime !=null and updateTime !=''">
+				UPDATE_TIME=#{updateTime, jdbcType=TIMESTAMP}
+			</if>
+	</sql>
+	
+</mapper>

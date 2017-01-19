@@ -1,0 +1,1 @@
+nohup java -Dfile.encoding="GBK" -jar start.jar &

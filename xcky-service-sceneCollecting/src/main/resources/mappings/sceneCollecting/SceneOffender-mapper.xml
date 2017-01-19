@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.SceneOffenderMapper">
+
+	<select id="getById" resultMap="SceneOffenderMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_OFFENDER
+		WHERE ID=#{id}
+	</select>
+	
+	<!-- 根据拼接的条件查询 -->
+	<select id="findListBySQL" resultMap="SceneOffenderMap" parameterType="String">
+		SELECT
+			T1.ID AS ID,
+			T1.INVESTIGATION_ID AS INVESTIGATION_ID,
+			T1.TYPE AS TYPE,
+			T1.NAME AS NAME,
+			T1.GENDER AS GENDER,
+			T1.BIRTHDAY AS BIRTHDAY,
+			T1.AGE AS AGE,
+			T1.PHONE AS PHONE,
+			T1.ADDRESS AS ADDRESS,
+			T1.NATIVE_PLACE AS NATIVE_PLACE,
+			T1.ID_CARD_NO AS ID_CARD_NO,
+			T1.ORGANIZATION AS ORGANIZATION,
+			T1.SOURCE AS SOURCE,
+			T1.VERSION AS VERSION,
+			T1.DELETE_FLAG AS DELETE_FLAG,
+			T1.CREATE_USER_ID AS CREATE_USER_ID,
+			T1.UPDATE_USER_ID AS UPDATE_USER_ID,
+			T1.CREATE_TIME AS CREATE_TIME,
+			T1.UPDATE_TIME AS UPDATE_TIME,
+			T2.DICT_VALUE AS SEX
+			from t_scene_offender t1,
+			         t_sys_dict       t2
+			 where t1.delete_flag = '0'
+			   and t2.root_key = 'XBDM'
+			   and t1.gender=t2.dict_key(+)
+		       and ${value}
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneOffender">
+		INSERT INTO T_SCENE_OFFENDER (
+			ID,
+			INVESTIGATION_ID,
+			TYPE,
+			NAME,
+			GENDER,
+			BIRTHDAY,
+			AGE,
+			PHONE,
+			ADDRESS,
+			NATIVE_PLACE,
+			ID_CARD_NO,
+			ORGANIZATION,
+			SOURCE,
+			VERSION,
+			DELETE_FLAG,
+			CREATE_USER_ID,
+			UPDATE_USER_ID,
+			CREATE_TIME,
+			UPDATE_TIME
+		) VALUES (
+			#{id, jdbcType=CHAR},
+			#{investigationId, jdbcType=CHAR},
+			#{type, jdbcType=VARCHAR},
+			#{name, jdbcType=VARCHAR},
+			#{gender, jdbcType=CHAR},
+			#{birthday, jdbcType=TIMESTAMP},
+			#{age, jdbcType=INTEGER},
+			#{phone, jdbcType=VARCHAR},
+			#{address, jdbcType=VARCHAR},
+			#{nativePlace, jdbcType=VARCHAR},
+			#{idCardNo, jdbcType=VARCHAR},
+			#{organization, jdbcType=VARCHAR},
+			#{source, jdbcType=VARCHAR},
+			#{version, jdbcType=INTEGER},
+			#{deleteFlag, jdbcType=CHAR},
+			#{createUserId, jdbcType=CHAR},
+			#{updateUserId, jdbcType=CHAR},
+			#{createTime, jdbcType=TIMESTAMP},
+			#{updateTime, jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_SCENE_OFFENDER WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneOffender">
+		UPDATE T_SCENE_OFFENDER 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneOffender">
+		UPDATE T_SCENE_OFFENDER
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="SceneOffenderMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneOffender">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_OFFENDER
+		WHERE DELETE_FLAG=#{deleteFlag}
+	</select>
+	
+</mapper>

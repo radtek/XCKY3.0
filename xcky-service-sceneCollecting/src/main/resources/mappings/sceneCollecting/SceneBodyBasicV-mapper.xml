@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.SceneBodyBasicMapper">
+
+	<resultMap type="com.hisign.xcky.api.model.sceneCollecting.SceneBodyBasic" id="SceneBodyBasicMap">
+		<result property="rowNum" column="ROW_ID" />
+		<result property="id" column="ID" />
+		<result property="investigationId" column="INVESTIGATION_ID" />
+		<result property="examinationNo" column="EXAMINATION_NO" />
+		<result property="consignedAgency" column="CONSIGNED_AGENCY" />
+		<result property="consignedDate" column="CONSIGNED_DATE" />
+		<result property="consignedBy" column="CONSIGNED_BY" />
+		<result property="consignerPhone" column="CONSIGNER_PHONE" />
+		<result property="examinedAgency" column="EXAMINED_AGENCY" />
+		<result property="examinedDate" column="EXAMINED_DATE" />
+		<result property="examinedBy" column="EXAMINED_BY" />
+		<result property="examinedPlace" column="EXAMINED_PLACE" />
+		<result property="name" column="NAME" />
+		<result property="originStatus" column="ORIGIN_STATUS" />
+		<result property="sex" column="SEX" />
+		<result property="birthDate" column="BIRTH_DATE" />
+		<result property="folk" column="FOLK" />
+		<result property="nationality" column="NATIONALITY" />
+		<result property="nativePlaceRegionalism" column="NATIVE_PLACE_REGIONALISM" />
+		<result property="nativePlace" column="NATIVE_PLACE" />
+		<result property="addressRegionalism" column="ADDRESS_REGIONALISM" />
+		<result property="address" column="ADDRESS" />
+		<result property="organization" column="ORGANIZATION" />
+		<result property="specialSign" column="SPECIAL_SIGN" />
+		<result property="deathDateFrom" column="DEATH_DATE_FROM" />
+		<result property="deathDateTo" column="DEATH_DATE_TO" />
+		<result property="caseSummary" column="CASE_SUMMARY" />
+		<result property="gesture" column="GESTURE" />
+		<result property="clothes" column="CLOTHES" />
+		<result property="takenWith" column="TAKEN_WITH" />
+		<result property="deathReason" column="DEATH_REASON" />
+		<result property="deathProperty" column="DEATH_PROPERTY" />
+		<result property="inflictManner" column="INFLICT_MANNER" />
+		<result property="strangleholdManner" column="STRANGLEHOLD_MANNER" />
+		<result property="chokeSymptom" column="CHOKE_SYMPTOM" />
+		<result property="encasedBy" column="ENCASED_BY" />
+		<result property="packagedBy" column="PACKAGED_BY" />
+		<result property="surfaceExamOpinion" column="SURFACE_EXAM_OPINION" />
+		<result property="dissectionExamOpinion" column="DISSECTION_EXAM_OPINION" />
+		<result property="remark" column="REMARK" />
+		<result property="examinedDateup" column="EXAMINED_DATEUP" />
+		<result property="examinedDatedown" column="EXAMINED_DATEDOWN" />
+		<result property="stfxddqk" column="STFXDDQK" />
+		<result property="stwz" column="STWZ" />
+		<result property="xcxjqk" column="XCXJQK" />
+		<result property="xczwhjgk" column="XCZWHJGK" />
+		<result property="familyComment" column="FAMILY_COMMENT" />
+		<result property="source" column="SOURCE" />
+		<result property="version" column="VERSION" />
+		<result property="deleteFlag" column="DELETE_FLAG" />
+		<result property="createUserId" column="CREATE_USER_ID" />
+		<result property="updateUserId" column="UPDATE_USER_ID" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="reportid" column="REPORTID" />
+		<result property="reportAttachmentId" column="report_attachment_id" />
+	</resultMap>
+
+	<sql id="selectId1">
+	   t1.id,
+       t1.investigation_id,
+       t1.examination_no,
+       t1.consigned_agency,
+       t1.consigned_date,
+       t1.consigned_by,
+       t1.consigner_phone,
+       t1.examined_agency,
+       t1.examined_date,
+       t1.examined_by,
+       t1.examined_place,
+       t1.name,
+       t1.origin_status,
+       t1.sex,
+       t1.birth_date,
+       t1.folk,
+       t1.nationality,
+       t1.native_place_regionalism,
+       t1.native_place,
+       t1.address_regionalism,
+       t1.address,
+       t1.organization,
+       t1.special_sign,
+       t1.death_date_from,
+       t1.death_date_to,
+       t1.case_summary,
+       t1.gesture,
+       t1.clothes,
+       t1.taken_with,
+       t1.death_reason,
+       t1.death_property,
+       t1.inflict_manner,
+       t1.stranglehold_manner,
+       t1.choke_symptom,
+       t1.encased_by,
+       t1.packaged_by,
+       t1.surface_exam_opinion,
+       t1.dissection_exam_opinion,
+       t1.remark,
+       t1.examined_dateup,
+       t1.examined_datedown,
+       t1.stfxddqk,
+       t1.stwz,
+       t1.xcxjqk,
+       t1.xczwhjgk,
+       t1.family_comment,
+       t1.source,
+       t1.version,
+       t1.delete_flag,
+       t1.create_user_id,
+       t1.update_user_id,
+       t1.create_time,
+       t1.update_time,
+       t1.reportid,
+       t2.file_server_path as report_attachment_id
+	</sql>
+	
+	<sql id="selectId">
+		ID,
+		INVESTIGATION_ID,
+		EXAMINATION_NO,
+		CONSIGNED_AGENCY,
+		CONSIGNED_DATE,
+		CONSIGNED_BY,
+		CONSIGNER_PHONE,
+		EXAMINED_AGENCY,
+		EXAMINED_DATE,
+		EXAMINED_BY,
+		EXAMINED_PLACE,
+		NAME,
+		ORIGIN_STATUS,
+		SEX,
+		BIRTH_DATE,
+		FOLK,
+		NATIONALITY,
+		NATIVE_PLACE_REGIONALISM,
+		NATIVE_PLACE,
+		ADDRESS_REGIONALISM,
+		ADDRESS,
+		ORGANIZATION,
+		SPECIAL_SIGN,
+		DEATH_DATE_FROM,
+		DEATH_DATE_TO,
+		CASE_SUMMARY,
+		GESTURE,
+		CLOTHES,
+		TAKEN_WITH,
+		DEATH_REASON,
+		DEATH_PROPERTY,
+		INFLICT_MANNER,
+		STRANGLEHOLD_MANNER,
+		CHOKE_SYMPTOM,
+		ENCASED_BY,
+		PACKAGED_BY,
+		SURFACE_EXAM_OPINION,
+		DISSECTION_EXAM_OPINION,
+		REMARK,
+		EXAMINED_DATEUP,
+		EXAMINED_DATEDOWN,
+		STFXDDQK,
+		STWZ,
+		XCXJQK,
+		XCZWHJGK,
+		FAMILY_COMMENT,
+		SOURCE,
+		VERSION,
+		DELETE_FLAG,
+		CREATE_USER_ID,
+		UPDATE_USER_ID,
+		CREATE_TIME,
+		UPDATE_TIME,
+		REPORTID
+	</sql>
+  
+	<sql id="insertId">
+		#{id, jdbcType=CHAR},
+		#{investigationId, jdbcType=CHAR},
+		#{examinationNo, jdbcType=VARCHAR},
+		#{consignedAgency, jdbcType=VARCHAR},
+		#{consignedDate, jdbcType=TIMESTAMP},
+		#{consignedBy, jdbcType=VARCHAR},
+		#{consignerPhone, jdbcType=VARCHAR},
+		#{examinedAgency, jdbcType=VARCHAR},
+		#{examinedDate, jdbcType=TIMESTAMP},
+		#{examinedBy, jdbcType=VARCHAR},
+		#{examinedPlace, jdbcType=VARCHAR},
+		#{name, jdbcType=VARCHAR},
+		#{originStatus, jdbcType=CHAR},
+		#{sex, jdbcType=VARCHAR},
+		#{birthDate, jdbcType=TIMESTAMP},
+		#{folk, jdbcType=VARCHAR},
+		#{nationality, jdbcType=VARCHAR},
+		#{nativePlaceRegionalism, jdbcType=VARCHAR},
+		#{nativePlace, jdbcType=VARCHAR},
+		#{addressRegionalism, jdbcType=VARCHAR},
+		#{address, jdbcType=VARCHAR},
+		#{organization, jdbcType=VARCHAR},
+		#{specialSign, jdbcType=VARCHAR},
+		#{deathDateFrom, jdbcType=TIMESTAMP},
+		#{deathDateTo, jdbcType=TIMESTAMP},
+		#{caseSummary, jdbcType=VARCHAR},
+		#{gesture, jdbcType=VARCHAR},
+		#{clothes, jdbcType=VARCHAR},
+		#{takenWith, jdbcType=VARCHAR},
+		#{deathReason, jdbcType=VARCHAR},
+		#{deathProperty, jdbcType=VARCHAR},
+		#{inflictManner, jdbcType=VARCHAR},
+		#{strangleholdManner, jdbcType=VARCHAR},
+		#{chokeSymptom, jdbcType=VARCHAR},
+		#{encasedBy, jdbcType=VARCHAR},
+		#{packagedBy, jdbcType=VARCHAR},
+		#{surfaceExamOpinion, jdbcType=VARCHAR},
+		#{dissectionExamOpinion, jdbcType=VARCHAR},
+		#{remark, jdbcType=VARCHAR},
+		#{examinedDateup, jdbcType=TIMESTAMP},
+		#{examinedDatedown, jdbcType=TIMESTAMP},
+		#{stfxddqk, jdbcType=VARCHAR},
+		#{stwz, jdbcType=VARCHAR},
+		#{xcxjqk, jdbcType=VARCHAR},
+		#{xczwhjgk, jdbcType=VARCHAR},
+		#{familyComment, jdbcType=VARCHAR},
+		#{source, jdbcType=VARCHAR},
+		#{version, jdbcType=INTEGER},
+		#{deleteFlag, jdbcType=CHAR},
+		#{createUserId, jdbcType=CHAR},
+		#{updateUserId, jdbcType=CHAR},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP},
+		#{reportid, jdbcType=CHAR}
+	</sql>
+
+	<sql id="updateId">
+			<if test="investigationId !=null and investigationId !=''">
+				INVESTIGATION_ID=#{investigationId, jdbcType=CHAR},
+			</if>
+			<if test="examinationNo !=null and examinationNo !=''">
+				EXAMINATION_NO=#{examinationNo, jdbcType=VARCHAR},
+			</if>
+			<if test="consignedAgency !=null and consignedAgency !=''">
+				CONSIGNED_AGENCY=#{consignedAgency, jdbcType=VARCHAR},
+			</if>
+			<if test="consignedDate !=null and consignedDate !=''">
+				CONSIGNED_DATE=#{consignedDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="consignedBy !=null and consignedBy !=''">
+				CONSIGNED_BY=#{consignedBy, jdbcType=VARCHAR},
+			</if>
+			<if test="consignerPhone !=null and consignerPhone !=''">
+				CONSIGNER_PHONE=#{consignerPhone, jdbcType=VARCHAR},
+			</if>
+			<if test="examinedAgency !=null and examinedAgency !=''">
+				EXAMINED_AGENCY=#{examinedAgency, jdbcType=VARCHAR},
+			</if>
+			<if test="examinedDate !=null and examinedDate !=''">
+				EXAMINED_DATE=#{examinedDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="examinedBy !=null and examinedBy !=''">
+				EXAMINED_BY=#{examinedBy, jdbcType=VARCHAR},
+			</if>
+			<if test="examinedPlace !=null and examinedPlace !=''">
+				EXAMINED_PLACE=#{examinedPlace, jdbcType=VARCHAR},
+			</if>
+			<if test="name !=null and name !=''">
+				NAME=#{name, jdbcType=VARCHAR},
+			</if>
+			<if test="originStatus !=null and originStatus !=''">
+				ORIGIN_STATUS=#{originStatus, jdbcType=CHAR},
+			</if>
+			<if test="sex !=null and sex !=''">
+				SEX=#{sex, jdbcType=VARCHAR},
+			</if>
+			<if test="birthDate !=null and birthDate !=''">
+				BIRTH_DATE=#{birthDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="folk !=null and folk !=''">
+				FOLK=#{folk, jdbcType=VARCHAR},
+			</if>
+			<if test="nationality !=null and nationality !=''">
+				NATIONALITY=#{nationality, jdbcType=VARCHAR},
+			</if>
+			<if test="nativePlaceRegionalism !=null and nativePlaceRegionalism !=''">
+				NATIVE_PLACE_REGIONALISM=#{nativePlaceRegionalism, jdbcType=VARCHAR},
+			</if>
+			<if test="nativePlace !=null and nativePlace !=''">
+				NATIVE_PLACE=#{nativePlace, jdbcType=VARCHAR},
+			</if>
+			<if test="addressRegionalism !=null and addressRegionalism !=''">
+				ADDRESS_REGIONALISM=#{addressRegionalism, jdbcType=VARCHAR},
+			</if>
+			<if test="address !=null and address !=''">
+				ADDRESS=#{address, jdbcType=VARCHAR},
+			</if>
+			<if test="organization !=null and organization !=''">
+				ORGANIZATION=#{organization, jdbcType=VARCHAR},
+			</if>
+			<if test="specialSign !=null and specialSign !=''">
+				SPECIAL_SIGN=#{specialSign, jdbcType=VARCHAR},
+			</if>
+			<if test="deathDateFrom !=null and deathDateFrom !=''">
+				DEATH_DATE_FROM=#{deathDateFrom, jdbcType=TIMESTAMP},
+			</if>
+			<if test="deathDateTo !=null and deathDateTo !=''">
+				DEATH_DATE_TO=#{deathDateTo, jdbcType=TIMESTAMP},
+			</if>
+			<if test="caseSummary !=null and caseSummary !=''">
+				CASE_SUMMARY=#{caseSummary, jdbcType=VARCHAR},
+			</if>
+			<if test="gesture !=null and gesture !=''">
+				GESTURE=#{gesture, jdbcType=VARCHAR},
+			</if>
+			<if test="clothes !=null and clothes !=''">
+				CLOTHES=#{clothes, jdbcType=VARCHAR},
+			</if>
+			<if test="takenWith !=null and takenWith !=''">
+				TAKEN_WITH=#{takenWith, jdbcType=VARCHAR},
+			</if>
+			<if test="deathReason !=null and deathReason !=''">
+				DEATH_REASON=#{deathReason, jdbcType=VARCHAR},
+			</if>
+			<if test="deathProperty !=null and deathProperty !=''">
+				DEATH_PROPERTY=#{deathProperty, jdbcType=VARCHAR},
+			</if>
+			<if test="inflictManner !=null and inflictManner !=''">
+				INFLICT_MANNER=#{inflictManner, jdbcType=VARCHAR},
+			</if>
+			<if test="strangleholdManner !=null and strangleholdManner !=''">
+				STRANGLEHOLD_MANNER=#{strangleholdManner, jdbcType=VARCHAR},
+			</if>
+			<if test="chokeSymptom !=null and chokeSymptom !=''">
+				CHOKE_SYMPTOM=#{chokeSymptom, jdbcType=VARCHAR},
+			</if>
+			<if test="encasedBy !=null and encasedBy !=''">
+				ENCASED_BY=#{encasedBy, jdbcType=VARCHAR},
+			</if>
+			<if test="packagedBy !=null and packagedBy !=''">
+				PACKAGED_BY=#{packagedBy, jdbcType=VARCHAR},
+			</if>
+			<if test="surfaceExamOpinion !=null and surfaceExamOpinion !=''">
+				SURFACE_EXAM_OPINION=#{surfaceExamOpinion, jdbcType=VARCHAR},
+			</if>
+			<if test="dissectionExamOpinion !=null and dissectionExamOpinion !=''">
+				DISSECTION_EXAM_OPINION=#{dissectionExamOpinion, jdbcType=VARCHAR},
+			</if>
+			<if test="remark !=null and remark !=''">
+				REMARK=#{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="examinedDateup !=null and examinedDateup !=''">
+				EXAMINED_DATEUP=#{examinedDateup, jdbcType=TIMESTAMP},
+			</if>
+			<if test="examinedDatedown !=null and examinedDatedown !=''">
+				EXAMINED_DATEDOWN=#{examinedDatedown, jdbcType=TIMESTAMP},
+			</if>
+			<if test="stfxddqk !=null and stfxddqk !=''">
+				STFXDDQK=#{stfxddqk, jdbcType=VARCHAR},
+			</if>
+			<if test="stwz !=null and stwz !=''">
+				STWZ=#{stwz, jdbcType=VARCHAR},
+			</if>
+			<if test="xcxjqk !=null and xcxjqk !=''">
+				XCXJQK=#{xcxjqk, jdbcType=VARCHAR},
+			</if>
+			<if test="xczwhjgk !=null and xczwhjgk !=''">
+				XCZWHJGK=#{xczwhjgk, jdbcType=VARCHAR},
+			</if>
+			<if test="familyComment !=null and familyComment !=''">
+				FAMILY_COMMENT=#{familyComment, jdbcType=VARCHAR},
+			</if>
+			<if test="source !=null and source !=''">
+				SOURCE=#{source, jdbcType=VARCHAR},
+			</if>
+			<if test="version !=null and version !=''">
+				VERSION=#{version, jdbcType=INTEGER},
+			</if>
+			<if test="updateUserId !=null and updateUserId !=''">
+				UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR},
+			</if>
+			<if test="updateTime !=null and updateTime !=''">
+				UPDATE_TIME=#{updateTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleteFlag !=null and deleteFlag !=''">
+				DELETE_FLAG=#{deleteFlag, jdbcType=CHAR},
+			</if>
+			<if test="reportid !=null and reportid !=''">
+				REPORTID=#{reportid, jdbcType=CHAR}
+			</if>
+	</sql>
+	
+</mapper>

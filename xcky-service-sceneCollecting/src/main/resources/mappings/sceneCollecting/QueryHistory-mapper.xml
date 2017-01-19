@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.QueryHistoryMapper">
+
+	<select id="getById" resultMap="QueryHistoryMap" parameterType="String">
+		SELECT 
+			ID,
+			QUERY_TYPE,
+			QUERY_CONTENT
+		FROM T_QUERY_HISTORY
+		WHERE ID=#{id}
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.QueryHistory">
+		INSERT INTO T_QUERY_HISTORY (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_QUERY_HISTORY WHERE ID=#{id}
+	</delete>
+			
+	<select id="query" resultMap="QueryHistoryMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.QueryHistory">
+		SELECT
+			ID,
+			QUERY_TYPE,
+			QUERY_CONTENT,
+			QUERY_NAME,
+			REMARK
+		FROM T_QUERY_HISTORY
+		WHERE DELETE_FLAG=#{deleteFlag}
+			<if test="queryType !=null and queryType !=''">
+				and QUERY_TYPE=#{queryType, jdbcType=VARCHAR}
+			</if>
+			<if test="createUserId !=null and createUserId !=''">
+				and CREATE_USER_ID=#{createUserId, jdbcType=CHAR}
+			</if>
+	</select>
+	
+</mapper>

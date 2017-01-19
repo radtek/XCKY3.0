@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.InvestigatorHistoryMapper">
+
+	<select id="getById" resultMap="InvestigatorHistoryMap" parameterType="String">
+		SELECT
+			<include refid="selectContentId" />
+		FROM T_INVESTIGATOR_HISTORY
+		WHERE ID=#{id}
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.InvestigatorHistory">
+		INSERT INTO T_INVESTIGATOR_HISTORY (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_INVESTIGATOR_HISTORY WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.InvestigatorHistory">
+		UPDATE T_INVESTIGATOR_HISTORY 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.InvestigatorHistory">
+		UPDATE T_INVESTIGATOR_HISTORY
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="InvestigatorHistoryMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.InvestigatorHistory">
+		SELECT
+			<include refid="selectContentId" />
+		FROM T_INVESTIGATOR_HISTORY
+		WHERE 1=1
+		<if test="investigatorName != null" >
+			and INVESTIGATOR_NAME = #{investigatorName,jdbcType=VARCHAR}
+		  </if> 
+		  <if test="createUserId != null" >
+			and CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR}
+		  </if> 
+	</select>
+	
+	
+	<select id="queryCommander" resultMap="InvestigatorHistoryMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.InvestigatorHistory">
+		SELECT
+			<include refid="selectContentId" />
+		FROM T_INVESTIGATOR_HISTORY
+		WHERE DUTY='1'
+		<if test="investigatorName != null" >
+			and INVESTIGATOR_NAME = #{investigatorName,jdbcType=VARCHAR}
+		  </if> 
+		  <if test="createUserId != null" >
+			and CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR}
+		  </if> 
+	</select>
+	
+	<select id="queryInquest" resultMap="InvestigatorHistoryMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.InvestigatorHistory">
+		SELECT
+			<include refid="selectContentId" />
+		FROM T_INVESTIGATOR_HISTORY
+		WHERE DUTY!='1'
+		<if test="investigatorName != null" >
+			and INVESTIGATOR_NAME = #{investigatorName,jdbcType=VARCHAR}
+		  </if> 
+		  <if test="createUserId != null" >
+			and CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR}
+		  </if> 
+	</select>
+	<!-- 刷新当前用户下数据为非勘验组 -->
+	<update id="updateIsOpenByUser" parameterType="String">
+		UPDATE T_INVESTIGATOR_HISTORY
+		<set>
+			IS_OPEN='0'
+		</set>
+		WHERE CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR}
+	</update>
+	
+	<delete id="deleteByMap" parameterType="String">
+		DELETE FROM T_INVESTIGATOR_HISTORY WHERE INVESTIGATOR_ID in (${investigatorIds}) and CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByCreateUserId" parameterType="String">
+		DELETE FROM T_INVESTIGATOR_HISTORY 
+		WHERE  CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR} 
+		<choose>
+			<when test="duty !=null and duty =='1'.toString()">
+				and duty = '1'			
+			</when>
+			<otherwise>
+				and duty != '1'
+			</otherwise>
+		</choose>
+	</delete>
+</mapper>

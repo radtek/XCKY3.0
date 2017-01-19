@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.TextTemplateMapper">
+
+	<select id="getById" resultMap="TextTemplateMap" parameterType="String">
+		SELECT
+			ID,
+			TEMPLATE_TYPE,
+			TEMPLATE_NAME,		
+			CASE_TYPE,
+			CONTENT,
+			ALL_AVAILABLE,
+			COMMON_FLAG,
+			ALLOW_MODIFY,
+			OPEN_FLAG
+		FROM T_TEXT_TEMPLATE
+		WHERE ID=#{id}
+	</select>
+	
+	
+	<select id="getAllByType" resultMap="TextTemplateMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.TextTemplate">
+		SELECT
+			ID,
+			TEMPLATE_TYPE,
+			TEMPLATE_NAME,		
+			CASE_TYPE,
+			CONTENT,
+			ALL_AVAILABLE,
+			COMMON_FLAG,
+			ALLOW_MODIFY,
+			OPEN_FLAG
+		FROM T_TEXT_TEMPLATE
+		WHERE delete_flag='0'
+			<if test="templateType !=null and templateType !=''">
+				and TEMPLATE_TYPE=#{templateType, jdbcType=VARCHAR},
+			</if>
+			<if test="caseType !=null and caseType !=''">
+				and CASE_TYPE=#{caseType, jdbcType=VARCHAR},
+			</if>
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.TextTemplate">
+		INSERT INTO T_TEXT_TEMPLATE (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_TEXT_TEMPLATE WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.TextTemplate">
+		UPDATE T_TEXT_TEMPLATE 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.TextTemplate">
+		UPDATE T_TEXT_TEMPLATE
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="TextTemplateMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.TextTemplate">
+		SELECT
+				ID,
+				TEMPLATE_TYPE,
+				(select tsd.dict_value
+			             from t_sys_dict tsd
+			            where tsd.dict_key = TEMPLATE_TYPE
+			            and tsd.root_key='WBMBLXDM') as templateTypeName,
+				TEMPLATE_NAME,		
+				CASE_TYPE,
+				(select tsd.dict_value
+			             from t_sys_dict tsd
+			            where tsd.dict_key = CASE_TYPE
+			            and tsd.root_key='AJLBDM') as caseTypeName,				
+				CONTENT,
+				ALL_AVAILABLE,
+				COMMON_FLAG,
+				ALLOW_MODIFY,
+				OPEN_FLAG
+		FROM T_TEXT_TEMPLATE
+		WHERE DELETE_FLAG=#{deleteFlag}
+		    <if test="templateType !=null and templateType !=''">
+				and TEMPLATE_TYPE=#{templateType, jdbcType=VARCHAR}
+			</if>
+			<if test="templateName !=null and templateName !=''">
+				and TEMPLATE_NAME like '%'||#{templateName, jdbcType=VARCHAR}||'%'
+			</if>	
+			<if test="openFlag !=null and openFlag !=''">
+				and OPEN_FLAG=#{openFlag, jdbcType=CHAR}
+			</if>
+			<if test="caseType !=null and caseType !=''">
+				and CASE_TYPE=#{caseType, jdbcType=VARCHAR}
+			</if>			
+		order by CREATE_TIME desc
+	</select>
+	
+</mapper>

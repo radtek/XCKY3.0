@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.SceneBodySurfaceMapper">
+
+	<resultMap type="com.hisign.xcky.api.model.sceneCollecting.SceneBodySurface" id="SceneBodySurfaceMap">
+		<result property="rowNum" column="ROW_ID" />
+		<result property="id" column="ID" />
+		<result property="investigationId" column="INVESTIGATION_ID" />
+		<result property="bodyId" column="BODY_ID" />
+		<result property="bodyLength" column="BODY_LENGTH" />
+		<result property="skinColor" column="SKIN_COLOR" />
+		<result property="growth" column="GROWTH" />
+		<result property="nutrition" column="NUTRITION" />
+		<result property="stain" column="STAIN" />
+		<result property="rigidity" column="RIGIDITY" />
+		<result property="measuringTime1" column="MEASURING_TIME1" />
+		<result property="measuringTime2" column="MEASURING_TIME2" />
+		<result property="envTemperature1" column="ENV_TEMPERATURE1" />
+		<result property="envTemperature2" column="ENV_TEMPERATURE2" />
+		<result property="bodyTemerature1" column="BODY_TEMERATURE1" />
+		<result property="bodyTemerature2" column="BODY_TEMERATURE2" />
+		<result property="bodyInfo" column="BODY_INFO" />
+		<result property="insectInfo" column="INSECT_INFO" />
+		<result property="rottenDegree" column="ROTTEN_DEGREE" />
+		<result property="hairColor" column="HAIR_COLOR" />
+		<result property="hairStyle" column="HAIR_STYLE" />
+		<result property="hairLength" column="HAIR_LENGTH" />
+		<result property="faceColor" column="FACE_COLOR" />
+		<result property="cornea" column="CORNEA" />
+		<result property="pupil" column="PUPIL" />
+		<result property="eyeball" column="EYEBALL" />
+		<result property="leftBallLidFilm" column="LEFT_BALL_LID_FILM" />
+		<result property="rightBallLidFilm" column="RIGHT_BALL_LID_FILM" />
+		<result property="auricle" column="AURICLE" />
+		<result property="externalAuditoryCanal" column="EXTERNAL_AUDITORY_CANAL" />
+		<result property="externalNose" column="EXTERNAL_NOSE" />
+		<result property="nasalCavity" column="NASAL_CAVITY" />
+		<result property="lips" column="LIPS" />
+		<result property="mouthCavity" column="MOUTH_CAVITY" />
+		<result property="tongue" column="TONGUE" />
+		<result property="tooth" column="TOOTH" />
+		<result property="gingiva" column="GINGIVA" />
+		<result property="headOther" column="HEAD_OTHER" />
+		<result property="neck" column="NECK" />
+		<result property="chest" column="CHEST" />
+		<result property="belly" column="BELLY" />
+		<result property="back" column="BACK" />
+		<result property="limbs" column="LIMBS" />
+		<result property="genitalOrgan" column="GENITAL_ORGAN" />
+		<result property="anus" column="ANUS" />
+		<result property="other" column="OTHER" />
+		<result property="stainColor" column="STAIN_COLOR" />
+		<result property="stainBw" column="STAIN_BW" />
+		<result property="stainZy" column="STAIN_ZY" />
+		<result property="rigidityHe" column="RIGIDITY_HE" />
+		<result property="rigidityJing" column="RIGIDITY_JING" />
+		<result property="rigiditySz" column="RIGIDITY_SZ" />
+		<result property="rigidityXz" column="RIGIDITY_XZ" />
+		<result property="rigidityQd" column="RIGIDITY_QD" />
+		<result property="pupilLeft" column="PUPIL_LEFT" />
+		<result property="pupilRight" column="PUPIL_RIGHT" />
+		<result property="eyeIfclose" column="EYE_IFCLOSE" />
+		<result property="canalLeft" column="CANAL_LEFT" />
+		<result property="canalRight" column="CANAL_RIGHT" />
+		<result property="envSd1" column="ENV_SD1" />
+		<result property="envSd2" column="ENV_SD2" />
+		<result property="faceInjureCondition" column="FACE_INJURE_CONDITION" />
+		<result property="source" column="SOURCE" />
+		<result property="version" column="VERSION" />
+		<result property="deleteFlag" column="DELETE_FLAG" />
+		<result property="createUserId" column="CREATE_USER_ID" />
+		<result property="updateUserId" column="UPDATE_USER_ID" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+	</resultMap>
+	
+	<sql id="selectId">
+		ID,
+		INVESTIGATION_ID,
+		BODY_ID,
+		BODY_LENGTH,
+		SKIN_COLOR,
+		GROWTH,
+		NUTRITION,
+		STAIN,
+		RIGIDITY,
+		MEASURING_TIME1,
+		MEASURING_TIME2,
+		ENV_TEMPERATURE1,
+		ENV_TEMPERATURE2,
+		BODY_TEMERATURE1,
+		BODY_TEMERATURE2,
+		BODY_INFO,
+		INSECT_INFO,
+		ROTTEN_DEGREE,
+		HAIR_COLOR,
+		HAIR_STYLE,
+		HAIR_LENGTH,
+		FACE_COLOR,
+		CORNEA,
+		PUPIL,
+		EYEBALL,
+		LEFT_BALL_LID_FILM,
+		RIGHT_BALL_LID_FILM,
+		AURICLE,
+		EXTERNAL_AUDITORY_CANAL,
+		EXTERNAL_NOSE,
+		NASAL_CAVITY,
+		LIPS,
+		MOUTH_CAVITY,
+		TONGUE,
+		TOOTH,
+		GINGIVA,
+		HEAD_OTHER,
+		NECK,
+		CHEST,
+		BELLY,
+		BACK,
+		LIMBS,
+		GENITAL_ORGAN,
+		ANUS,
+		OTHER,
+		STAIN_COLOR,
+		STAIN_BW,
+		STAIN_ZY,
+		RIGIDITY_HE,
+		RIGIDITY_JING,
+		RIGIDITY_SZ,
+		RIGIDITY_XZ,
+		RIGIDITY_QD,
+		PUPIL_LEFT,
+		PUPIL_RIGHT,
+		EYE_IFCLOSE,
+		CANAL_LEFT,
+		CANAL_RIGHT,
+		ENV_SD1,
+		ENV_SD2,
+		FACE_INJURE_CONDITION,
+		SOURCE,
+		VERSION,
+		DELETE_FLAG,
+		CREATE_USER_ID,
+		UPDATE_USER_ID,
+		CREATE_TIME,
+		UPDATE_TIME
+	</sql>
+  
+	<sql id="insertId">
+		#{id, jdbcType=CHAR},
+		#{investigationId, jdbcType=CHAR},
+		#{bodyId, jdbcType=CHAR},
+		#{bodyLength, jdbcType=INTEGER},
+		#{skinColor, jdbcType=VARCHAR},
+		#{growth, jdbcType=VARCHAR},
+		#{nutrition, jdbcType=VARCHAR},
+		#{stain, jdbcType=VARCHAR},
+		#{rigidity, jdbcType=VARCHAR},
+		#{measuringTime1, jdbcType=VARCHAR},
+		#{measuringTime2, jdbcType=VARCHAR},
+		#{envTemperature1, jdbcType=INTEGER},
+		#{envTemperature2, jdbcType=INTEGER},
+		#{bodyTemerature1, jdbcType=INTEGER},
+		#{bodyTemerature2, jdbcType=INTEGER},
+		#{bodyInfo, jdbcType=VARCHAR},
+		#{insectInfo, jdbcType=VARCHAR},
+		#{rottenDegree, jdbcType=VARCHAR},
+		#{hairColor, jdbcType=VARCHAR},
+		#{hairStyle, jdbcType=VARCHAR},
+		#{hairLength, jdbcType=INTEGER},
+		#{faceColor, jdbcType=VARCHAR},
+		#{cornea, jdbcType=VARCHAR},
+		#{pupil, jdbcType=VARCHAR},
+		#{eyeball, jdbcType=VARCHAR},
+		#{leftBallLidFilm, jdbcType=VARCHAR},
+		#{rightBallLidFilm, jdbcType=VARCHAR},
+		#{auricle, jdbcType=VARCHAR},
+		#{externalAuditoryCanal, jdbcType=VARCHAR},
+		#{externalNose, jdbcType=VARCHAR},
+		#{nasalCavity, jdbcType=VARCHAR},
+		#{lips, jdbcType=VARCHAR},
+		#{mouthCavity, jdbcType=VARCHAR},
+		#{tongue, jdbcType=VARCHAR},
+		#{tooth, jdbcType=VARCHAR},
+		#{gingiva, jdbcType=VARCHAR},
+		#{headOther, jdbcType=VARCHAR},
+		#{neck, jdbcType=VARCHAR},
+		#{chest, jdbcType=VARCHAR},
+		#{belly, jdbcType=VARCHAR},
+		#{back, jdbcType=VARCHAR},
+		#{limbs, jdbcType=VARCHAR},
+		#{genitalOrgan, jdbcType=VARCHAR},
+		#{anus, jdbcType=VARCHAR},
+		#{other, jdbcType=VARCHAR},
+		#{stainColor, jdbcType=VARCHAR},
+		#{stainBw, jdbcType=VARCHAR},
+		#{stainZy, jdbcType=VARCHAR},
+		#{rigidityHe, jdbcType=VARCHAR},
+		#{rigidityJing, jdbcType=VARCHAR},
+		#{rigiditySz, jdbcType=VARCHAR},
+		#{rigidityXz, jdbcType=VARCHAR},
+		#{rigidityQd, jdbcType=VARCHAR},
+		#{pupilLeft, jdbcType=VARCHAR},
+		#{pupilRight, jdbcType=VARCHAR},
+		#{eyeIfclose, jdbcType=VARCHAR},
+		#{canalLeft, jdbcType=VARCHAR},
+		#{canalRight, jdbcType=VARCHAR},
+		#{envSd1, jdbcType=INTEGER},
+		#{envSd2, jdbcType=INTEGER},
+		#{faceInjureCondition, jdbcType=VARCHAR},
+		#{source, jdbcType=VARCHAR},
+		#{version, jdbcType=INTEGER},
+		#{deleteFlag, jdbcType=CHAR},
+		#{createUserId, jdbcType=CHAR},
+		#{updateUserId, jdbcType=CHAR},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	</sql>
+
+	<sql id="updateId">
+			<if test="investigationId !=null and investigationId !=''">
+				INVESTIGATION_ID=#{investigationId, jdbcType=CHAR},
+			</if>
+			<if test="bodyId !=null and bodyId !=''">
+				BODY_ID=#{bodyId, jdbcType=CHAR},
+			</if>
+			<if test="bodyLength !=null and bodyLength !=''">
+				BODY_LENGTH=#{bodyLength, jdbcType=INTEGER},
+			</if>
+			<if test="skinColor !=null and skinColor !=''">
+				SKIN_COLOR=#{skinColor, jdbcType=VARCHAR},
+			</if>
+			<if test="growth !=null and growth !=''">
+				GROWTH=#{growth, jdbcType=VARCHAR},
+			</if>
+			<if test="nutrition !=null and nutrition !=''">
+				NUTRITION=#{nutrition, jdbcType=VARCHAR},
+			</if>
+			<if test="stain !=null and stain !=''">
+				STAIN=#{stain, jdbcType=VARCHAR},
+			</if>
+			<if test="rigidity !=null and rigidity !=''">
+				RIGIDITY=#{rigidity, jdbcType=VARCHAR},
+			</if>
+			<if test="measuringTime1 !=null and measuringTime1 !=''">
+				MEASURING_TIME1=#{measuringTime1, jdbcType=VARCHAR},
+			</if>
+			<if test="measuringTime2 !=null and measuringTime2 !=''">
+				MEASURING_TIME2=#{measuringTime2, jdbcType=VARCHAR},
+			</if>
+			<if test="envTemperature1 !=null and envTemperature1 !=''">
+				ENV_TEMPERATURE1=#{envTemperature1, jdbcType=INTEGER},
+			</if>
+			<if test="envTemperature2 !=null and envTemperature2 !=''">
+				ENV_TEMPERATURE2=#{envTemperature2, jdbcType=INTEGER},
+			</if>
+			<if test="bodyTemerature1 !=null and bodyTemerature1 !=''">
+				BODY_TEMERATURE1=#{bodyTemerature1, jdbcType=INTEGER},
+			</if>
+			<if test="bodyTemerature2 !=null and bodyTemerature2 !=''">
+				BODY_TEMERATURE2=#{bodyTemerature2, jdbcType=INTEGER},
+			</if>
+			<if test="bodyInfo !=null and bodyInfo !=''">
+				BODY_INFO=#{bodyInfo, jdbcType=VARCHAR},
+			</if>
+			<if test="insectInfo !=null and insectInfo !=''">
+				INSECT_INFO=#{insectInfo, jdbcType=VARCHAR},
+			</if>
+			<if test="rottenDegree !=null and rottenDegree !=''">
+				ROTTEN_DEGREE=#{rottenDegree, jdbcType=VARCHAR},
+			</if>
+			<if test="hairColor !=null and hairColor !=''">
+				HAIR_COLOR=#{hairColor, jdbcType=VARCHAR},
+			</if>
+			<if test="hairStyle !=null and hairStyle !=''">
+				HAIR_STYLE=#{hairStyle, jdbcType=VARCHAR},
+			</if>
+			<if test="hairLength !=null and hairLength !=''">
+				HAIR_LENGTH=#{hairLength, jdbcType=INTEGER},
+			</if>
+			<if test="faceColor !=null and faceColor !=''">
+				FACE_COLOR=#{faceColor, jdbcType=VARCHAR},
+			</if>
+			<if test="cornea !=null and cornea !=''">
+				CORNEA=#{cornea, jdbcType=VARCHAR},
+			</if>
+			<if test="pupil !=null and pupil !=''">
+				PUPIL=#{pupil, jdbcType=VARCHAR},
+			</if>
+			<if test="eyeball !=null and eyeball !=''">
+				EYEBALL=#{eyeball, jdbcType=VARCHAR},
+			</if>
+			<if test="leftBallLidFilm !=null and leftBallLidFilm !=''">
+				LEFT_BALL_LID_FILM=#{leftBallLidFilm, jdbcType=VARCHAR},
+			</if>
+			<if test="rightBallLidFilm !=null and rightBallLidFilm !=''">
+				RIGHT_BALL_LID_FILM=#{rightBallLidFilm, jdbcType=VARCHAR},
+			</if>
+			<if test="auricle !=null and auricle !=''">
+				AURICLE=#{auricle, jdbcType=VARCHAR},
+			</if>
+			<if test="externalAuditoryCanal !=null and externalAuditoryCanal !=''">
+				EXTERNAL_AUDITORY_CANAL=#{externalAuditoryCanal, jdbcType=VARCHAR},
+			</if>
+			<if test="externalNose !=null and externalNose !=''">
+				EXTERNAL_NOSE=#{externalNose, jdbcType=VARCHAR},
+			</if>
+			<if test="nasalCavity !=null and nasalCavity !=''">
+				NASAL_CAVITY=#{nasalCavity, jdbcType=VARCHAR},
+			</if>
+			<if test="lips !=null and lips !=''">
+				LIPS=#{lips, jdbcType=VARCHAR},
+			</if>
+			<if test="mouthCavity !=null and mouthCavity !=''">
+				MOUTH_CAVITY=#{mouthCavity, jdbcType=VARCHAR},
+			</if>
+			<if test="tongue !=null and tongue !=''">
+				TONGUE=#{tongue, jdbcType=VARCHAR},
+			</if>
+			<if test="tooth !=null and tooth !=''">
+				TOOTH=#{tooth, jdbcType=VARCHAR},
+			</if>
+			<if test="gingiva !=null and gingiva !=''">
+				GINGIVA=#{gingiva, jdbcType=VARCHAR},
+			</if>
+			<if test="headOther !=null and headOther !=''">
+				HEAD_OTHER=#{headOther, jdbcType=VARCHAR},
+			</if>
+			<if test="neck !=null and neck !=''">
+				NECK=#{neck, jdbcType=VARCHAR},
+			</if>
+			<if test="chest !=null and chest !=''">
+				CHEST=#{chest, jdbcType=VARCHAR},
+			</if>
+			<if test="belly !=null and belly !=''">
+				BELLY=#{belly, jdbcType=VARCHAR},
+			</if>
+			<if test="back !=null and back !=''">
+				BACK=#{back, jdbcType=VARCHAR},
+			</if>
+			<if test="limbs !=null and limbs !=''">
+				LIMBS=#{limbs, jdbcType=VARCHAR},
+			</if>
+			<if test="genitalOrgan !=null and genitalOrgan !=''">
+				GENITAL_ORGAN=#{genitalOrgan, jdbcType=VARCHAR},
+			</if>
+			<if test="anus !=null and anus !=''">
+				ANUS=#{anus, jdbcType=VARCHAR},
+			</if>
+			<if test="other !=null and other !=''">
+				OTHER=#{other, jdbcType=VARCHAR},
+			</if>
+			<if test="stainColor !=null and stainColor !=''">
+				STAIN_COLOR=#{stainColor, jdbcType=VARCHAR},
+			</if>
+			<if test="stainBw !=null and stainBw !=''">
+				STAIN_BW=#{stainBw, jdbcType=VARCHAR},
+			</if>
+			<if test="stainZy !=null and stainZy !=''">
+				STAIN_ZY=#{stainZy, jdbcType=VARCHAR},
+			</if>
+			<if test="rigidityHe !=null and rigidityHe !=''">
+				RIGIDITY_HE=#{rigidityHe, jdbcType=VARCHAR},
+			</if>
+			<if test="rigidityJing !=null and rigidityJing !=''">
+				RIGIDITY_JING=#{rigidityJing, jdbcType=VARCHAR},
+			</if>
+			<if test="rigiditySz !=null and rigiditySz !=''">
+				RIGIDITY_SZ=#{rigiditySz, jdbcType=VARCHAR},
+			</if>
+			<if test="rigidityXz !=null and rigidityXz !=''">
+				RIGIDITY_XZ=#{rigidityXz, jdbcType=VARCHAR},
+			</if>
+			<if test="rigidityQd !=null and rigidityQd !=''">
+				RIGIDITY_QD=#{rigidityQd, jdbcType=VARCHAR},
+			</if>
+			<if test="pupilLeft !=null and pupilLeft !=''">
+				PUPIL_LEFT=#{pupilLeft, jdbcType=VARCHAR},
+			</if>
+			<if test="pupilRight !=null and pupilRight !=''">
+				PUPIL_RIGHT=#{pupilRight, jdbcType=VARCHAR},
+			</if>
+			<if test="eyeIfclose !=null and eyeIfclose !=''">
+				EYE_IFCLOSE=#{eyeIfclose, jdbcType=VARCHAR},
+			</if>
+			<if test="canalLeft !=null and canalLeft !=''">
+				CANAL_LEFT=#{canalLeft, jdbcType=VARCHAR},
+			</if>
+			<if test="canalRight !=null and canalRight !=''">
+				CANAL_RIGHT=#{canalRight, jdbcType=VARCHAR},
+			</if>
+			<if test="envSd1 !=null and envSd1 !=''">
+				ENV_SD1=#{envSd1, jdbcType=INTEGER},
+			</if>
+			<if test="envSd2 !=null and envSd2 !=''">
+				ENV_SD2=#{envSd2, jdbcType=INTEGER},
+			</if>
+			<if test="faceInjureCondition !=null and faceInjureCondition !=''">
+				FACE_INJURE_CONDITION=#{faceInjureCondition, jdbcType=VARCHAR},
+			</if>
+			<if test="source !=null and source !=''">
+				SOURCE=#{source, jdbcType=VARCHAR},
+			</if>
+			<if test="version !=null and version !=''">
+				VERSION=#{version, jdbcType=INTEGER},
+			</if>
+			<if test="updateUserId !=null and updateUserId !=''">
+				UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR},
+			</if>
+			<if test="deleteFlag !=null and deleteFlag !=''">
+				DELETE_FLAG=#{deleteFlag, jdbcType=CHAR},
+			</if>
+			<if test="updateTime !=null and updateTime !=''">
+				UPDATE_TIME=#{updateTime, jdbcType=TIMESTAMP}
+			</if>
+	</sql>
+	
+</mapper>

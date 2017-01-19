@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.system.SysXtdhMapper">
+
+	<select id="getById" resultMap="SysXtdhMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SYS_XTDH
+		WHERE ID=#{id}
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.system.SysXtdh">
+		INSERT INTO T_SYS_XTDH (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_SYS_XTDH WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.system.SysXtdh">
+		UPDATE T_SYS_XTDH 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.system.SysXtdh">
+		UPDATE T_SYS_XTDH
+				set
+				<if test="systemName !=null and systemName !=''">
+					SYSTEM_NAME=#{systemName, jdbcType=VARCHAR},
+				</if>
+				<if test="systemCode !=null and systemCode !=''">
+					SYSTEM_CODE=#{systemCode, jdbcType=VARCHAR},
+				</if>
+				<if test="systemCunit !=null and systemCunit !=''">
+					SYSTEM_CUNIT=#{systemCunit, jdbcType=VARCHAR},
+				</if>
+				<if test="systemAddr !=null and systemAddr !=''">
+					SYSTEM_ADDR=#{systemAddr, jdbcType=VARCHAR},
+				</if>
+				<if test="sort !=null and sort !=''">
+					SORT=#{sort, jdbcType=VARCHAR},
+				</if>
+				<if test="photo !=null and photo !=''">
+					PHOTO=#{photo, jdbcType=BLOB},
+				</if>
+				<if test="ifLogin !=null and ifLogin !=''">
+					IF_LOGIN=#{ifLogin, jdbcType=CHAR},
+				</if>
+				<if test="ifJh !=null and ifJh !=''">
+					IF_JH=#{ifJh, jdbcType=CHAR},
+				</if>
+				<if test="jhPara !=null and jhPara !=''">
+					JH_PARA=#{jhPara, jdbcType=VARCHAR},
+				</if>
+				<if test="ifSfzh !=null and ifSfzh !=''">
+					IF_SFZH=#{ifSfzh, jdbcType=CHAR},
+				</if>
+				<if test="sfzhPara !=null and sfzhPara !=''">
+					SFZH_PARA=#{sfzhPara, jdbcType=VARCHAR},
+				</if>
+				UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR},
+				UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="SysXtdhMap" parameterType="com.hisign.xcky.api.model.system.SysXtdh">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SYS_XTDH
+		WHERE DELETE_FLAG=#{deleteFlag}
+		<if test="systemName!=null and systemName!=''">
+			and SYSTEM_NAME=#{systemName}
+		</if>
+		<if test="systemCode!=null and systemCode!=''">
+			and SYSTEM_CODE=#{systemCode}
+		</if>
+		
+	</select>
+	
+	<update id="photoUpdate" parameterType="com.hisign.xcky.api.model.system.SysXtdh">
+      UPDATE T_SYS_XTDH 
+      	SET
+      		PHOTO = #{photo}
+    	where id=#{id}
+    </update>
+	
+</mapper>

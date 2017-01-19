@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.InputTemplateMapper">
+
+	<select id="getById" resultMap="InputTemplateMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_INPUT_TEMPLATE
+		WHERE ID=#{id}
+		and DELETE_FLAG='0'
+		and effective_flag='1'
+		
+	</select>
+	
+	<select id="getByCaseType" resultMap="InputTemplateMap" parameterType="String">
+		SELECT
+			ID,
+			USEAGE_USER_LEVEL,
+			CASE_TYPE,
+			CONTENT,
+			ALLOW_MODIFY,
+			EFFECTIVE_FLAG,
+			OPEN_FLAG
+		FROM T_INPUT_TEMPLATE
+		WHERE case_type=#{value}
+		and DELETE_FLAG='0'
+		and effective_flag='1'
+	</select>
+	
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.InputTemplate">
+		INSERT INTO T_INPUT_TEMPLATE (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_INPUT_TEMPLATE WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.InputTemplate">
+		UPDATE T_INPUT_TEMPLATE 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.InputTemplate">
+		UPDATE T_INPUT_TEMPLATE
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="InputTemplateMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.InputTemplate">
+		SELECT
+			       t.id,
+			       t.useage_user_level,
+			       t.case_type as case_type,
+			       case
+			         when t.case_type = 'AJLBDM' then
+			          '标准模板'
+			         else
+			          (select tsd.dict_value
+			             from t_sys_dict tsd
+			            where tsd.dict_key = t.case_type
+			            and tsd.root_key='AJLBDM')
+			       end as caseTypeName,
+			       t.allow_modify,
+			       t.effective_flag,
+			       t.open_flag,
+			       (select tsu.true_name from t_sys_user tsu where tsu.id=t.create_user_id) as create_user,
+			       t.create_time,
+			       (select tsu.true_name from t_sys_user tsu where tsu.id=t.update_user_id) as update_user,
+			       t.update_time
+		FROM T_INPUT_TEMPLATE t
+		WHERE DELETE_FLAG='0'
+		and effective_flag='1'
+		order by CREATE_TIME desc
+	</select>
+	
+	<select id="checkExist" resultMap="InputTemplateMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.InputTemplate">
+		 select t.id
+		   from t_input_template t
+		  where t.case_type = #{caseType}
+		        and t.effective_flag = '1'
+    			and t.delete_flag = '0'		
+	</select> 
+	
+</mapper>

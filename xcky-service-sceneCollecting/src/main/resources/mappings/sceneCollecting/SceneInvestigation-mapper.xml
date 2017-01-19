@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.SceneInvestigationMapper">
+
+	<select id="getById" resultMap="SceneInvestigationMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_INVESTIGATION
+		WHERE ID=#{id}
+	</select>
+	
+	<select id="findMaxIterationNoByInvestigationNo" resultType="Integer" parameterType="String">
+		select Max(ITERATION_NO) AS ITERATION_NO from T_SCENE_INVESTIGATION t WHERE t.DELETE_FLAG='0' AND t.INVESTIGATION_NO=#{value}
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigation">
+		INSERT INTO T_SCENE_INVESTIGATION (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_SCENE_INVESTIGATION WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigation">
+		UPDATE T_SCENE_INVESTIGATION 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigation">
+		UPDATE T_SCENE_INVESTIGATION
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+
+	<select id="query" resultMap="QueryMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigation">
+	    select t.*,rowNum from (
+		select
+		       t1.id,
+		       t1.investigation_no as investigationNo,
+		       t2.case_no as caseNo,
+		       t2.alarm_no as alarmNo,
+		       t4.dict_value as caseType,
+		       t11.dict_value as caseNature,
+		       t1.investigation_date_from as investigationDateFrom,
+		       t1.investigation_date_to as investigationDateTo,
+		       t1.organ_name as organName,
+		       t7.investigator_id         as sceneInvestigatorId,
+		       t7.investigator_name       as sceneinvestigator,
+		       t1.investigation_place as investigationPlace,
+		       t5.organ_name as caseRegionalism,
+		       t2.case_location as caseLocation,
+		       t2.crime_time_begin as crimeTimeBegin,
+		       t2.crime_time_end as crimeTimeEnd,
+		       t6.scene_picture_amount as scenePicture,
+		       t6.scene_photo_amount as scenePhoto,
+		       t6.video_evidence_amount as sceneVideo,
+		       t8.evidenct_amount as sceneMaterialEvidence,
+		       t9.goods_amount as collectGoodsAmount,
+		       t3.last_submit_datetime as submitDate,
+		       t2.dead_amount as deadAmount,
+		       t3.save_flag as saveFlag,
+		       t3.allow_modify as allowModify,
+		       t1.create_user_id as createUserId,
+		       t10.id as followId,
+		       t3.note_made_flag         as noteMadeFlag,
+		       t12.file_server_path       as fileServicePath,
+		       t1.iteration_no		          as iterationNo
+		  from t_scene_investigation t1,
+		       t_scene_investigation_dispatch t2,
+		       t_scene_investigation_status t3,
+		       t_sys_dict t4,
+		       t_organization t5,
+		       t_scene_pic_summary t6,
+		       (select t71.investigation_id,
+		               wm_concat(distinct to_char(t71.investigator_id)) as investigator_id,
+		               wm_concat(distinct to_char(t71.investigator_name)) as investigator_name
+		          from t_scene_investigator t71
+		          <choose>
+		          	<when test="sceneInvestigatorId !=null and sceneInvestigatorId !=''">
+		          		,t_scene_investigator t72
+					 where t71.investigation_id = t72.investigation_id
+					   and t72.investigator_id =  #{sceneInvestigatorId}
+		          	</when>
+		          	<otherwise>
+		          		where t71.delete_flag = '0'
+		          	</otherwise>
+		          </choose>
+		         group by t71.investigation_id) t7,
+		       (select t81.investigation_id,
+		               count(t81.id) as evidenct_amount
+		          from t_scene_material_evidence t81
+		         group by t81.investigation_id) t8,
+		       (select t91.investigation_id,
+		               sum(t91.amount) as goods_amount
+		          from t_scene_collected_goods t91
+		         group by t91.investigation_id) t9,
+		        t_scene_follow t10,
+		        t_sys_dict t11,
+		       (select investigation_id,
+		               file_server_path
+		          from t_common_attachment
+		         where category = '02') t12		        
+		 where t1.delete_flag = '0'
+		   and t1.id = t2.investigation_id
+		   and t1.id = t3.investigation_id
+		   and t4.root_key(+) = 'AJLBDM'
+		   and t2.case_type = t4.dict_key(+)
+		   and t11.root_key(+) = 'AJXZDM'
+		   and t2.case_nature = t11.dict_key(+)
+		   and t2.case_regionalism = t5.regionalism(+)
+		   and t1.id = t6.investigation_id(+)
+			<choose>
+				<when test="sceneInvestigatorId !=null and sceneInvestigatorId !=''">
+					and t1.id = t7.investigation_id
+				</when>
+				<otherwise>
+					and t1.id = t7.investigation_id(+)
+				</otherwise>
+			</choose>
+		   and t1.id = t8.investigation_id(+)
+		   and t1.id = t9.investigation_id(+)
+		   and t1.id = t10.investigation_id(+)
+		   and t1.id = t12.investigation_id(+)	
+		   <if test="sceneArea !=null and sceneArea =='0'.toString()">
+		   		and t1.create_user_id = #{createUserId}
+		   </if>
+		   <if test="sceneArea !=null and sceneArea =='1'.toString()">
+			    and t1.organ_no = #{organNo}
+		   </if>
+		   <if test="investigationDateFrom !=null and investigationDateFrom !=''">
+		   		and t1.investigation_date_from <![CDATA[>=]]> #{investigationDateFrom, jdbcType=DATE}
+		   </if>
+		   <if test="investigationDateTo !=null and investigationDateTo !=''">
+		   		and t1.investigation_date_from <![CDATA[<]]> #{investigationDateTo, jdbcType=DATE}+1
+		   </if>
+		   <if test="crimeTimeBegin !=null and crimeTimeBegin !=''">
+				and t2.crime_time_begin <![CDATA[>=]]> #{crimeTimeBegin, jdbcType=DATE}
+		   </if>
+		   <if test="crimeTimeEnd !=null and crimeTimeEnd !=''">
+				and t2.crime_time_begin <![CDATA[<]]> #{crimeTimeEnd, jdbcType=DATE}+1
+		   </if>
+		   <if test="caseType !=null and caseType !=''">
+		   		and t2.case_type like #{caseType}||'%'
+		   </if>
+		   <if test="caseRegionalism !=null and caseRegionalism !=''">
+		   		and t2.case_regionalism like #{caseRegionalism}||'%'
+		   </if>
+		   <if test="investigationNo !=null and investigationNo !=''">
+		   		and t1.investigation_no like #{investigationNo}||'%'
+		   </if>
+		   <if test="investigationPlace !=null and investigationPlace !=''">
+		   		and t1.investigation_place like '%' || #{investigationPlace} || '%'
+		   </if>
+		   <if test="caseNo !=null and caseNo !=''">
+		   		and t2.case_no like #{caseNo}||'%'
+		   </if>
+		   <if test="alarmNo !=null and alarmNo !=''">
+		   		and t2.alarm_no like #{alarmNo}||'%'
+		   </if>
+		   <if test="sceneStatus !=null and sceneStatus !=''">
+           		<choose>
+					<when test="sceneStatus !=null and sceneStatus ==2">
+           				and t3.quality_flag='0'
+           			</when>           		
+					<when test="sceneStatus !=null and sceneStatus ==3">
+           				and t10.create_user_id = #{createUserId}
+           			</when>           			
+           			<otherwise>
+		           		and t3.save_flag = #{sceneStatus}
+           			</otherwise>
+           		</choose>
+           </if>
+           <if test="relateFlag !=null and relateFlag !=''">
+				<choose>
+	           		<when test="relateType !=null and relateType ==1">
+				   		and t3.case_no_flag=#{relateFlag}
+	           		</when>
+	           		<when test="relateType !=null and relateType ==2">
+				   		and t3.alarm_no_flag=#{relateFlag}
+	           		</when>
+	           		<otherwise>
+	           			and t3.case_no_flag=#{relateFlag}
+				   		and t3.alarm_no_flag=#{relateFlag}
+	           		</otherwise>
+	           </choose>				           
+           </if>           
+		   <if test="noteMadeFlag !=null and noteMadeFlag !=''">
+             	and t3.note_made_flag = #{noteMadeFlag}
+		   </if>
+		   <if test="bsCollectFlag !=null and bsCollectFlag !=''">
+           		and t3.bs_collect_flag = #{bsCollectFlag}
+		   </if>
+		   order by t1.create_time desc
+		   <if test="sceneArea !=null and sceneArea =='0'">
+		   		<if test="sceneInvestigatorId ==null or sceneInvestigatorId ==''">
+				union
+				select 
+						   t1.id,
+					       t1.investigation_no as investigationNo,
+					       t2.case_no as caseNo,
+					       t2.alarm_no as alarmNo,
+					       t4.dict_value as caseType,
+					       t11.dict_value as caseNature,
+					       t1.investigation_date_from as investigationDateFrom,
+					       t1.investigation_date_to as investigationDateTo,
+					       t1.organ_name as organName,
+					       to_char(t7.investigator_id)         as sceneInvestigatorId,
+					       to_char(t7.investigator_name)       as sceneinvestigator,
+					       t1.investigation_place as investigationPlace,
+					       t5.organ_name as caseRegionalism,
+					       t2.case_location as caseLocation,
+					       t2.crime_time_begin as crimeTimeBegin,
+					       t2.crime_time_end as crimeTimeEnd,
+					       t6.scene_picture_amount as scenePicture,
+					       t6.scene_photo_amount as scenePhoto,
+					       t6.video_evidence_amount as sceneVideo,
+					       t8.evidenct_amount as sceneMaterialEvidence,
+					       t9.goods_amount as collectGoodsAmount,
+					       t3.last_submit_datetime as submitDate,
+					       t2.dead_amount as deadAmount,
+					       t3.save_flag as saveFlag,
+					       t3.allow_modify as allowModify,
+					       t1.create_user_id as createUserId,
+					       t10.id as followId,
+					       t3.note_made_flag         as noteMadeFlag,
+					       t12.file_server_path       as fileServicePath,
+					       t1.iteration_no		          as iterationNo						       
+					  from t_scene_investigation t1,
+					       t_scene_investigation_dispatch t2,
+					       t_scene_investigation_status t3,
+					       t_sys_dict t4,
+					       t_organization t5,
+					       t_scene_pic_summary t6,
+					       (select t71.investigation_id,
+					               wm_concat(distinct to_char(t71.investigator_id)) as investigator_id,
+					               wm_concat(distinct to_char(t71.investigator_name)) as investigator_name
+					          from t_scene_investigator t71
+						         ,t_scene_investigator t72
+								 where t71.investigation_id = t72.investigation_id
+								   and t72.investigator_id =  #{createUserId}
+								   and t71.delete_flag = '0'
+								   and t72.delete_flag = '0'
+					         group by t71.investigation_id) t7,
+					       (select t81.investigation_id,
+					               count(t81.id) as evidenct_amount
+					          from t_scene_material_evidence t81
+					         group by t81.investigation_id) t8,
+					       (select t91.investigation_id,
+					               sum(t91.amount) as goods_amount
+					          from t_scene_collected_goods t91
+					         group by t91.investigation_id) t9,
+					        t_scene_follow t10,
+					        t_sys_dict t11,
+					       (select investigation_id,
+					               file_server_path
+					          from t_common_attachment
+					         where category = '02') t12						        
+					 where t1.delete_flag = '0'
+					   and t1.id = t2.investigation_id
+					   and t1.id = t3.investigation_id
+					   and t4.root_key(+) = 'AJLBDM'
+					   and t2.case_type = t4.dict_key(+)
+					   and t11.root_key(+) = 'AJXZDM'
+					   and t2.case_nature = t11.dict_key(+)
+					   and t2.case_regionalism = t5.regionalism(+)
+					   and t1.id = t6.investigation_id(+)
+					   <choose>
+					   		<when test="sceneInvestigatorId !=null and sceneInvestigatorId !=''">
+								   and t1.id = t7.investigation_id
+					   		</when>
+					   		<otherwise>
+					   			  and t1.id = t7.investigation_id(+)
+					   		</otherwise>
+					   </choose>
+					   and t1.id = t8.investigation_id(+)
+					   and t1.id = t9.investigation_id(+)
+					   and t1.id = t10.investigation_id(+)
+  						   and t1.id = t12.investigation_id(+)						   
+					   <if test="sceneArea !=null and sceneArea =='1'.toString()">
+						    and t1.organ_no = #{organNo}
+					   </if>
+					   <if test="investigationDateFrom !=null and investigationDateFrom !=''">
+					   		and t1.investigation_date_from <![CDATA[>=]]> #{investigationDateFrom, jdbcType=DATE}
+					   </if>
+					   <if test="investigationDateTo !=null and investigationDateTo !=''">
+					   		and t1.investigation_date_from <![CDATA[<]]> #{investigationDateTo, jdbcType=DATE}+1
+					   </if>
+					   <if test="caseType !=null and caseType !=''">
+					   		and t2.case_type like #{caseType}||'%'
+					   </if>
+					   <if test="caseRegionalism !=null and caseRegionalism !=''">
+					   		and t2.case_regionalism like #{caseRegionalism}||'%'
+					   </if>
+					   <if test="investigationNo !=null and investigationNo !=''">
+					   		and t1.investigation_no like #{investigationNo}||'%'
+					   </if>
+					   <if test="investigationPlace !=null and investigationPlace !=''">
+					   		and t1.investigation_place like '%' || #{investigationPlace} || '%'
+					   </if>
+					   <if test="caseNo !=null and caseNo !=''">
+					   		and t2.case_no like #{caseNo}||'%'
+					   </if>
+					   <if test="alarmNo !=null and alarmNo !=''">
+					   		and t2.alarm_no like #{alarmNo}||'%'
+					   </if>
+					   <if test="sceneStatus !=null and sceneStatus !=''">
+			           		<choose>
+								<when test="sceneStatus !=null and sceneStatus ==2">
+			           				and t3.quality_flag='0'
+			           			</when>				           		
+								<when test="sceneStatus !=null and sceneStatus ==3">
+			           				and t10.create_user_id = #{createUserId}
+			           			</when>
+			           			<otherwise>
+					           		and t3.save_flag = #{sceneStatus}
+			           			</otherwise>
+			           		</choose>
+			           </if>
+			           <if test="relateFlag !=null and relateFlag !=''">
+							<choose>
+				           		<when test="relateType !=null and relateType ==1">
+							   		and t3.case_no_flag=#{relateFlag}
+				           		</when>
+				           		<when test="relateType !=null and relateType ==2">
+							   		and t3.alarm_no_flag=#{relateFlag}
+				           		</when>
+				           		<otherwise>
+				           			and t3.case_no_flag=#{relateFlag}
+							   		and t3.alarm_no_flag=#{relateFlag}
+				           		</otherwise>
+				           </choose>				           
+			           </if>
+					   <if test="noteMadeFlag !=null and noteMadeFlag !=''">
+			             	and t3.note_made_flag = #{noteMadeFlag}
+					   </if>
+					   <if test="bsCollectFlag !=null and bsCollectFlag !=''">
+			           		and t3.bs_collect_flag = #{bsCollectFlag}
+					   </if>	
+					   order by t1.create_time desc	   		
+	   		</if>
+		   </if>
+		   ) t
+	</select>
+	
+	
+	<select id="queryCount" resultType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigation"  parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigation">
+		select t11.allCount,
+		       t22.allOrganCount,
+		       t33.allPersonCount
+		  from (select count(t1.id) as allCount
+		          from t_scene_investigation        t1,
+		               t_scene_investigation_status t2
+		         where t1.delete_flag = '0'
+		           and t1.iteration_no = '0'
+		           and t1.id = t2.investigation_id
+		           <if test="saveFlag !=null and saveFlag !=''">
+				   		and t2.save_flag = #{saveFlag}
+				   </if>
+				   <if test="qualityFlag !=null and qualityFlag !=''">
+				   		and t2.quality_flag = #{saveFlag}
+				   </if>
+				   <if test="caseNoFlag !=null and caseNoFlag !=''">
+				   		and t2.case_no_flag='0'
+				   </if>
+				   <if test="alarmNoFlag !=null and alarmNoFlag !=''">
+				   		and t2.alarm_no_flag='0'
+				   </if>				   				   
+		           ) t11,
+		       (select count(t1.id) as allOrganCount
+		          from t_scene_investigation t1,
+		               t_scene_investigation_status t2,
+		               (select regionalism
+		                  from t_organization
+		                 where delete_flag = '0'
+		                 start with regionalism = #{organNo}
+		                connect by prior id = parent_id) t3
+		         where t1.delete_flag = '0'
+		           and t1.iteration_no = '0'
+		           and t1.id = t2.investigation_id
+		           and t1.organ_no = t3.regionalism
+		           <if test="saveFlag !=null and saveFlag !=''">
+				   		and t2.save_flag = #{saveFlag}
+				   </if>
+				   <if test="qualityFlag !=null and qualityFlag !=''">
+				   		and t2.quality_flag = #{saveFlag}
+				   </if>
+				   <if test="caseNoFlag !=null and caseNoFlag !=''">
+				   		and t2.case_no_flag='0'
+				   </if>
+				   <if test="alarmNoFlag !=null and alarmNoFlag !=''">
+				   		and t2.alarm_no_flag='0'
+				   </if>					   
+		           ) t22,
+		       (select count(distinct t1.id) as allPersonCount
+		          from t_scene_investigation        t1,
+		               t_scene_investigation_status t2,
+		               t_scene_investigator         t3
+		         where t1.delete_flag = '0'
+		           and t1.iteration_no = '0'
+		           and t1.id = t2.investigation_id
+		           and t1.id = t3.investigation_id(+)
+		           and (t1.create_user_id = #{createUserId} or
+		               t3.investigator_id = #{createUserId})
+		           <if test="saveFlag !=null and saveFlag !=''">
+				   		and t2.save_flag = #{saveFlag}
+				   </if>	
+				   <if test="qualityFlag !=null and qualityFlag !=''">
+				   		and t2.quality_flag = #{saveFlag}
+				   </if>
+				   <if test="caseNoFlag !=null and caseNoFlag !=''">
+				   		and t2.case_no_flag='0'
+				   </if>
+				   <if test="alarmNoFlag !=null and alarmNoFlag !=''">
+				   		and t2.alarm_no_flag='0'
+				   </if>					   	               
+		           ) t33
+		           
+   </select>
+
+   <select id="followCount" resultType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigation"  parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigation">
+		select count(t1.id) as allCount
+		  from t_scene_investigation        t1,
+		       t_scene_investigation_status t2,
+		       t_scene_follow               t3
+		 where t1.delete_flag = '0'
+		   and t1.iteration_no = '0'
+		   and t1.id = t2.investigation_id
+		   and t1.id = t3.investigation_id(+)
+		   and t3.create_user_id = #{createUserId}		   		
+   </select>
+	
+</mapper>

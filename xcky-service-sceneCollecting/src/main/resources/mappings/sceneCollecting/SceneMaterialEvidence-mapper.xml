@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.SceneMaterialEvidenceMapper">
+
+	<select id="getById" resultMap="SceneMaterialEvidenceMap" parameterType="String">
+		SELECT
+			<include refid="selectcloum" />
+		FROM T_SCENE_MATERIAL_EVIDENCE T1,T_SCENE_PICTURE T2,t_common_picture t3
+		WHERE T1.PICTURE_ID=T2.ID and t1.modify_picture_id = t3.id(+) AND 	T1.ID=#{id}
+	</select>
+	
+	<select id="findListByInvestigationId" resultMap="SceneMaterialEvidenceMap" parameterType="String">
+		SELECT
+			<include refid="selectcloum" />
+		FROM T_SCENE_MATERIAL_EVIDENCE T1,T_COMMON_PICTURE T2,t_common_picture t3
+		WHERE T1.PICTURE_ID=T2.ID(+) and t1.modify_picture_id = t3.id(+) AND T1.DELETE_FLAG = '0' and T1.INVESTIGATION_ID=#{investigationId}
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneMaterialEvidence">
+		INSERT INTO T_SCENE_MATERIAL_EVIDENCE (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_SCENE_MATERIAL_EVIDENCE WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneMaterialEvidence">
+		UPDATE T_SCENE_MATERIAL_EVIDENCE 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneMaterialEvidence">
+		UPDATE T_SCENE_MATERIAL_EVIDENCE
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="SceneMaterialEvidenceMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneMaterialEvidence">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SCENE_MATERIAL_EVIDENCE
+		WHERE DELETE_FLAG=#{deleteFlag}
+			<if test="investigationId !=null and investigationId !=''">
+				and INVESTIGATION_ID=#{investigationId, jdbcType=CHAR}
+			</if>
+			<if test="category !=null and category !=''">
+				and CATEGORY=#{category, jdbcType=VARCHAR}
+			</if>
+			<if test="pictureId !=null and pictureId !=''">
+				and PICTURE_ID=#{pictureId, jdbcType=CHAR}
+			</if>
+			<if test="materialEvidenceNo !=null and materialEvidenceNo !=''">
+				and MATERIAL_EVIDENCE_NO=#{materialEvidenceNo, jdbcType=VARCHAR}
+			</if>
+			<if test="materialEvidenceName !=null and materialEvidenceName !=''">
+				and MATERIAL_EVIDENCE_NAME=#{materialEvidenceName, jdbcType=VARCHAR}
+			</if>
+			<if test="materialEvidenceTypeDict !=null and materialEvidenceTypeDict !=''">
+				and MATERIAL_EVIDENCE_TYPE_DICT=#{materialEvidenceTypeDict, jdbcType=VARCHAR}
+			</if>
+			<if test="materialEvidenceType !=null and materialEvidenceType !=''">
+				and MATERIAL_EVIDENCE_TYPE=#{materialEvidenceType, jdbcType=VARCHAR}
+			</if>
+			<if test="materialEvidenceCode !=null and materialEvidenceCode !=''">
+				and MATERIAL_EVIDENCE_CODE=#{materialEvidenceCode, jdbcType=VARCHAR}
+			</if>
+			<if test="materialEvidenceJudgement !=null and materialEvidenceJudgement !=''">
+				and MATERIAL_EVIDENCE_JUDGEMENT=#{materialEvidenceJudgement, jdbcType=VARCHAR}
+			</if>
+			<if test="leftPosition !=null and leftPosition !=''">
+				and LEFT_POSITION=#{leftPosition, jdbcType=VARCHAR}
+			</if>
+			<if test="collectionModeDict !=null and collectionModeDict !=''">
+				and COLLECTION_MODE_DICT=#{collectionModeDict, jdbcType=VARCHAR}
+			</if>
+			<if test="collectionMode !=null and collectionMode !=''">
+				and COLLECTION_MODE=#{collectionMode, jdbcType=VARCHAR}
+			</if>
+			<if test="collectedTime !=null and collectedTime !=''">
+				and COLLECTED_TIME=#{collectedTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="feature !=null and feature !=''">
+				and FEATURE=#{feature, jdbcType=VARCHAR}
+			</if>
+			<if test="bulletModel !=null and bulletModel !=''">
+				and BULLET_MODEL=#{bulletModel, jdbcType=VARCHAR}
+			</if>
+			<if test="storageFlag !=null and storageFlag !=''">
+				and STORAGE_FLAG=#{storageFlag, jdbcType=CHAR}
+			</if>
+			<if test="storageStatus !=null and storageStatus !=''">
+				and STORAGE_STATUS=#{storageStatus, jdbcType=VARCHAR}
+			</if>
+			<if test="collectedFlag !=null and collectedFlag !=''">
+				and COLLECTED_FLAG=#{collectedFlag, jdbcType=CHAR}
+			</if>
+			<if test="source !=null and source !=''">
+				and SOURCE=#{source, jdbcType=VARCHAR}
+			</if>
+			<if test="version !=null and version !=''">
+				and VERSION=#{version, jdbcType=INTEGER}
+			</if>
+			<if test="updateUserId !=null and updateUserId !=''">
+				and UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR}
+			</if>
+			<if test="updateTime !=null and updateTime !=''">
+				and UPDATE_TIME=#{updateTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="bulletType !=null and bulletType !=''">
+				and BULLET_TYPE=#{bulletType, jdbcType=VARCHAR}
+			</if>
+
+	</select>
+	
+</mapper>

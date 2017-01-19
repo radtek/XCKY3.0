@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.SceneFollowMapper">
+
+	<select id="getById" resultMap="SceneFollowMap" parameterType="String">
+		SELECT
+			ID,
+			INVESTIGATION_ID
+		FROM T_SCENE_FOLLOW
+		WHERE ID=#{id}
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneFollow">
+		INSERT INTO T_SCENE_FOLLOW (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_SCENE_FOLLOW WHERE investigation_id=#{id}
+	</delete>
+	
+	
+	<select id="query" resultMap="SceneFollowMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneFollow">
+		SELECT 
+			ID,
+			INVESTIGATION_ID
+		FROM T_SCENE_FOLLOW
+		WHERE DELETE_FLAG=#{deleteFlag}
+			<if test="investigationId !=null and investigationId !=''">
+				and INVESTIGATION_ID=#{investigationId, jdbcType=CHAR}
+			</if>
+			<if test="createUserId !=null and createUserId !=''">
+				and CREATE_USER_ID=#{createUserId, jdbcType=CHAR}
+			</if>
+	</select>
+	
+</mapper>

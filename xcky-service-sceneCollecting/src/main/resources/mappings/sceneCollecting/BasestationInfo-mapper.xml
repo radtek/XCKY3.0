@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.BasestationInfoMapper">
+
+	<select id="getById" resultMap="BasestationInfoMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_BASESTATION_INFO
+		WHERE ID=#{id}
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.sceneCollecting.BasestationInfo">
+		INSERT INTO T_BASESTATION_INFO (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_BASESTATION_INFO WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.BasestationInfo">
+		UPDATE T_BASESTATION_INFO 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.sceneCollecting.BasestationInfo">
+		UPDATE T_BASESTATION_INFO
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="BasestationInfoMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.BasestationInfo">
+		SELECT
+			<include refid="selectId" />
+		FROM T_BASESTATION_INFO
+		WHERE DELETE_FLAG=#{deleteFlag}
+			<if test="investigationId !=null and investigationId !=''">
+				and INVESTIGATION_ID=#{investigationId, jdbcType=CHAR}
+			</if>
+			<if test="deviceId !=null and deviceId !=''">
+				and DEVICE_ID=#{deviceId, jdbcType=VARCHAR}
+			</if>
+			<if test="dataType !=null and dataType !=''">
+				and DATA_TYPE=#{dataType, jdbcType=VARCHAR}
+			</if>
+			<if test="bsType !=null and bsType !=''">
+				and BS_TYPE=#{bsType, jdbcType=VARCHAR}
+			</if>
+			<if test="ifactive !=null and ifactive !=''">
+				and IFACTIVE=#{ifactive, jdbcType=VARCHAR}
+			</if>
+			<if test="regZone !=null and regZone !=''">
+				and REG_ZONE=#{regZone, jdbcType=VARCHAR}
+			</if>
+			<if test="sid !=null and sid !=''">
+				and SID=#{sid, jdbcType=VARCHAR}
+			</if>
+			<if test="nid !=null and nid !=''">
+				and NID=#{nid, jdbcType=VARCHAR}
+			</if>
+			<if test="baseId !=null and baseId !=''">
+				and BASE_ID=#{baseId, jdbcType=VARCHAR}
+			</if>
+			<if test="cdmaCh !=null and cdmaCh !=''">
+				and CDMA_CH=#{cdmaCh, jdbcType=VARCHAR}
+			</if>
+			<if test="pn !=null and pn !=''">
+				and PN=#{pn, jdbcType=VARCHAR}
+			</if>
+			<if test="strength !=null and strength !=''">
+				and STRENGTH=#{strength, jdbcType=VARCHAR}
+			</if>
+			<if test="mccMnc !=null and mccMnc !=''">
+				and MCC_MNC=#{mccMnc, jdbcType=VARCHAR}
+			</if>
+			<if test="lac !=null and lac !=''">
+				and LAC=#{lac, jdbcType=VARCHAR}
+			</if>
+			<if test="cellId !=null and cellId !=''">
+				and CELL_ID=#{cellId, jdbcType=VARCHAR}
+			</if>
+			<if test="bcch !=null and bcch !=''">
+				and BCCH=#{bcch, jdbcType=VARCHAR}
+			</if>
+			<if test="bsic !=null and bsic !=''">
+				and BSIC=#{bsic, jdbcType=VARCHAR}
+			</if>
+			<if test="sysBand !=null and sysBand !=''">
+				and SYS_BAND=#{sysBand, jdbcType=VARCHAR}
+			</if>
+			<if test="lon !=null and lon !=''">
+				and LON=#{lon, jdbcType=VARCHAR}
+			</if>
+			<if test="lat !=null and lat !=''">
+				and LAT=#{lat, jdbcType=VARCHAR}
+			</if>
+			<if test="colTime !=null and colTime !=''">
+				and COL_TIME=#{colTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="erfcn !=null and erfcn !=''">
+				and ERFCN=#{erfcn, jdbcType=VARCHAR}
+			</if>
+			<if test="pci !=null and pci !=''">
+				and PCI=#{pci, jdbcType=VARCHAR}
+			</if>
+			<if test="band !=null and band !=''">
+				and BAND=#{band, jdbcType=VARCHAR}
+			</if>
+			<if test="cell !=null and cell !=''">
+				and CELL=#{cell, jdbcType=VARCHAR}
+			</if>
+			<if test="earfcn !=null and earfcn !=''">
+				and EARFCN=#{earfcn, jdbcType=VARCHAR}
+			</if>
+			<if test="rsrp !=null and rsrp !=''">
+				and RSRP=#{rsrp, jdbcType=VARCHAR}
+			</if>
+			<if test="rsrq !=null and rsrq !=''">
+				and RSRQ=#{rsrq, jdbcType=VARCHAR}
+			</if>
+			<if test="rssi !=null and rssi !=''">
+				and RSSI=#{rssi, jdbcType=VARCHAR}
+			</if>
+			<if test="source !=null and source !=''">
+				and SOURCE=#{source, jdbcType=VARCHAR}
+			</if>
+			<if test="version !=null and version !=''">
+				and VERSION=#{version, jdbcType=INTEGER}
+			</if>
+			<if test="updateUserId !=null and updateUserId !=''">
+				and UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR}
+			</if>
+			<if test="updateTime !=null and updateTime !=''">
+				and UPDATE_TIME=#{updateTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="attachmentId !=null and attachmentId !=''">
+				and ATTACHMENT_ID=#{attachmentId, jdbcType=CHAR}
+			</if>
+			<if test="secmod !=null and secmod !=''">
+				and SECMOD=#{secmod, jdbcType=VARCHAR}
+			</if>
+			<if test="ssid !=null and ssid !=''">
+				and SSID=#{ssid, jdbcType=VARCHAR}
+			</if>
+			<if test="mac !=null and mac !=''">
+				and MAC=#{mac, jdbcType=VARCHAR}
+			</if>
+			<if test="chn !=null and chn !=''">
+				and CHN=#{chn, jdbcType=VARCHAR}
+			</if>
+
+	</select>
+	
+	<select id="queryAll" resultMap="BasestationInfoMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.BasestationInfo">
+		select
+			<include refid="selectId" />
+		  from t_basestation_info
+		 where investigation_id = #{investigationId, jdbcType=CHAR}
+		   and attachment_id = #{attachmentId, jdbcType=CHAR}
+		 order by bs_type asc	
+	</select>
+	
+	<update id="deleteAllLogicById" parameterType="com.hisign.xcky.api.model.sceneCollecting.BasestationInfo">
+		UPDATE T_BASESTATION_INFO 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE investigation_id=#{investigationId}
+	</update>	
+	
+	
+</mapper>

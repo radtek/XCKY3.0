@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.ScenePicSummaryMapper">
+
+	<resultMap type="com.hisign.xcky.api.model.sceneCollecting.ScenePicSummary" id="ScenePicSummaryMap">
+		<result property="rowNum" column="ROW_ID" />
+		<result property="investigationId" column="INVESTIGATION_ID" />
+		<result property="handprintAmount" column="HANDPRINT_AMOUNT" />
+		<result property="footprintAmount" column="FOOTPRINT_AMOUNT" />
+		<result property="toolmarkAmount" column="TOOLMARK_AMOUNT" />
+		<result property="bulletprintAmount" column="BULLETPRINT_AMOUNT" />
+		<result property="specialprintAmount" column="SPECIALPRINT_AMOUNT" />
+		<result property="bioEvidenceAmount" column="BIO_EVIDENCE_AMOUNT" />
+		<result property="toxicEvidenceAmount" column="TOXIC_EVIDENCE_AMOUNT" />
+		<result property="physicalEvidenceAmount" column="PHYSICAL_EVIDENCE_AMOUNT" />
+		<result property="fileEvidenceAmount" column="FILE_EVIDENCE_AMOUNT" />
+		<result property="electroEvidenceAmount" column="ELECTRO_EVIDENCE_AMOUNT" />
+		<result property="videoEvidenceAmount" column="VIDEO_EVIDENCE_AMOUNT" />
+		<result property="otherEvidenceAmount" column="OTHER_EVIDENCE_AMOUNT" />
+		<result property="scenePhotoAmount" column="SCENE_PHOTO_AMOUNT" />
+		<result property="scenePictureAmount" column="SCENE_PICTURE_AMOUNT" />
+		<result property="planeGraphAmount" column="PLANE_GRAPH_AMOUNT" />
+		<result property="orientationMapAmount" column="ORIENTATION_MAP_AMOUNT" />
+		<result property="profilePictureAmount" column="PROFILE_PICTURE_AMOUNT" />
+		<result property="detailPictureAmount" column="DETAIL_PICTURE_AMOUNT" />
+		<result property="focusPartPicAmount" column="FOCUS_PART_PIC_AMOUNT" />
+		<result property="source" column="SOURCE" />
+		<result property="version" column="VERSION" />
+		<result property="deleteFlag" column="DELETE_FLAG" />
+		<result property="createUserId" column="CREATE_USER_ID" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+	
+	<sql id="selectId">
+		INVESTIGATION_ID,
+		HANDPRINT_AMOUNT,
+		FOOTPRINT_AMOUNT,
+		TOOLMARK_AMOUNT,
+		BULLETPRINT_AMOUNT,
+		SPECIALPRINT_AMOUNT,
+		BIO_EVIDENCE_AMOUNT,
+		TOXIC_EVIDENCE_AMOUNT,
+		PHYSICAL_EVIDENCE_AMOUNT,
+		FILE_EVIDENCE_AMOUNT,
+		ELECTRO_EVIDENCE_AMOUNT,
+		VIDEO_EVIDENCE_AMOUNT,
+		OTHER_EVIDENCE_AMOUNT,
+		SCENE_PHOTO_AMOUNT,
+		SCENE_PICTURE_AMOUNT,
+		PLANE_GRAPH_AMOUNT,
+		ORIENTATION_MAP_AMOUNT,
+		PROFILE_PICTURE_AMOUNT,
+		DETAIL_PICTURE_AMOUNT,
+		FOCUS_PART_PIC_AMOUNT,
+		SOURCE,
+		VERSION,
+		DELETE_FLAG,
+		CREATE_USER_ID,
+		CREATE_TIME
+	</sql>
+  
+	<sql id="insertId">
+		#{investigationId, jdbcType=CHAR},
+		#{handprintAmount, jdbcType=INTEGER},
+		#{footprintAmount, jdbcType=INTEGER},
+		#{toolmarkAmount, jdbcType=INTEGER},
+		#{bulletprintAmount, jdbcType=INTEGER},
+		#{specialprintAmount, jdbcType=INTEGER},
+		#{bioEvidenceAmount, jdbcType=INTEGER},
+		#{toxicEvidenceAmount, jdbcType=INTEGER},
+		#{physicalEvidenceAmount, jdbcType=INTEGER},
+		#{fileEvidenceAmount, jdbcType=INTEGER},
+		#{electroEvidenceAmount, jdbcType=INTEGER},
+		#{videoEvidenceAmount, jdbcType=INTEGER},
+		#{otherEvidenceAmount, jdbcType=INTEGER},
+		#{scenePhotoAmount, jdbcType=INTEGER},
+		#{scenePictureAmount, jdbcType=INTEGER},
+		#{planeGraphAmount, jdbcType=INTEGER},
+		#{orientationMapAmount, jdbcType=INTEGER},
+		#{profilePictureAmount, jdbcType=INTEGER},
+		#{detailPictureAmount, jdbcType=INTEGER},
+		#{focusPartPicAmount, jdbcType=INTEGER},
+		#{source, jdbcType=VARCHAR},
+		#{version, jdbcType=INTEGER},
+		#{deleteFlag, jdbcType=CHAR},
+		#{createUserId, jdbcType=CHAR},
+		#{createTime, jdbcType=TIMESTAMP}
+	</sql>
+
+	<sql id="updateId">
+			<if test="investigationId !=null and investigationId !=''">
+				INVESTIGATION_ID=#{investigationId, jdbcType=CHAR},
+			</if>
+			<if test="handprintAmount !=null and handprintAmount !=''">
+				HANDPRINT_AMOUNT=#{handprintAmount, jdbcType=INTEGER},
+			</if>
+			<if test="footprintAmount !=null and footprintAmount !=''">
+				FOOTPRINT_AMOUNT=#{footprintAmount, jdbcType=INTEGER},
+			</if>
+			<if test="toolmarkAmount !=null and toolmarkAmount !=''">
+				TOOLMARK_AMOUNT=#{toolmarkAmount, jdbcType=INTEGER},
+			</if>
+			<if test="bulletprintAmount !=null and bulletprintAmount !=''">
+				BULLETPRINT_AMOUNT=#{bulletprintAmount, jdbcType=INTEGER},
+			</if>
+			<if test="specialprintAmount !=null and specialprintAmount !=''">
+				SPECIALPRINT_AMOUNT=#{specialprintAmount, jdbcType=INTEGER},
+			</if>
+			<if test="bioEvidenceAmount !=null and bioEvidenceAmount !=''">
+				BIO_EVIDENCE_AMOUNT=#{bioEvidenceAmount, jdbcType=INTEGER},
+			</if>
+			<if test="toxicEvidenceAmount !=null and toxicEvidenceAmount !=''">
+				TOXIC_EVIDENCE_AMOUNT=#{toxicEvidenceAmount, jdbcType=INTEGER},
+			</if>
+			<if test="physicalEvidenceAmount !=null and physicalEvidenceAmount !=''">
+				PHYSICAL_EVIDENCE_AMOUNT=#{physicalEvidenceAmount, jdbcType=INTEGER},
+			</if>
+			<if test="fileEvidenceAmount !=null and fileEvidenceAmount !=''">
+				FILE_EVIDENCE_AMOUNT=#{fileEvidenceAmount, jdbcType=INTEGER},
+			</if>
+			<if test="electroEvidenceAmount !=null and electroEvidenceAmount !=''">
+				ELECTRO_EVIDENCE_AMOUNT=#{electroEvidenceAmount, jdbcType=INTEGER},
+			</if>
+			<if test="videoEvidenceAmount !=null and videoEvidenceAmount !=''">
+				VIDEO_EVIDENCE_AMOUNT=#{videoEvidenceAmount, jdbcType=INTEGER},
+			</if>
+			<if test="otherEvidenceAmount !=null and otherEvidenceAmount !=''">
+				OTHER_EVIDENCE_AMOUNT=#{otherEvidenceAmount, jdbcType=INTEGER},
+			</if>
+			<if test="scenePhotoAmount !=null and scenePhotoAmount !=''">
+				SCENE_PHOTO_AMOUNT=#{scenePhotoAmount, jdbcType=INTEGER},
+			</if>
+			<if test="scenePictureAmount !=null and scenePictureAmount !=''">
+				SCENE_PICTURE_AMOUNT=#{scenePictureAmount, jdbcType=INTEGER},
+			</if>
+			<if test="planeGraphAmount !=null and planeGraphAmount !=''">
+				PLANE_GRAPH_AMOUNT=#{planeGraphAmount, jdbcType=INTEGER},
+			</if>
+			<if test="orientationMapAmount !=null and orientationMapAmount !=''">
+				ORIENTATION_MAP_AMOUNT=#{orientationMapAmount, jdbcType=INTEGER},
+			</if>
+			<if test="profilePictureAmount !=null and profilePictureAmount !=''">
+				PROFILE_PICTURE_AMOUNT=#{profilePictureAmount, jdbcType=INTEGER},
+			</if>
+			<if test="detailPictureAmount !=null and detailPictureAmount !=''">
+				DETAIL_PICTURE_AMOUNT=#{detailPictureAmount, jdbcType=INTEGER},
+			</if>
+			<if test="focusPartPicAmount !=null and focusPartPicAmount !=''">
+				FOCUS_PART_PIC_AMOUNT=#{focusPartPicAmount, jdbcType=INTEGER},
+			</if>
+			<if test="source !=null and source !=''">
+				SOURCE=#{source, jdbcType=VARCHAR},
+			</if>
+			<if test="deleteFlag !=null and deleteFlag !=''">
+				DELETE_FLAG=#{deleteFlag, jdbcType=CHAR},
+			</if>
+			<if test="version !=null and version !=''">
+				VERSION=#{version, jdbcType=INTEGER},
+			</if>
+	</sql>
+	
+</mapper>

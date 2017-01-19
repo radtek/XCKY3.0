@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.system.SysSequenceMapper">
+	<!-- 插入新流水信息 -->
+	<insert id="add" parameterType="com.hisign.xcky.api.model.system.SysSequence">
+		INSERT INTO T_SYS_SEQUENCE (
+			<include refid="selectId" />
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	<!-- 流水信息逻辑删除 -->
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.system.SysSequence">
+		UPDATE T_SYS_SEQUENCE 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.system.SysSequence">
+		UPDATE T_SYS_SEQUENCE
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<select id="query" resultMap="SysSequenceMap" parameterType="com.hisign.xcky.api.model.system.SysSequence">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SYS_SEQUENCE
+		WHERE DELETE_FLAG=#{deleteFlag}
+	</select>
+	<!-- 业务查询最大的流水值 -->
+	<select id="findMaxSeqByFilter" resultMap="SysSequenceMap" parameterType="com.hisign.xcky.api.model.system.SysSequence">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SYS_SEQUENCE
+		WHERE DELETE_FLAG='0'
+		    <if test="seqType !=null and seqType !=''">
+				AND SEQ_TYPE=#{seqType, jdbcType=VARCHAR}
+			</if>
+			<if test="orgCode !=null and orgCode !=''">
+				AND ORG_CODE=#{orgCode, jdbcType=VARCHAR}
+			</if>
+			<if test="curDate !=null and curDate !=''">
+				AND CUR_DATE=#{curDate, jdbcType=VARCHAR}
+			</if>
+	</select>
+	<!-- 业务修改流水最大值 -->
+	<update id="updateByIdAndVersionFlag" parameterType="com.hisign.xcky.api.model.system.SysSequence">
+		UPDATE T_SYS_SEQUENCE
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE DELETE_FLAG='0' AND ID=#{id} AND VERSION=#{versionFlag}
+	</update>
+	
+	<!-- 业务查询根据ID和版本查询是否存在 -->
+	<select id="findSysSequenceByIdAndVersion" resultMap="SysSequenceMap" parameterType="com.hisign.xcky.api.model.system.SysSequence">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SYS_SEQUENCE
+		WHERE DELETE_FLAG='0' AND ID=#{id} AND VERSION=#{version}
+	</select>
+</mapper>

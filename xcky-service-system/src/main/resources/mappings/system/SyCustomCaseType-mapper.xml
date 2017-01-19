@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.system.SysCustomCaseTypeMapper">
+
+    <insert id="add" parameterType="com.hisign.xcky.api.model.system.SysCustomCaseType">
+        INSERT INTO T_SYS_CUSTOM_CASETYPE (
+        GROUP_ID,
+        PARENT_GROUP_ID,
+        GROUP_NAME,
+        GROUP_DESC,
+        CASE_TYPE,
+        VERSION,
+        DELETE_FLAG,
+        SYSTEM_FLAG,
+        CREATE_USER_ID,
+        UPDATE_USER_ID,
+        CREATE_TIME,
+        UPDATE_TIME
+        ) VALUES (
+        #{groupId, jdbcType=CHAR},
+        #{parentGroupId, jdbcType=CHAR},
+        #{groupName, jdbcType=VARCHAR},
+        #{groupDesc, jdbcType=VARCHAR},
+        #{caseType, jdbcType=VARCHAR},
+        #{version, jdbcType=INTEGER},
+        #{deleteFlag, jdbcType=CHAR},
+        #{systemFlag, jdbcType=CHAR},
+        #{createUserId, jdbcType=CHAR},
+        #{updateUserId, jdbcType=CHAR},
+        #{createTime, jdbcType=DATE},
+        #{updateTime, jdbcType=DATE}
+        )
+    </insert>
+
+    <delete id="delete" parameterType="HashMap">
+        DELETE FROM T_SYS_CUSTOM_CASETYPE
+        <where>
+            <choose>
+                <when test="parentGroupId != null and parentGroupId != ''" >
+                    and PARENT_GROUP_ID=#{parentGroupId}
+                </when>
+                <when test="groupId != null and groupId != ''" >
+                    AND SYSTEM_FLAG = '0'
+                    and GROUP_ID=#{groupId} OR PARENT_GROUP_ID=#{groupId}
+                </when>
+                <otherwise>
+                    and 1 = 0
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <update id="updateById" parameterType="com.hisign.xcky.api.model.system.SysCustomCaseType">
+        UPDATE T_SYS_CUSTOM_CASETYPE
+        <set>
+            <if test="groupName !=null and groupName !=''">
+                GROUP_NAME=#{groupName, jdbcType=VARCHAR},
+            </if>
+            <if test="groupDesc !=null and groupDesc !=''">
+                GROUP_DESC=#{groupDesc, jdbcType=VARCHAR},
+            </if>
+            <if test="version !=null and version !=''">
+                VERSION=#{version, jdbcType=INTEGER},
+            </if>
+            <if test="updateUserId !=null and updateUserId !=''">
+                UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR},
+            </if>
+            <if test="updateTime !=null and updateTime !=''">
+                UPDATE_TIME=#{updateTime, jdbcType=DATE}
+            </if>
+        </set>
+        WHERE GROUP_ID=#{groupId}
+    </update>
+
+    <select id="query" resultMap="SysCustomCaseTypeMap" parameterType="com.hisign.xcky.api.model.system.SysCustomCaseType">
+       SELECT
+          rowNum,
+          t1.GROUP_ID,
+          t1.PARENT_GROUP_ID,
+          t1.GROUP_NAME,
+          t1.GROUP_DESC,
+          t2.case_type,
+          t2.case_type_cn,
+          t1.SYSTEM_FLAG,
+          T1.CREATE_TIME,
+          T1.UPDATE_TIME
+       FROM T_SYS_CUSTOM_CASETYPE t1,
+            (select t31.PARENT_GROUP_ID,
+             wm_concat(to_char(t31.case_type)) as case_type,
+             wm_concat(to_char(t41.dict_value)) as case_type_cn
+             from T_SYS_CUSTOM_CASETYPE t31,
+                  T_SYS_DICT t41
+             where t31.PARENT_GROUP_ID is not null
+             and t31.CASE_TYPE = t41.DICT_KEY(+)
+             and t41.ROOT_KEY(+) = 'AJLBDM'
+             group by t31.PARENT_GROUP_ID) t2
+       <where>
+            t1.PARENT_GROUP_ID is null
+            and t1.group_id = t2.parent_group_id
+       </where>
+    </select>
+
+</mapper>

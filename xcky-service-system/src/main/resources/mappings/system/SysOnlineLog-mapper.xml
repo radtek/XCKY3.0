@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.system.SysOnlineLogMapper">
+
+	<select id="getById" resultMap="SysOnlineLogMap" parameterType="String">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SYS_ONLINE_LOG
+		WHERE ID=#{id}
+	</select>
+	
+	<insert id="add" parameterType="com.hisign.xcky.api.model.system.SysOnlineLog">
+		INSERT INTO T_SYS_ONLINE_LOG (
+					ID,
+					LOGIN_TOKEN,
+					LOGIN_USER,
+					LOGIN_USER_IP,
+					LOGIN_TIME,
+					LOGIN_USER_ID
+		) VALUES (
+			<include refid="insertId" />
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		DELETE FROM T_SYS_ONLINE_LOG WHERE ID=#{id}
+	</delete>
+	
+	<update id="deleteLogicById" parameterType="com.hisign.xcky.api.model.system.SysOnlineLog">
+		UPDATE T_SYS_ONLINE_LOG 
+		<set>
+			DELETE_FLAG=#{deleteFlag},
+			VERSION=#{version, jdbcType=VARCHAR},
+			UPDATE_USER_ID=#{updateUserId, jdbcType=VARCHAR},
+			UPDATE_TIME=#{updateTime, jdbcType=DATE}
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateById" parameterType="com.hisign.xcky.api.model.system.SysOnlineLog">
+		UPDATE T_SYS_ONLINE_LOG
+		<set>
+			<include refid="updateId" />	
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<update id="updateByToken" parameterType="com.hisign.xcky.api.model.system.SysOnlineLog">
+		UPDATE T_SYS_ONLINE_LOG
+			set LOGOUT_TIME=#{logoutTime}
+		WHERE LOGIN_TOKEN=#{loginToken}
+	</update>
+	
+	<select id="query" resultMap="SysOnlineLogMap" parameterType="com.hisign.xcky.api.model.system.SysOnlineLog">
+		SELECT
+			<include refid="selectId" />
+		FROM T_SYS_ONLINE_LOG
+		 where 1=1
+		 <if test="loginUser!=null and loginUser!=''">
+		 	and LOGIN_USER=#{loginUser}
+		 </if>
+		 <if test="loginTimeBegin!=null and loginTimeBegin!=''">
+		 	and LOGIN_TIME <![CDATA[>=]]> #{loginTimeBegin, jdbcType=DATE}
+		 </if>
+		 <if test="loginTimeEnd!=null and loginTimeEnd!=''">
+		 	and LOGIN_TIME <![CDATA[<]]> #{loginTimeEnd, jdbcType=DATE}+1
+		 </if>
+		 order by LOGIN_TIME desc
+	</select>
+	
+</mapper>

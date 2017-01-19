@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.InvestigatorHistoryMapper">
+
+	<resultMap type="com.hisign.xcky.api.model.sceneCollecting.InvestigatorHistory" id="InvestigatorHistoryMap">
+		<result property="rowNum" column="ROW_ID" />
+		<result property="id" column="ID" />
+		<result property="investigatorId" column="INVESTIGATOR_ID" />
+		<result property="investigatorName" column="INVESTIGATOR_NAME" />
+		<result property="duty" column="DUTY" />
+		<result property="createUserId" column="CREATE_USER_ID" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="isOpen" column="IS_OPEN" />		
+	</resultMap>
+	
+	<sql id="selectId">
+		ID,
+		INVESTIGATOR_ID,
+		INVESTIGATOR_NAME,
+		DUTY,
+		CREATE_USER_ID,
+		CREATE_TIME,
+		IS_OPEN		
+	</sql>
+  <!-- 关联字典表查询列 -->
+  	<sql id="selectContentId">
+		ID,
+		INVESTIGATOR_ID,
+		INVESTIGATOR_NAME,
+		DUTY,
+		IS_OPEN
+	</sql>
+  
+	<sql id="insertId">
+		#{id, jdbcType=CHAR},
+		#{investigatorId, jdbcType=CHAR},
+		#{investigatorName, jdbcType=VARCHAR},
+		#{duty, jdbcType=VARCHAR},
+		#{createUserId, jdbcType=CHAR},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{isOpen, jdbcType=CHAR}		
+	</sql>
+
+	<sql id="updateId">
+			<if test="investigatorId !=null and investigatorId !=''">
+				INVESTIGATOR_ID=#{investigatorId, jdbcType=CHAR},
+			</if>
+			<if test="investigatorName !=null and investigatorName !=''">
+				INVESTIGATOR_NAME=#{investigatorName, jdbcType=VARCHAR},
+			</if>
+			<if test="duty !=null and duty !=''">
+				DUTY=#{duty, jdbcType=VARCHAR},
+			</if>
+			<if test="deleteFlag !=null and deleteFlag !=''">
+				DELETE_FLAG=#{deleteFlag, jdbcType=CHAR},
+			</if>
+			<if test="isOpen !=null and isOpen !=''">
+				IS_OPEN=#{isOpen, jdbcType=CHAR}
+			</if>			
+	</sql>
+	
+</mapper>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="example" version="1.5">
+    <fields>
+        <!-- 勘验基本信息 -->
+        <field name="ID" type="string" indexed="true" stored="true" required="true"/>
+        <field name="INVESTIGATION_NO" type="string" indexed="true" stored="true"/> <!--勘验号-->
+        <field name="INVESTIGATION_DATE_FROM" type="tdate" indexed="true" stored="true"/> <!--勘验开始时间-->
+        <field name="INVESTIGATION_DATE_TO" type="tdate" indexed="false" stored="true"/> <!--勘验结束时间-->
+        <field name="INVESTIGATION_PLACE" type="text_cn_ik" indexed="true" stored="true"/> <!--勘验地点-->
+        <field name="CASE_LON" type="string" indexed="false" stored="true"/> <!--经度-->
+        <field name="CASE_LAT" type="string" indexed="false" stored="true"/> <!--纬度-->
+        <field name="INVEST_NOTE" type="text_cn_ik" indexed="true" stored="true"/> <!--现场勘验情况文本-->
+        <field name="LOST_TOTAL_VALUE" type="tlong" indexed="false" stored="true"/> <!--损失物品总价值-->
+        <field name="REMNANT_DESC" type="text_cn_ik" indexed="true" stored="true"/> <!--现场遗留物描述-->
+        <field name="SCENE_DISPOSAL" type="text_cn_ik" indexed="true" stored="true"/> <!--现场处置意见(XCCZYJDM)-->
+        <field name="SCENE_DISPOSAL_DESC" type="text_cn_ik" indexed="true" stored="true"/> <!--现场处置意见描述-->
+        <field name="VIDEO_TIME" type="tint" indexed="false" stored="true"/> <!--录像时间-->
+        <field name="RECORD_TIME" type="tint" indexed="false" stored="true"/> <!--录音时间-->
+        <field name="ORGAN_NO" type="string" indexed="false" stored="true"/> <!--勘验单位代码-->
+        <field name="ORGAN_NAME" type="text_cn_ik" indexed="true" stored="true"/> <!--勘验单位名称-->
+        <field name="OTHER_PERSONS" type="text_cn_ik" indexed="true" stored="true"/> <!--其他到达现场人员-->
+        <field name="CHANGE_REASON" type="text_cn_ik" indexed="true" stored="true"/> <!--现场变动原因(BDYYDM)-->
+        <field name="CHANGE_REASON_DESC" type="text_cn_ik" indexed="true" stored="true"/> <!--现场变动原因描述-->
+        <field name="WITNESS_REMARK" type="text_cn_ik" indexed="true" stored="true"/> <!--见证人备注-->
+        <field name="SOURCE" type="string" indexed="false" stored="true"/> <!--数据来源(SJLYDM)-->
+        <field name="CREATE_USER" type="string" indexed="false" stored="true"/> <!--创建人-->
+        <field name="CREATE_TIME" type="tdate" indexed="false" stored="true"/> <!--创建时间-->
+
+        <!-- 案件信息 -->
+        <field name="ALARM_NO" type="string" indexed="true" stored="true"/> <!--接警编号-->
+        <field name="ALARM_ACCEPT_NO" type="string" indexed="true" stored="true"/> <!--接警受理号-->
+        <field name="ALARM_TIME" type="tdate" indexed="true" stored="true"/> <!--接警时间-->
+        <field name="ALARM_RECEIVER" type="text_cn_ik" indexed="true" stored="true"/> <!--接警人-->
+        <field name="ASSIGN_PERSON" type="text_cn_ik" indexed="true" stored="true"/> <!--指派/报告单位-->
+        <field name="ASSIGN_METHOD" type="text_cn_ik" indexed="true" stored="true"/> <!--指派方式(XCKYJJFSDM)-->
+        <field name="ASSIGN_METHOD_DESC" type="text_cn_ik" indexed="true" stored="true"/> <!--指派方式描述-->
+        <field name="ASSIGN_REASON" type="text_cn_ik" indexed="true" stored="true"/> <!--勘验事由-->
+        <field name="DISPATCH_TIME" type="tdate" indexed="true" stored="true"/> <!--出警时间-->
+        <field name="CASE_NO" type="string" indexed="true" stored="true"/> <!--案件编号-->
+        <field name="CASE_TYPE" type="text_cn_ik" indexed="true" stored="true"/> <!--案件类别(AJLBDM)-->
+        <field name="CASE_NATURE" type="text_cn_ik" indexed="true" stored="true"/> <!--案件性质(AJXZDM)-->
+        <field name="CASE_NAME" type="string" indexed="false" stored="true"/> <!--案件名称-->
+        <field name="CASE_BRIEF" type="text_cn_ik" indexed="true" stored="true"/> <!--简要案情(案件发现过程)-->
+        <field name="CASE_REGIONALISM" type="text_cn_ik" indexed="true" stored="true"/> <!--发案区划-->
+        <field name="CASE_LOCATION" type="text_cn_ik" indexed="true" stored="true"/> <!--发案地点-->
+        <field name="CRIME_TIME_BEGIN" type="tdate" indexed="true" stored="true"/> <!--发案开始时间-->
+        <field name="CRIME_TIME_END" type="tdate" indexed="false" stored="true"/> <!--发案结束时间-->
+        <field name="MURDER_FLAG" type="string" indexed="false" stored="true"/> <!--是否命案-->
+        <field name="CRIMINAL_FLAG" type="string" indexed="false" stored="true"/> <!--是否刑案-->
+        <field name="WOUNDED_AMOUNT" type="tint" indexed="false" stored="true"/> <!--受伤人数-->
+        <field name="DEAD_AMOUNT" type="tint" indexed="false" stored="true"/> <!--死亡人数-->
+        <field name="INVESTIGATOR_NAME" type="text_cn_ik" indexed="true" stored="true"/> <!--勘验人-->
+
+        <!-- Facets -->
+        <!--<field name="CASE_TYPE_FACET" type="string" indexed="true" stored="false"/>
+        <field name="MAIN_ORGAN_NAME_FACET" type="string" indexed="true" stored="false"/>
+        <field name="SCENE_REGIONALISM_FACET" type="string" indexed="true" stored="false"/>-->
+
+        <field name="text" type="text_cn_ik" indexed="true" stored="true" multiValued="true"/>
+        <field name="_version_" type="long" indexed="true" stored="true"/>
+    </fields>
+
+    <uniqueKey>ID</uniqueKey>
+    <copyField source="INVESTIGATION_NO" dest="text"/>
+    <copyField source="INVESTIGATION_DATE_FROM" dest="text"/>
+    <copyField source="INVESTIGATION_PLACE" dest="text"/>
+    <copyField source="INVEST_NOTE" dest="text"/>
+    <copyField source="REMNANT_DESC" dest="text"/>
+    <copyField source="SCENE_DISPOSAL" dest="text"/>
+    <copyField source="SCENE_DISPOSAL_DESC" dest="text"/>
+    <copyField source="ORGAN_NAME" dest="text"/>
+    <copyField source="OTHER_PERSONS" dest="text"/>
+    <copyField source="CHANGE_REASON" dest="text"/>
+    <copyField source="CHANGE_REASON_DESC" dest="text"/>
+    <copyField source="WITNESS_REMARK" dest="text"/>
+    <copyField source="INVESTIGATOR_NAME" dest="text"/>
+
+    <!-- 案件信息 -->
+    <copyField source="ALARM_NO" dest="text"/>
+    <copyField source="ALARM_ACCEPT_NO" dest="text"/>
+    <copyField source="ALARM_TIME" dest="text"/>
+    <copyField source="ALARM_RECEIVER" dest="text"/>
+    <copyField source="ASSIGN_PERSON" dest="text"/>
+    <copyField source="ASSIGN_METHOD" dest="text"/>
+    <copyField source="ASSIGN_METHOD_DESC" dest="text"/>
+    <copyField source="ASSIGN_REASON" dest="text"/>
+    <copyField source="DISPATCH_TIME" dest="text"/>
+    <copyField source="CASE_NO" dest="text"/>
+    <copyField source="CASE_TYPE" dest="text"/>
+    <copyField source="CASE_NATURE" dest="text"/>
+    <copyField source="CASE_NAME" dest="text"/>
+    <copyField source="CASE_BRIEF" dest="text"/>
+    <copyField source="CASE_REGIONALISM" dest="text"/>
+    <copyField source="CASE_LOCATION" dest="text"/>
+    <copyField source="CRIME_TIME_BEGIN" dest="text"/>
+
+    <types>
+        <fieldType name="string" class="solr.StrField" sortMissingLast="true"/>
+        <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="tint" class="solr.TrieIntField" precisionStep="8" positionIncrementGap="0"/>
+        <fieldType name="tfloat" class="solr.TrieFloatField" precisionStep="8" positionIncrementGap="0"/>
+        <fieldType name="tlong" class="solr.TrieLongField" precisionStep="8" positionIncrementGap="0"/>
+        <fieldType name="tdate" class="solr.TrieDateField" precisionStep="6" positionIncrementGap="0"/>
+        <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
+            <analyzer type="index">
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"
+                        enablePositionIncrements="true"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+            </analyzer>
+            <analyzer type="query">
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"
+                        enablePositionIncrements="true"/>
+                <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+            </analyzer>
+        </fieldType>
+        <!-- Customized fieldType of text for cn
+        <fieldType name="text" class="solr.TextField">
+          <analyzer type="index" class="org.bison.wsc.lucene.BisonAnalyzer">
+          </analyzer>
+          <analyzer type="query" class="org.bison.wsc.lucene.BisonAnalyzer">
+          </analyzer>
+        </fieldType>
+        -->
+        <!-- Customized fieldType of text for cn -->
+        <fieldType name="text_cn_ik" class="solr.TextField">
+            <analyzer type="index" class="org.wltea.analyzer.lucene.IKAnalyzer" useSmart="true">
+            </analyzer>
+            <analyzer type="query" class="org.wltea.analyzer.lucene.IKAnalyzer" useSmart="true">
+            </analyzer>
+        </fieldType>
+    </types>
+</schema>

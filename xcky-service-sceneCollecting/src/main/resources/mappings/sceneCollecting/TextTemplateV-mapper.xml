@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.TextTemplateMapper">
+
+	<resultMap type="com.hisign.xcky.api.model.sceneCollecting.TextTemplate" id="TextTemplateMap">
+		<result property="rowNum" column="ROW_ID" />
+		<result property="id" column="ID" />
+		<result property="templateType" column="TEMPLATE_TYPE" />
+		<result property="templateTypeName" column="templateTypeName" />
+		<result property="templateName" column="TEMPLATE_NAME" />		
+		<result property="caseType" column="CASE_TYPE" />
+		<result property="caseTypeName" column="caseTypeName" />
+		<result property="content" column="CONTENT" />
+		<result property="allAvailable" column="ALL_AVAILABLE" />
+		<result property="commonFlag" column="COMMON_FLAG" />
+		<result property="allowModify" column="ALLOW_MODIFY" />
+		<result property="openFlag" column="OPEN_FLAG" />
+		<result property="source" column="SOURCE" />
+		<result property="version" column="VERSION" />
+		<result property="deleteFlag" column="DELETE_FLAG" />
+		<result property="createUserId" column="CREATE_USER_ID" />
+		<result property="updateUserId" column="UPDATE_USER_ID" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+	</resultMap>
+	
+	<sql id="selectId">
+		ID,
+		TEMPLATE_TYPE,
+		TEMPLATE_NAME,		
+		CASE_TYPE,
+		CONTENT,
+		ALL_AVAILABLE,
+		COMMON_FLAG,
+		ALLOW_MODIFY,
+		OPEN_FLAG,
+		SOURCE,
+		VERSION,
+		DELETE_FLAG,
+		CREATE_USER_ID,
+		UPDATE_USER_ID,
+		CREATE_TIME,
+		UPDATE_TIME
+	</sql>
+  
+	<sql id="insertId">
+		#{id, jdbcType=CHAR},
+		#{templateType, jdbcType=VARCHAR},
+		#{templateName, jdbcType=VARCHAR},		
+		#{caseType, jdbcType=VARCHAR},
+		#{content, jdbcType=CLOB},
+		#{allAvailable, jdbcType=CHAR},
+		#{commonFlag, jdbcType=CHAR},
+		#{allowModify, jdbcType=CHAR},
+		#{openFlag, jdbcType=CHAR},
+		#{source, jdbcType=VARCHAR},
+		#{version, jdbcType=INTEGER},
+		#{deleteFlag, jdbcType=CHAR},
+		#{createUserId, jdbcType=CHAR},
+		#{updateUserId, jdbcType=CHAR},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	</sql>
+
+	<sql id="updateId">
+			<if test="templateType !=null and templateType !=''">
+				TEMPLATE_TYPE=#{templateType, jdbcType=VARCHAR},
+			</if>
+			<if test="templateName !=null and templateName !=''">
+				TEMPLATE_NAME=#{templateName, jdbcType=VARCHAR},
+			</if>	
+			<if test="caseType !=null and caseType !=''">
+				CASE_TYPE=#{caseType, jdbcType=VARCHAR},
+			</if>
+			<if test="content !=null and content !=''">
+				CONTENT=#{content, jdbcType=CLOB},
+			</if>
+			<if test="allAvailable !=null and allAvailable !=''">
+				ALL_AVAILABLE=#{allAvailable, jdbcType=CHAR},
+			</if>
+			<if test="commonFlag !=null and commonFlag !=''">
+				COMMON_FLAG=#{commonFlag, jdbcType=CHAR},
+			</if>
+			<if test="allowModify !=null and allowModify !=''">
+				ALLOW_MODIFY=#{allowModify, jdbcType=CHAR},
+			</if>
+			<if test="openFlag !=null and openFlag !=''">
+				OPEN_FLAG=#{openFlag, jdbcType=CHAR},
+			</if>
+			<if test="source !=null and source !=''">
+				SOURCE=#{source, jdbcType=VARCHAR},
+			</if>
+			<if test="version !=null and version !=''">
+				VERSION=#{version, jdbcType=INTEGER},
+			</if>
+			<if test="updateUserId !=null and updateUserId !=''">
+				UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR},
+			</if>
+			<if test="deleteFlag !=null and deleteFlag !=''">
+				DELETE_FLAG=#{deleteFlag, jdbcType=CHAR},
+			</if>
+			<if test="updateTime !=null and updateTime !=''">
+				UPDATE_TIME=#{updateTime, jdbcType=TIMESTAMP}
+			</if>
+	</sql>
+	
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hisign.xcky.persist.mapper.sceneCollecting.DictCommMapper">
+
+	<resultMap type="com.hisign.xcky.api.model.sceneCollecting.DictComm" id="DictCommMap">
+		<result property="rowNum" column="ROW_ID" />
+		<result property="id" column="ID" />
+		<result property="dictId" column="DICT_ID" />
+		<result property="dictType" column="DICT_TYPE" />
+		<result property="sort" column="SORT" />
+		<result property="createUserId" column="CREATE_USER_ID" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="DICT_KEY" column="dictKey" />
+		<result property="dictKey" column="DICT_KEY" />
+		<result property="dictValue" column="DICT_VALUE" />
+	</resultMap>
+	
+	<sql id="selectId">
+		ID,
+		DICT_ID,
+		DICT_TYPE,
+		SORT,
+		CREATE_USER_ID,
+		CREATE_TIME
+	</sql>
+	<!-- 关联字典表查询列 -->
+  	<sql id="selectContentId">
+		c.ID,
+		c.DICT_ID,
+		c.DICT_TYPE,
+		c.SORT,
+		t.DICT_VALUE,
+		t.DICT_KEY,
+		c.CREATE_USER_ID
+	</sql>
+  	
+	<sql id="insertId">
+		#{id, jdbcType=CHAR},
+		#{dictId, jdbcType=VARCHAR},
+		#{dictType, jdbcType=VARCHAR},
+		#{sort, jdbcType=INTEGER},
+		#{createUserId, jdbcType=CHAR},
+		#{createTime, jdbcType=TIMESTAMP}
+	</sql>
+
+	<sql id="updateId">
+			<if test="dictId !=null and dictId !=''">
+				DICT_ID=#{dictId, jdbcType=VARCHAR},
+			</if>
+			<if test="dictType !=null and dictType !=''">
+				DICT_TYPE=#{dictType, jdbcType=VARCHAR},
+			</if>
+			<if test="deleteFlag !=null and deleteFlag !=''">
+				DELETE_FLAG=#{deleteFlag, jdbcType=CHAR},
+			</if>
+			<if test="sort !=null and sort !=''">
+				SORT=#{sort, jdbcType=INTEGER},
+			</if>
+	</sql>
+	
+</mapper>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jaxws="http://cxf.apache.org/jaxws" 
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://cxf.apache.org/jaxws
+		http://cxf.apache.org/schemas/jaxws.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.springframework.org/schema/context  
+      	http://www.springframework.org/schema/context/spring-context.xsd
+        ">
+        
+    <dubbo:application name="hisign-xcky-service-system" />
+
+	<!-- 去除默认的dubbo异常处理器 -->
+    <dubbo:provider filter="-exception"/>
+	
+	<!-- rmi begin -->
+    <dubbo:service interface="com.hisign.xcky.api.service.system.SysUserService" protocol="rmi" ref="sysUserService" />
+
+	<dubbo:service interface="com.hisign.xcky.api.service.system.SysParameterService" protocol="rmi" ref="sysParameterService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.system.SysOnlineLogService" protocol="rmi" ref="sysOnlineLogService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.system.SysLogService" protocol="rmi" ref="sysLogService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.system.SysDictService" protocol="rmi" ref="sysDictService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.system.OrganizationService" protocol="rmi" ref="organizationService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.IKafkaSendService" protocol="rmi" ref="kafkaSendService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.IKafkaReceiveService" protocol="rmi" ref="kafkaReceiveService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.system.SysSequenceService" protocol="rmi" ref="sysSequenceService" />
+	
+    <!-- rmi end -->
+    
+    
+    <!-- use tomcat server -->
+    <dubbo:protocol name="rest" threads="500" contextpath="xcky3/api/sys" server="tomcat" accepts="500"
+                  extension="com.hisign.xcky.filter.TokenInterceptor,com.hisign.xcky.exception.XckyBusinessExceptionMapper,com.hisign.xcky.exception.CustomExceptionMapper"/>
+	
+	<!-- rest start -->
+	<dubbo:service interface="com.hisign.xcky.api.service.system.LoginService" protocol="rest" ref="loginService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.system.SysUserService" protocol="rest" ref="sysUserService" />
+
+	<dubbo:service interface="com.hisign.xcky.api.service.system.SysRoleService" protocol="rest" ref="sysRoleService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.system.SysParameterService" protocol="rest" ref="sysParameterService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.system.SysOnlineLogService" protocol="rest" ref="sysOnlineLogService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.system.SysLogService" protocol="rest" ref="sysLogService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.system.SysDictService" protocol="rest" ref="sysDictService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.system.OrganizationService" protocol="rest" ref="organizationService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.system.SysXtdhService" protocol="rest" ref="sysXtdhService" />
+	
+	<dubbo:service interface="com.hisign.xcky.api.service.system.SysModuleService" protocol="rest" ref="sysModuleService" />
+
+	<dubbo:service interface="com.hisign.xcky.api.service.system.SysCustomCaseTypeService" protocol="rest" ref="sysCustomCaseTypeService" />
+    <!-- rest end -->
+    
+</beans>

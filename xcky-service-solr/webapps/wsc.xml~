@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">  
+<properties>  
+	<comment>NLPIR_Config</comment>
+	<!--NLPIR分词包位置 -->
+	<entry key="nlpir_config_path">D:/wsc-libs</entry>
+	<!-- NLPIR运行的操作系统　1.win32 2.win64 3.linux32 4.linux64 -->
+	<entry key="nlpir_config_system">win64</entry>
+	<!-- NLPIR运行的动态库　-->
+	<entry key="nlpir_config_dllname">NLPIR.dll</entry>
+	<!-- NLPIR默认编码　　默认编码:　0:GBK 1:UTF-8 2:BIG5 3:GBK和繁体 -->
+	<entry key="nlpir_config_coding">0</entry>
+	<!-- NLPIR词性标注集　  0:计算所二级标注集    1:计算所一级标注集   2:北大二级标注集    3:北大一级标注集  -->
+	<entry key="nlpir_config_type">0</entry>
+</properties>

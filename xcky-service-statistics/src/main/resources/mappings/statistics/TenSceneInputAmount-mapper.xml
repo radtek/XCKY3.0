@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.statistics.TenSceneInputAmountMapper">
+
+	<select id="getAountByRegionalism"
+		resultType="com.hisign.xcky.api.model.statistics.TenSceneInputAmount"
+		parameterType="com.hisign.xcky.api.model.statistics.SceneInputAmountFilter">
+		select
+		sum(case when T2.CASE_TYPE ='040101' then 1 else 0 end) AS killCount,
+		sum(case when T2.CASE_TYPE ='040103' then 1 else 0 end) AS injureCount,
+		sum(case when T2.CASE_TYPE ='040105' then 1 else 0 end) AS rapeCount,
+		sum(case when T2.CASE_TYPE ='040110' then 1 else 0 end) AS kidnapCount,
+		sum(case when T2.CASE_TYPE ='050101' then 1 else 0 end) AS robCount,
+		sum(case when T2.CASE_TYPE ='020101' then 1 else 0 end) AS fireCount,
+		sum(case when T2.CASE_TYPE ='020103' then 1 else 0 end) AS bombCount,
+		sum(case when T2.CASE_TYPE in('020300','020311','020312','020313')
+		then 1 else 0 end) AS hijackCount,
+		sum(case when T2.CASE_TYPE ='050201' then 1 else 0 end) AS stealCount,
+		sum(case when T2.CASE_TYPE
+		in('020201','020202','020203','020204','020205','020206',
+		'020207','040280','040300','040430','051000','060122','060123','060158','060251',
+		'060370','060380','060635','070300','070400','070500') then 1 else 0
+		end) AS destroyCount,
+		sum(case when T2.CASE_TYPE ='020104' then 1 else 0 end) AS poisoningCount,
+		sum(case when T2.CASE_TYPE !='040101' and T2.DEAD_AMOUNT>0 then 1 else
+		0 end) AS otherCount
+		from T_SCENE_INVESTIGATION T1,
+		T_SCENE_INVESTIGATION_DISPATCH T2,
+		T_SCENE_INVESTIGATION_STATUS T3
+		WHERE T1.ID=T2.INVESTIGATION_ID
+		AND T1.ID=T3.INVESTIGATION_ID
+		<if test="dateType !=null and dateType ==1">
+			    <if test="filterDateFrom !=null">
+			   		 AND <![CDATA[T1.INVESTIGATION_DATE_FROM>=TO_date(#{filterDateFrom},'yyyy-mm-dd')]]>
+				</if>
+				<if test="filterDateTo !=null">
+			   		 AND <![CDATA[T1.INVESTIGATION_DATE_FROM<=TO_date(#{filterDateTo},'yyyy-mm-dd')]]>
+				</if>
+		</if>
+		<if test="dateType !=null and dateType ==2">
+			    <if test="filterDateFrom !=null">
+			   		 AND <![CDATA[T1.CREATE_TIME>=TO_date( #{filterDateFrom},'yyyy-mm-dd')]]>
+				</if>
+				<if test="filterDateTo !=null">
+			   		 AND <![CDATA[T1.CREATE_TIME<=TO_date(#{filterDateTo},'yyyy-mm-dd')]]>
+				</if>
+		</if>
+		<if test="dateType !=null and dateType ==3">
+			    <if test="filterDateFrom !=null">
+			   		 AND <![CDATA[T3.LAST_SUBMIT_DATETIME>=TO_date(#{filterDateFrom},'yyyy-mm-dd')]]>
+				</if>
+				<if test="filterDateTo !=null">
+			   		 AND <![CDATA[T3.LAST_SUBMIT_DATETIME<=TO_date(#{filterDateTo},'yyyy-mm-dd')]]>
+				</if>
+		</if>
+		<if test="isSameMonInvAndInp !=null and isSameMonInvAndInp ==1">
+			   AND to_char(T1.INVESTIGATION_DATE_FROM,'yyyymm')=to_char(T1.CREATE_TIME,'yyyymm')
+		</if> 
+		<if test="isIncludeLowerLevelSQL !=null and isIncludeLowerLevelSQL ==0">
+			    AND T1.ORGAN_NO=#{orgNo}
+		</if>
+		<if test="isIncludeLowerLevelSQL !=null and isIncludeLowerLevelSQL ==1">
+			AND T1.ORGAN_NO in(
+					select  organ.regionalism 
+		          from T_ORGANIZATION organ
+		         start with organ.regionalism = #{orgNo}
+		        connect by prior organ.id = organ.parent_id
+			)
+		</if>
+	</select>
+</mapper>
