@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hisign.xcky.persist.mapper.query.SceneCollectedGoodsPageMapper">
+
+	<resultMap type="com.hisign.xcky.api.model.sceneCollecting.SceneCollectedGoods" id="SceneCollectedGoodsMap">
+		<result property="rowNum" column="ROW_ID" />
+		<result property="id" column="ID" />
+		<result property="investigationId" column="INVESTIGATION_ID" />
+		<result property="serialNo" column="SERIAL_NO" />
+		<result property="name" column="NAME" />
+		<result property="materialEvidenceFlag" column="MATERIAL_EVIDENCE_FLAG" />
+		<result property="materialEvidenceId" column="MATERIAL_EVIDENCE_ID" />
+		<result property="amount" column="AMOUNT" />
+		<result property="collectedPosition" column="COLLECTED_POSITION" />
+		<result property="collectedMethod" column="COLLECTED_METHOD" />
+		<result property="collectedTime" column="COLLECTED_TIME" />
+		<result property="feature" column="FEATURE" />
+		<result property="source" column="SOURCE" />
+		<result property="version" column="VERSION" />
+		<result property="deleteFlag" column="DELETE_FLAG" />
+		<result property="createUserId" column="CREATE_USER_ID" />
+		<result property="updateUserId" column="UPDATE_USER_ID" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="remark" column="REMARK" />
+		<result property="pictureId" column="PICTURE_ID" />
+		<result property="attachmentId" column="ATTACHMENT_ID" />
+		<result property="category" column="CATEGORY" />
+		<result property="materialEvidenceTypeDict" column="MATERIAL_EVIDENCE_TYPE_DICT" />
+		<result property="materialEvidenceType" column="MATERIAL_EVIDENCE_TYPE" />
+		<result property="collectedPersonID" column="collectedPersonID" />
+		<result property="collectedPerson" column="collectedPerson" />
+		<result property="storageStatus" column="STORAGE_STATUS" />
+		<result property="storageStatusCN" column="STORAGE_STATUS_CN" />
+	</resultMap>
+
+
+	<resultMap type="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigation" id="QueryMap">
+		<result property="rowNum" column="rowNum" />
+		<result property="id" column="ID" />
+		<result property="investigationNo" column="investigationNo" />
+		<result property="caseNo" column="caseNo" />
+		<result property="alarmNo" column="alarmNo" />
+		<result property="caseType" column="caseType" />
+		<result property="caseNature" column="caseNature" />
+		<result property="investigationDateFrom" column="investigationDateFrom" />
+		<result property="investigationDateTo" column="investigationDateTo" />
+		<result property="organName" column="organName" />
+		<result property="sceneInvestigatorId" column="sceneInvestigatorId" />
+		<result property="sceneInvestigator" column="sceneInvestigator" />
+		<result property="investigationPlace" column="investigationPlace" />
+		<result property="caseRegionalism" column="caseRegionalism" />
+		<result property="caseLocation" column="caseLocation" />
+		<result property="crimeTimeBegin" column="crimeTimeBegin" />
+		<result property="crimeTimeEnd" column="crimeTimeEnd" />
+		<result property="scenePicture" column="scenePicture" />
+		<result property="scenePhoto" column="scenePhoto" />
+		<result property="sceneVideo" column="sceneVideo" />
+		<result property="sceneMaterialEvidence" column="sceneMaterialEvidence" />
+		<result property="collectGoodsAmount" column="collectGoodsAmount" />
+		<result property="submitDate" column="submitDate" />
+		<result property="deadAmount" column="deadAmount" />
+		<result property="saveFlag" column="saveFlag" />
+		<result property="allowModify" column="allowModify" />
+		<result property="createUserId" column="createUserId" />
+		<result property="followId" column="followId" />
+	</resultMap>
+</mapper>

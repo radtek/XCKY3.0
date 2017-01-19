@@ -1,0 +1,163 @@
+<table>
+    <tr my-head>
+        <td my-width="10">序号</td>
+        #if ($map.get("investigationId")=="1")<td my-width="25">勘验信息ID</td>#end
+	    #if ($map.get("investigationNo")=="1")<td my-width="25">勘验号</td>#end
+        #if ($map.get("caseNo")=="1")<td my-width="25">案件编号</td>#end
+        #if ($map.get("alarmNo")=="1")<td my-width="25">警情编号</td>#end
+        #if ($map.get("caseTypeCn")=="1")<td my-width="25">案件类别</td>#end
+	    #if ($map.get("caseNatureCn")=="1")<td my-width="25">案件性质</td>#end
+	    #if ($map.get("organName")=="1")<td my-width="25">勘验单位</td>#end
+	    #if ($map.get("investigationDateFrom")=="1")<td my-width="25">勘验开始时间</td>#end
+	    #if ($map.get("investigationDateTo")=="1")<td my-width="25">勘验结束时间</td>#end
+        #if ($map.get("investigationPlace")=="1")<td my-width="25">勘验地点</td>#end
+	    #if ($map.get("caseRegionalismCn")=="1")<td my-width="25">发案区划</td>#end
+	    #if ($map.get("caseLocation")=="1")<td my-width="25">发案地点</td>#end
+	    #if ($map.get("crimeTimeBegin")=="1")<td my-width="25">发案开始时间</td>#end
+	    #if ($map.get("crimeTimeEnd")=="1")<td my-width="25">发案结束时间</td>#end
+	    #if ($map.get("scenePhotoAmount")=="1")<td my-width="25">现场照片</td>#end
+	    #if ($map.get("scenePictureAmount")=="1")<td my-width="25">现场图</td>#end
+	    #if ($map.get("evidenceAmount")=="1")<td my-width="25">痕迹物证</td>#end
+	    #if ($map.get("videoEvidenceAmount")=="1")<td my-width="25">视频</td>#end
+	    #if ($map.get("collectedGoodsAmount")=="1")<td my-width="25">提取物品数量</td>#end
+	    #if ($map.get("investigatorName")=="1")<td my-width="25">勘验人</td>#end
+	    #if ($map.get("commandName")=="1")<td my-width="25">指挥人</td>#end
+	    #if ($map.get("witnessName")=="1")<td my-width="25">见证人</td>#end
+	    #if ($map.get("protector")=="1")<td my-width="25">保护人</td>#end
+	    #if ($map.get("protectionDate")=="1")<td my-width="25">保护日期</td>#end
+	    #if ($map.get("protectionMeasureCn")=="1")<td my-width="25">保护措施</td>#end
+	    #if ($map.get("lostTotalValue")=="1")<td my-width="25">损失物品总价值</td>#end
+	    #if ($map.get("woundedAmount")=="1")<td my-width="25">受伤人数</td>#end
+	    #if ($map.get("deadAmount")=="1")<td my-width="25">死亡人数</td>#end
+	    #if ($map.get("chooseObject")=="1")<td my-width="25">选择对象</td>#end
+	    #if ($map.get("choosePlace")=="1")<td my-width="25">选择地点</td>#end
+	    #if ($map.get("crimeTime")=="1")<td my-width="25">作案时机</td>#end
+	    #if ($map.get("crimeInOut")=="1")<td my-width="25">作案出入口</td>#end
+	    #if ($map.get("crimeFeature")=="1")<td my-width="25">作案特点</td>#end
+	    #if ($map.get("invasionType")=="1")<td my-width="25">侵入方式</td>#end
+	    #if ($map.get("commissionDesc")=="1")<td my-width="25">作案过程</td>#end
+	    #if ($map.get("criminalPoints")=="1")<td my-width="25">作案人特点</td>#end
+	    #if ($map.get("crimeTools")=="1")<td my-width="25">作案工具</td>#end
+	    #if ($map.get("lastSubmitDatetime")=="1")<td my-width="25">提交时间</td>#end
+    </tr>
+    #foreach($o in $list)
+        <tr>
+        	<td>$o.rowNum</td>
+        	#if ($o.investigationId && $map.get("investigationId")=="1")
+				<td>$o.investigationId</td>	
+			#end
+        	#if ($o.investigationNo && $map.get("investigationNo")=="1")
+				<td>$o.investigationNo</td>
+			#end
+        	#if ($o.caseNo && $map.get("caseNo")=="1")
+        		<td>$o.caseNo</td>
+			#end
+        	#if ($o.alarmNo && $map.get("alarmNo")=="1")
+        		<td>$o.alarmNo</td>
+			#end
+        	#if ($o.caseTypeCn && $map.get("caseTypeCn")=="1")
+				<td>$o.caseTypeCn</td>
+			#end
+			#if ($o.caseNatureCn && $map.get("caseNatureCn")=="1")
+				<td>$o.caseNatureCn</td>
+			#end
+			#if ($o.organName && $map.get("organName")=="1")
+				<td>$o.organName</td>
+			#end
+        	#if ($o.investigationDateFrom && $map.get("investigationDateFrom")=="1")
+				<td>$!dateTool.format('yyyy-MM-dd HH:mm:ss ',$o.investigationDateFrom)</td>
+			#end
+        	#if ($o.investigationDateTo && $map.get("investigationDateTo")=="1")
+				<td>$!dateTool.format('yyyy-MM-dd HH:mm:ss ',$o.investigationDateTo)</td>
+			#end
+        	#if ($o.investigationPlace && $map.get("investigationPlace")=="1")
+				<td>$o.investigationPlace</td>
+			#end
+        	#if ($o.caseRegionalismCn && $map.get("caseRegionalismCn")=="1")
+				<td>$o.caseRegionalismCn</td>
+			#end
+        	#if ($o.caseLocation && $map.get("caseLocation")=="1")
+				<td>$o.caseLocation</td>
+			#end
+        	#if ($o.crimeTimeBegin && $map.get("crimeTimeBegin")=="1")
+				<td>$!dateTool.format('yyyy-MM-dd HH:mm:ss ',$o.crimeTimeBegin)</td>
+			#end
+        	#if ($o.crimeTimeEnd && $map.get("crimeTimeEnd")=="1")
+				<td>$!dateTool.format('yyyy-MM-dd HH:mm:ss ',$o.crimeTimeEnd)</td>
+			#end
+        	#if ($o.scenePhotoAmount && $map.get("scenePhotoAmount")=="1")
+				<td>$o.scenePhotoAmount</td>
+			#end
+        	#if ($o.scenePictureAmount && $map.get("scenePictureAmount")=="1")
+				<td>$o.scenePictureAmount</td>
+			#end
+        	#if ($o.evidenceAmount && $map.get("evidenceAmount")=="1")
+				<td>$o.evidenceAmount</td>
+			#end
+        	#if ($o.sceneVideo && $map.get("sceneVideo")=="1")
+				<td>$o.sceneVideo</td>
+			#end
+        	#if ($o.collectedGoodsAmount && $map.get("collectedGoodsAmount")=="1")
+				<td>$o.collectedGoodsAmount</td>
+			#end
+			#if ($o.investigatorName && $map.get("investigatorName")=="1")
+				<td>$o.investigatorName</td>
+			#end
+			#if ($o.commandName && $map.get("commandName")=="1")
+				<td>$o.commandName</td>
+			#end
+			#if ($o.witnessName && $map.get("witnessName")=="1")
+				<td>$o.witnessName</td>
+			#end
+			#if ($o.protector && $map.get("protector")=="1")
+				<td>$o.protector</td>
+			#end
+        	#if ($o.protectionDate && $map.get("protectionDate")=="1")
+				<td>$!dateTool.format('yyyy-MM-dd HH:mm:ss ',$o.protectionDate)</td>
+			#end
+        	#if ($o.protectionMeasureCn && $map.get("protectionMeasureCn")=="1")
+				<td>$o.protectionMeasureCn</td>
+			#end
+        	#if ($o.lostTotalValue && $map.get("lostTotalValue")=="1")
+				<td>$o.lostTotalValue</td>
+			#end
+        	#if ($o.woundedAmount && $map.get("woundedAmount")=="1")
+				<td>$o.woundedAmount</td>
+			#end        	
+        	#if ($o.deadAmount && $map.get("deadAmount")=="1")
+				 <td>$o.deadAmount</td>
+			#end        	
+        	#if ($o.chooseObject && $map.get("chooseObject")=="1")
+				 <td>$o.chooseObject</td>
+			#end
+			#if ($o.choosePlace && $map.get("choosePlace")=="1")
+				 <td>$o.choosePlace</td>
+			#end
+			#if ($o.crimeTime && $map.get("crimeTime")=="1")
+				 <td>$o.crimeTime</td>
+			#end
+			#if ($o.crimeInOut && $map.get("crimeInOut")=="1")
+				 <td>$o.crimeInOut</td>
+			#end
+			#if ($o.crimeFeature && $map.get("crimeFeature")=="1")
+				 <td>$o.crimeFeature</td>
+			#end
+			#if ($o.invasionType && $map.get("invasionType")=="1")
+				 <td>$o.invasionType</td>
+			#end
+			#if ($o.commissionDesc && $map.get("commissionDesc")=="1")
+				 <td>$o.commissionDesc</td>
+			#end
+			#if ($o.criminalPoints && $map.get("criminalPoints")=="1")
+				 <td>$o.criminalPoints</td>
+			#end
+			#if ($o.crimeTools && $map.get("crimeTools")=="1")
+				 <td>$o.crimeTools</td>
+			#end
+			#if ($o.lastSubmitDatetime && $map.get("lastSubmitDatetime")=="1")
+				 <td>$!dateTool.format('yyyy-MM-dd HH:mm:ss ',$o.lastSubmitDatetime)</td>
+			#end
+        </tr>
+      #end    
+</table>
+

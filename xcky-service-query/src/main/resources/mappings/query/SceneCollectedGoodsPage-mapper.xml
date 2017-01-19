@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.query.SceneCollectedGoodsPageMapper">
+
+	<select id="query" resultMap="SceneCollectedGoodsMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneCollectedGoods">
+		SELECT
+			T1.ID,
+			T1.INVESTIGATION_ID,
+			T1.SERIAL_NO,
+			T1.NAME,
+			T1.MATERIAL_EVIDENCE_FLAG,
+			T1.MATERIAL_EVIDENCE_ID,
+			T1.AMOUNT,
+			T1.COLLECTED_POSITION,
+			T1.COLLECTED_METHOD,
+			T1.COLLECTED_TIME,
+			T1.FEATURE,
+			T1.SOURCE,
+			T1.VERSION,
+			T1.DELETE_FLAG,
+			T1.CREATE_USER_ID,
+			T1.UPDATE_USER_ID,
+			T1.CREATE_TIME,
+			T1.UPDATE_TIME,
+			T1.REMARK,
+			T1.PICTURE_ID,
+			t4.dict_value as CATEGORY,
+			T1.MATERIAL_EVIDENCE_TYPE_DICT,
+			T1.MATERIAL_EVIDENCE_TYPE,
+			T1.STORAGE_STATUS,
+			t3.dict_value as STORAGE_STATUS_CN,
+			t2.collectedPersonID as collectedPersonID,
+			t2.collectedPerson as collectedPerson
+		FROM T_SCENE_COLLECTED_GOODS t1,
+			(select t21.MATERIAL_EVIDENCE_ID,
+			wm_concat(to_char(t21.COLLECTED_PERSON_ID)) as collectedPersonID,
+			wm_concat(to_char(t21.COLLECTED_PERSON)) as collectedPerson
+			from t_scene_collected_person t21
+			<if test="collectedPersonID !=null and collectedPersonID !=''">
+				,t_scene_collected_person t22
+				where t21.MATERIAL_EVIDENCE_ID = t22.MATERIAL_EVIDENCE_ID
+				and t22.COLLECTED_PERSON_ID =  #{collectedPersonID}
+			</if>
+			group by t21.MATERIAL_EVIDENCE_ID) t2,
+			t_sys_dict t3,
+			t_sys_dict t4
+		WHERE t1.DELETE_FLAG=#{deleteFlag}
+			and t1.storage_status = t3.dict_key(+)
+			and t3.root_key(+) = 'ZYXTZTFKDM'
+			and t1.category = t4.dict_key(+)
+			and t4.root_key(+) = 'WZLBDM'
+			and t4.parent_key(+) = 'WZLBDM'
+			<choose>
+				<when test="collectedPersonID !=null and collectedPersonID !=''">
+					and t1.id = t2.MATERIAL_EVIDENCE_ID
+				</when>
+				<otherwise>
+					and t1.id = t2.MATERIAL_EVIDENCE_ID(+)
+				</otherwise>
+			</choose>
+			<if test="investigationId !=null and investigationId !=''">
+				and t1.INVESTIGATION_ID=#{investigationId, jdbcType=CHAR}
+			</if>
+			<if test="serialNo !=null and serialNo !=''">
+				and t1.SERIAL_NO=#{serialNo, jdbcType=VARCHAR}
+			</if>
+			<if test="name !=null and name !=''">
+				and t1.NAME=#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="materialEvidenceFlag !=null and materialEvidenceFlag !=''">
+				and t1.MATERIAL_EVIDENCE_FLAG=#{materialEvidenceFlag, jdbcType=CHAR}
+			</if>
+			<if test="materialEvidenceId !=null and materialEvidenceId !=''">
+				and t1.MATERIAL_EVIDENCE_ID=#{materialEvidenceId, jdbcType=CHAR}
+			</if>
+			<if test="amount !=null and amount !=''">
+				and t1.AMOUNT=#{amount, jdbcType=INTEGER}
+			</if>
+			<if test="collectedPosition !=null and collectedPosition !=''">
+				and t1.COLLECTED_POSITION=#{collectedPosition, jdbcType=VARCHAR}
+			</if>
+			<if test="collectedMethod !=null and collectedMethod !=''">
+				and t1.COLLECTED_METHOD=#{collectedMethod, jdbcType=VARCHAR}
+			</if>
+			<if test="collectedTime !=null and collectedTime !=''">
+				and t1.COLLECTED_TIME=#{collectedTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="feature !=null and feature !=''">
+				and t1.FEATURE=#{feature, jdbcType=VARCHAR}
+			</if>
+			<if test="source !=null and source !=''">
+				and t1.SOURCE=#{source, jdbcType=VARCHAR}
+			</if>
+			<if test="version !=null and version !=''">
+				and t1.VERSION=#{version, jdbcType=INTEGER}
+			</if>
+			<if test="updateUserId !=null and updateUserId !=''">
+				and t1.UPDATE_USER_ID=#{updateUserId, jdbcType=CHAR}
+			</if>
+			<if test="updateTime !=null and updateTime !=''">
+				and t1.UPDATE_TIME=#{updateTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="remark !=null and remark !=''">
+				and t1.REMARK=#{remark, jdbcType=VARCHAR}
+			</if>
+			<if test="pictureId !=null and pictureId !=''">
+				and t1.PICTURE_ID=#{pictureId, jdbcType=VARCHAR}
+			</if>
+			<if test="storageStatus !=null and storageStatus !=''">
+				and t1.STORAGE_STATUS=#{storageStatus, jdbcType=VARCHAR}
+			</if>
+	</select>
+
+	<select id="queryScene" resultMap="QueryMap" parameterType="com.hisign.xcky.api.model.sceneCollecting.SceneInvestigation">
+		select
+		rowNum,
+		t1.id,
+		t1.investigation_no as investigationNo,
+		t4.dict_value as caseType,
+		t1.investigation_date_from as investigationDateFrom,
+		t1.investigation_date_to as investigationDateTo,
+		t1.organ_name as organName,
+		t8.investigator_id         as sceneInvestigatorId,
+		t8.investigator_name       as sceneinvestigator,
+		t1.investigation_place as investigationPlace,
+		t5.organ_name as caseRegionalism
+
+		from t_scene_investigation t1,
+		t_scene_investigation_dispatch t2,
+		t_sys_dict t4,
+		t_organization t5,
+		(select t71.investigation_id
+		from t_scene_investigator t71
+		<if test="sceneInvestigatorId !=null and sceneInvestigatorId !=''">
+			,t_scene_investigator t72
+			where t71.investigation_id = t72.investigation_id
+			and t72.investigator_id =  #{sceneInvestigatorId}
+		</if>
+		group by t71.investigation_id) t7,
+		(select t81.investigation_id,
+		wm_concat(to_char(t81.investigator_id)) as investigator_id,
+		wm_concat(to_char(t81.investigator_name)) as investigator_name
+		from t_scene_investigator t81
+		group by t81.investigation_id) t8,
+		(select t141.investigation_id from t_scene_collected_goods t141
+		<if test="storageStatus != null and storageStatus != ''">
+			,t_scene_collected_goods t142
+			where t141.investigation_id = t142.investigation_id
+			and t142.storage_status = #{storageStatus}
+		</if>
+		group by t141.investigation_id)t14
+		where t1.delete_flag = '0'
+		and t1.id = t2.investigation_id
+		and t4.root_key(+) = 'AJLBDM'
+		and t2.case_type = t4.dict_key(+)
+		and t2.case_regionalism = t5.regionalism(+)
+		and t1.id = t14.investigation_id
+		and t1.id = t8.investigation_id(+)
+		and t1.id = t7.investigation_id(+)
+		and ( t1.create_user_id = #{sceneInvestigatorId}
+		or
+		t1.id =  t7.investigation_id)
+
+		<if test="investigationDateFrom !=null and investigationDateFrom !=''">
+			and t1.investigation_date_from <![CDATA[>=]]> #{investigationDateFrom, jdbcType=DATE}
+		</if>
+		<if test="investigationDateTo !=null and investigationDateTo !=''">
+			and t1.investigation_date_from <![CDATA[<]]> #{investigationDateTo, jdbcType=DATE}+1
+		</if>
+		<if test="crimeTimeBegin !=null and crimeTimeBegin !=''">
+			and t2.crime_time_begin <![CDATA[>=]]> #{crimeTimeBegin, jdbcType=DATE}
+		</if>
+		<if test="crimeTimeEnd !=null and crimeTimeEnd !=''">
+			and t2.crime_time_begin <![CDATA[<]]> #{crimeTimeEnd, jdbcType=DATE}+1
+		</if>
+		<if test="caseType !=null and caseType !=''">
+			and t2.case_type like #{caseType}||'%'
+		</if>
+		<if test="caseRegionalism !=null and caseRegionalism !=''">
+			and t2.case_regionalism like #{caseRegionalism}||'%'
+		</if>
+		<if test="investigationNo !=null and investigationNo !=''">
+			and t1.investigation_no like #{investigationNo}||'%'
+		</if>
+		<if test="investigationPlace !=null and investigationPlace !=''">
+			and t1.investigation_place like '%' || #{investigationPlace} || '%'
+		</if>
+		<if test="caseNo !=null and caseNo !=''">
+			and t2.case_no like #{caseNo}||'%'
+		</if>
+
+	</select>
+
+</mapper>

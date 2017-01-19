@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hisign.xcky.persist.mapper.query.SceneSimpleQueryMapper">
+
+	<resultMap type="com.hisign.xcky.api.model.sceneQuery.SceneSimpleQuery" id="TempSceneQueryMap">
+		<result property="rowNum" column="N_ROW_NUMBER" />
+		<result property="investigationId" column="INVESTIGATION_ID" />
+		<result property="investigationNo" column="INVESTIGATION_NO" />
+		<result property="caseNo" column="CASE_NO" />
+		<result property="alarmNo" column="ALARM_NO" />
+		<result property="caseType" column="CASE_TYPE" />
+		<result property="caseTypeCn" column="CASE_TYPE_CN" />
+		<result property="caseNature" column="CASE_NATURE" />
+		<result property="caseNatureCn" column="CASE_NATURE_CN" />
+		<result property="organName" column="ORGAN_NAME" />
+		<result property="investigationDateFrom" column="INVESTIGATION_DATE_FROM" />
+		<result property="investigationDateTo" column="INVESTIGATION_DATE_TO" />
+		<result property="investigationPlace" column="INVESTIGATION_PLACE" />
+		<result property="caseRegionalism" column="CASE_REGIONALISM" />
+		<result property="caseLocation" column="CASE_LOCATION" />
+		<result property="crimeTimeBegin" column="CRIME_TIME_BEGIN" />
+		<result property="crimeTimeEnd" column="CRIME_TIME_END" />
+		<result property="caseRegionalismCn" column="CASE_REGIONALISM_CN" />
+		<result property="scenePhotoAmount" column="SCENE_PHOTO_AMOUNT" />
+		<result property="scenePictureAmount" column="SCENE_PICTURE_AMOUNT" />
+		<result property="evidenceAmount" column="EVIDENCE_AMOUNT" />
+		<result property="videoEvidenceAmount" column="VIDEO_EVIDENCE_AMOUNT" />
+		<result property="collectedGoodsAmount" column="COLLECTED_GOODS_AMOUNT" />
+		<result property="investigatorName" column="INVESTIGATOR_NAME" />
+		<result property="commandName" column="COMMAND_NAME" />
+		<result property="witnessName" column="WITNESS_NAME" />
+		<result property="protector" column="PROTECTOR" />
+		<result property="protectionDate" column="PROTECTION_DATE" />
+		<result property="protectionMeasureCn" column="PROTECTION_MEASURE_CN" />
+		<result property="lostTotalValue" column="LOST_TOTAL_VALUE" />
+		<result property="woundedAmount" column="WOUNDED_AMOUNT" />
+		<result property="deadAmount" column="DEAD_AMOUNT" />
+		<result property="chooseObject" column="CHOOSE_OBJECT" />
+		<result property="choosePlace" column="CHOOSE_PLACE" />
+		<result property="crimeTime" column="CRIME_TIME" />
+		<result property="crimeInOut" column="CRIME_IN_OUT" />
+		<result property="crimeFeature" column="CRIME_FEATURE" />
+		<result property="crimeType" column="CRIME_TYPE" />
+		<result property="invasionType" column="INVASION_TYPE" />
+		<result property="commissionDesc" column="COMMISSION_DESC" />
+		<result property="criminalPoints" column="CRIMINAL_POINTS" />
+		<result property="crimeTools" column="CRIME_TOOLS" />
+		<result property="lastSubmitDatetime" column="LAST_SUBMIT_DATETIME" />
+		<result property="fileServerPath" column="FILE_SERVER_PATH" />
+		<result property="materialEvidenceNo" column="MATERIAL_EVIDENCE_NO" />
+		<result property="materialEvidenceName" column="MATERIAL_EVIDENCE_NAME" />
+		<result property="materialEvidenceTypeCn" column="MATERIAL_EVIDENCE_TYPE_CN" />
+		<result property="collectionModeCn" column="COLLECTION_MODE_CN" />		
+	</resultMap>
+	
+</mapper>

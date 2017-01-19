@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hisign.xcky.persist.mapper.query.SceneMaterialEvidencePageMapper">
+	<resultMap type="com.hisign.xcky.api.model.sceneQuery.SceneMaterialEvidencePage" id="QueryMap">
+		<result property="rowNum" column="rowNum" />
+		<result property="investigationId" column="investigationId" />
+		<result property="investigationNo" column="investigationNo" />
+		<result property="materialEvidenceNo" column="materialEvidenceNo" />
+		<result property="materialEvidenceName" column="materialEvidenceName" />
+		<result property="materialEvidenceTypeDict" column="materialEvidenceTypeDict" />
+		<result property="materialEvidenceType" column="materialEvidenceType" />
+		<result property="leftPosition" column="leftPosition" />
+		<result property="collectionModeDict" column="collectionModeDict" />
+		<result property="collectionMode" column="collectionMode" />
+		<result property="caseType" column="caseType" />
+		<result property="caseRegionalism" column="caseRegionalism" />
+		<result property="organName" column="organName" />
+		<result property="category" column="category" />
+		<result property="investigationDateFrom" column="investigationDateFrom" />
+		<result property="investigationDateTo" column="investigationDateTo" />
+		<result property="investigationPlace" column="investigationPlace" />
+		<result property="sceneInvestigatorId" column="sceneInvestigatorId" />
+		<result property="sceneInvestigator" column="sceneInvestigator" />
+		<result property="sceneCollectedPersonID" column="sceneCollectedPersonID" />
+		<result property="sceneCollectedPerson" column="sceneCollectedPerson" />
+		<result property="storageFlag" column="storageFlag" />
+	</resultMap>
+</mapper>

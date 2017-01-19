@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.query.SceneSimpleQueryMapper">
+
+	<select id="queryAll" statementType="CALLABLE" parameterType="java.util.Map">
+		
+		{call sp_scene_query(
+			  #{param.investigationNo, jdbcType=VARCHAR,mode=IN},
+			  #{param.createTimeStart, jdbcType=VARCHAR,mode=IN},
+			  #{param.createTimeEnd, jdbcType=VARCHAR,mode=IN},
+			  #{param.investigationDateStart, jdbcType=VARCHAR,mode=IN},
+			  #{param.investigationDateEnd, jdbcType=VARCHAR,mode=IN},
+			  #{param.source, jdbcType=VARCHAR,mode=IN},
+			  #{param.caseLon, jdbcType=INTEGER,mode=IN},
+			  #{param.caseLat, jdbcType=INTEGER,mode=IN},
+			  #{param.radius, jdbcType=INTEGER,mode=IN},
+			  #{param.caseNo, jdbcType=VARCHAR,mode=IN},
+			  #{param.alarmAcceptNo, jdbcType=VARCHAR,mode=IN},
+			  #{param.caseType, jdbcType=VARCHAR,mode=IN},
+			  #{param.murderFlag, jdbcType=VARCHAR,mode=IN},
+			  #{param.criminalFlag, jdbcType=VARCHAR,mode=IN},
+			  #{param.crimeTimeBeginStr, jdbcType=VARCHAR,mode=IN},
+			  #{param.crimeTimeEndStr, jdbcType=VARCHAR,mode=IN},
+			  #{param.caseRegionalism, jdbcType=VARCHAR,mode=IN},
+			  #{param.caseNature, jdbcType=VARCHAR,mode=IN},
+			  #{param.lastSubmitDatetimeStart, jdbcType=VARCHAR,mode=IN},
+			  #{param.lastSubmitDatetimeEnd, jdbcType=VARCHAR,mode=IN},
+			  #{param.bsCollectFlag, jdbcType=VARCHAR,mode=IN},
+			  #{param.investigatorId, jdbcType=VARCHAR,mode=IN},
+			  #{param.duty, jdbcType=VARCHAR,mode=IN},
+			  #{param.chooseObject, jdbcType=VARCHAR,mode=IN},
+			  #{param.choosePlace, jdbcType=VARCHAR,mode=IN},
+			  #{param.crimeInOut, jdbcType=VARCHAR,mode=IN},
+			  #{param.crimeTime, jdbcType=VARCHAR,mode=IN},
+			  #{param.invasionType, jdbcType=VARCHAR,mode=IN},
+			  #{param.crimeFeature, jdbcType=VARCHAR,mode=IN},
+			  #{param.crimeType, jdbcType=VARCHAR,mode=IN},
+			  #{param.evidenceType, jdbcType=VARCHAR,mode=IN},
+			  #{param.catagory, jdbcType=VARCHAR,mode=IN},
+			  #{param.begin, jdbcType=INTEGER,mode=IN},
+			  #{param.end, jdbcType=INTEGER,mode=IN},
+			  #{outRecordAmount, jdbcType=INTEGER,mode=OUT},
+			  #{refcursorOut, mode=OUT, jdbcType=CURSOR,resultMap=TempSceneQueryMap}
+		)}
+	</select>
+	
+</mapper>

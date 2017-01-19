@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hisign.xcky.persist.mapper.query.SceneMaterialEvidencePageMapper">
+	<!-- 查询案件现场列表 -->
+	<select id="query" resultMap="QueryMap" parameterType="com.hisign.xcky.api.model.sceneQuery.PageFilter">
+		select
+           rowNum, 
+           T1.id as investigationId,
+           T1.investigation_no as investigationNo,
+		   T1.organ_name as organName,
+           T3.dict_value as caseType,
+           T5.organ_name as caseRegionalism,
+           T1.investigation_date_from as investigationDateFrom,
+           T1.investigation_date_to as investigationDateTo,
+           T1.investigation_place as investigationPlace,
+           T8.investigator_id         as sceneInvestigatorId,
+           T8.investigator_name       as sceneinvestigator
+           FROM T_SCENE_INVESTIGATION T1,
+                T_SCENE_INVESTIGATION_DISPATCH T2,
+                T_SYS_DICT T3,
+                T_ORGANIZATION T5,
+                (select t61.investigation_id
+		          from t_scene_investigator t61
+				<if test="investigatorId !=null and investigatorId !=''">
+					,t_scene_investigator t62
+					where t61.investigation_id = t62.investigation_id
+					and t62.investigator_id =  #{investigatorId}
+				</if>
+		         group by t61.investigation_id
+                ) T6,
+                (SELECT T71.INVESTIGATION_ID
+				  FROM T_SCENE_MATERIAL_EVIDENCE T71
+						<if test="storageFlag != null and storageFlag != ''">
+							,T_SCENE_MATERIAL_EVIDENCE t72
+							where t71.investigation_id = t72.investigation_id
+							AND T72.STORAGE_FLAG= #{storageFlag}
+						</if>
+				        group by T71.INVESTIGATION_ID) T7,
+				(select t81.investigation_id,
+				wm_concat(to_char(t81.investigator_id)) as investigator_id,
+				wm_concat(to_char(t81.investigator_name)) as investigator_name
+				from t_scene_investigator t81
+				group by t81.investigation_id) t8
+		         WHERE t1.delete_flag = '0'
+					 AND T1.ID=T2.INVESTIGATION_ID
+		             AND  T3.root_key(+) = 'AJLBDM'
+		             AND  T2.case_type = T3.dict_key(+)
+		             AND  T2.case_regionalism = T5.regionalism(+)
+					 AND  T1.ID=T8.INVESTIGATION_ID(+)
+                	 AND  T1.ID=T6.INVESTIGATION_ID(+)
+					 AND  ( t1.create_user_id = #{investigatorId}
+					 or
+					 t1.id =  t6.investigation_id)
+					 and t1.id = t7.investigation_id
+		       <if test="investigationDateFrom !=null and investigationDateFrom !=''">
+			   		and T1.investigation_date_from <![CDATA[>=]]> #{investigationDateFrom, jdbcType=DATE}
+			   </if>
+			   <if test="investigationDateTo !=null and investigationDateTo !=''">
+			   		and T1.investigation_date_from <![CDATA[<]]> #{investigationDateTo, jdbcType=DATE}+1
+			   </if>
+			   <if test="crimeTimeBegin !=null and crimeTimeBegin !=''">
+			   		and T2.CRIME_TIME_BEGIN <![CDATA[>=]]> #{crimeTimeBegin, jdbcType=DATE}
+			   </if>
+			   <if test="crimeTimeEnd !=null and crimeTimeEnd !=''">
+			   		and T2.CRIME_TIME_BEGIN <![CDATA[<]]> #{crimeTimeEnd, jdbcType=DATE}+1
+			   </if>
+			   <if test="caseType !=null and caseType !=''">
+			   		and T2.case_type like #{caseType}||'%'
+			   </if>
+			   <if test="caseRegionalism !=null and caseRegionalism !=''">
+			   		and T2.case_regionalism like #{caseRegionalism}||'%'
+			   </if>
+			   <if test="investigationNo !=null and investigationNo !=''">
+			   		and T1.investigation_no like #{investigationNo}||'%'
+			   </if>
+			   <if test="investigationPlace !=null and investigationPlace !=''">
+			   		and T1.investigation_place like '%' || #{investigationPlace} || '%'
+			   </if>
+	</select>
+	
+	<!-- 查询案件现场列表 -->
+	<select id="queryMaterialEvidenceList" resultMap="QueryMap"
+		parameterType="java.util.Map">
+		SELECT
+		T1.ID,
+		T1.MATERIAL_EVIDENCE_NO as materialEvidenceNo,
+		T1.MATERIAL_EVIDENCE_NAME as materialEvidenceName,
+		T2.DICT_VALUE as category,
+		T3.DICT_VALUE AS materialEvidenceType,
+		T4.DICT_VALUE AS collectionMode,
+		T1.LEFT_POSITION as leftPosition,
+		T5.collectedPersonID as sceneCollectedPersonID,
+		T5.collectedPerson as sceneCollectedPerson,
+		T1.STORAGE_FLAG as storageFlag
+		FROM T_SCENE_MATERIAL_EVIDENCE T1,
+		T_SYS_DICT T2,
+		T_SYS_DICT T3,
+		T_SYS_DICT T4,
+		(select t51.MATERIAL_EVIDENCE_ID,
+		wm_concat(to_char(t51.COLLECTED_PERSON_ID)) as collectedPersonID,
+		wm_concat(to_char(t51.COLLECTED_PERSON)) as collectedPerson
+		from t_scene_collected_person t51
+		<if test="collectedPersonID !=null and collectedPersonID !=''">
+			,t_scene_collected_person t52
+			where t51.MATERIAL_EVIDENCE_ID = t52.MATERIAL_EVIDENCE_ID
+			and t52.COLLECTED_PERSON_ID =  #{collectedPersonID}
+		</if>
+		group by t51.MATERIAL_EVIDENCE_ID) T5
+		where t1.DELETE_FLAG='0'
+		AND T1.CATEGORY = T2.DICT_KEY(+)
+		AND T2.root_key(+) = 'XCHJWZLBDM'
+		AND T1.MATERIAL_EVIDENCE_TYPE = T3.DICT_KEY(+)
+		AND T3.root_key(+) = T1.MATERIAL_EVIDENCE_TYPE_DICT
+		AND T1.COLLECTION_MODE = T4.DICT_KEY(+)
+		AND T4.ROOT_KEY(+) = T1.COLLECTION_MODE_DICT
+		<choose>
+			<when test="collectedPersonID !=null and collectedPersonID !=''">
+				and T1.id = T5.MATERIAL_EVIDENCE_ID
+			</when>
+			<otherwise>
+				and T1.id = T5.MATERIAL_EVIDENCE_ID(+)
+			</otherwise>
+		</choose>
+		<if test="investigationId !=null and investigationId !=''">
+			   	AND T1.INVESTIGATION_ID =#{investigationId}
+	    </if>
+		<if test="storageFlag !=null and storageFlag !=''">
+			   AND T1.STORAGE_FLAG = #{storageFlag}
+	    </if>
+	</select>
+</mapper>
