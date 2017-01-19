@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>警情复用</title>
+    <link rel="stylesheet" href="../css/base-plus.css">
+    <link rel="stylesheet" href="../css/pol-case-reuse.css">
+</head>
+<body>
+    <div class="body-agent">
+        <!--<div class="common-panel-heading">-->
+            <!--<ul class="clearfix">-->
+                <!--<li class="active">查询条件</li>-->
+                <!--<li>已保存条件</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <div class="query-block query-block-inner">
+            <div class="query-block-row">
+                <div class="fl qc-group-m">
+                    <span class="qc-label-xs">接警编号：</span>
+                    <input id="aqxx-alarm-no" name="alarmNo" type="text" class="cm-input">
+                </div>
+                <div class="fl qc-group-l">
+                    <span class="qc-label-l">案件编号：</span>
+                    <input id="aqxx-case-no" name="caseNo" type="text" class="cm-input">
+                </div>
+            </div>
+            <div class="query-condition-hide hider">
+                <div class="query-block-row">
+                    <div class="fl qc-group scope">
+                        <span name="sfzp" class="qc-label-xs">发案区划：</span>
+                        <dict dict-type="tree" dict-root="GXSDM" dict-common="true" dict-name="caseRegionalism" dict-id="case-regionalism" class="dict" empty="true"></dict>
+                    </div>
+                </div>
+                <div class="query-block-row">
+                    <div class="fl qc-group scope">
+                        <span name="sfzp" class="qc-label-xs">案件类别：</span>
+                        <dict dict-type="tree" dict-root="AJLBDM" dict-common="true" dict-name="caseType" dict-id="case-type" class="dict" empty="true"></dict>
+                    </div>
+                </div>
+                <div class="query-block-row">
+                    <div class="fl qc-group-m">
+                        <span class="qc-label-xs">接警时间：</span>
+                        <div class="text-time">
+                            <input name="alarmTime" type="text" class="cm-input cm-input-time">
+                            <i class="icon-calendar icon-time"></i>
+                        </div>
+                    </div>
+                    <div class="fl qc-group-l">
+                        <span class="qc-label-l">发案时间：</span>
+                        <div class="text-time">
+                            <input name="crimeTime" type="text" class="cm-input cm-input-range-time" placeholder="起始时间-结束时间">
+                            <i class="icon-calendar icon-time"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="query-block-row">
+                    <div class="fl qc-group-xxl">
+                        <span class="qc-label-xs">发案地点：</span>
+                        <input id="aqxx-case-location" name="caseLocation" type="text" class="cm-input cl-input">
+                    </div>
+                </div>
+                <div class="query-block-row">
+                    <div class="fl qc-group-l">
+                        <span class="qc-label-xs">接警人：</span>
+                        <input id="aqxx-alarm-receiver" name="alarmReceiver" type="text" class="cm-input">
+                    </div>
+                </div>
+            </div>
+            <hr class="cm-dash" />
+            <p class="query-reset">
+                <b class="cm-query-btn" id="pcr-query-btn"></b>
+                <b class="cm-reset-btn" id="pcr-reset-btn"></b>
+            </p>
+            <!--<div class="cq-condition al-save-condition"></div>-->
+        </div>
+        <div class="more-condition" title="展开查询条件栏"><i class="icon-angle-up icon-angle-down"></i></div>
+        <!--<div class="more-condition" title="展开查询条件栏"><i class="icon-angle-up icon-angle-down"></i></div>-->
+        <div id="pc-reuse-query-result" class="query-result">
+            <div class="new-color-bar">
+                <span class="title"><i class="icon-search pr10 fs14"></i>警情复用列表<span class="result-count-desc">共找到<span class="total-count"></span>条符合的记录</span></span>
+            </div>
+            <table id="pc-reuse-table" class="typical-tb mem"></table>
+            <div class="paging"></div>
+        </div>
+    </div>
+</body>
+<script type="text/template" id="pc-reuse-table-opt">
+    <a class="pc-reuse-link" href="javascript:void(0);" paramid="{id}">复用</a>
+</script>
+<script src="../js/base.js"></script>
+<script>
+    importing('dict','datepicker','daterangepicker',function () {
+        var getListDataAction = makeAct('sceneCollecting/alarmInfo/query');
+        var connectAlarmSceneAction = makeAct('sceneCollecting/alarmInfo/connectAlarmScene');
+
+        var $qr = $('#pc-reuse-query-result');
+        var $qo = $('.query-block');
+        var $tb = $('#pc-reuse-table');
+
+        var investId = queryParse().investId;//勘验ID
+        var columns = [
+            {title:'序号',            map:'rowNum',          cls:'cell-xs'},
+            {title:'警情编号',        map:'alarmNo',          cls:'mem18'},
+            {title:'案件编号',        map:'caseNo',           cls:'mem18'},
+            {title:'发案地所辖派出所', map:'alarmNo.ifExist',  cls:'mem12'},
+            {title:'案件类别',        map:'caseTypeCn',        cls:'mem10'},
+            {title:'接警人',          map:'alarmReceiver',    cls:'mem8'},
+            {title:'接警时间',        map:'alarmTime.asCnTime',        cls:'mem8'},
+            {title:'发案时间',        map:'crimeTimeBegin.asCnTime',   cls:'mem8'},
+            {title:'发案地点',        map:'caseLocation',     cls:'mem16'},
+            {title:'简要案情',        map:'caseBrief',        cls:'mem22'},
+            {title:'操作',            map:'id.asReuseBtn',    cls:'mem4'}
+        ];
+
+        function init() {
+            var alarmNo = queryParse().alarmNo || '',//接警编号
+                caseNo = queryParse().caseNo || '',//案件编号
+                caseLocation = decodeURIComponent(queryParse().caseLocation).asUndefined() || '',//发案地点
+                alarmReceiver = decodeURIComponent(queryParse().alarmReceiver).asUndefined() || '';//接收人
+
+            //aqxx-alarm-no aqxx-case-no aqxx-case-location aqxx-alarm-receiver
+            $('#aqxx-alarm-no').val(alarmNo);
+            $('#aqxx-case-no').val(caseNo);
+            $('#aqxx-case-location').val(caseLocation);
+            $('#aqxx-alarm-receiver').val(alarmReceiver);
+            $('.cm-input-time').datepicker({dateFmt:"yyyy-MM-dd"});
+            $('.cm-input-range-time').daterangepicker();
+            $('.dict').dict();
+            loadListData();
+//            saveCondition('.cq-condition', '.al-save-condition');
+        }
+        //加载列表数据
+        function loadListData() {
+            var queryObj = getQueryObj();
+            $qr.pagingList({
+                action:getListDataAction,
+                currentPage: $qr.children('.paging').data('currentPage'),
+                jsonObj:queryObj,
+                callback:loadListDataCb
+            });
+        }
+        //加载列表数据回调
+        function loadListDataCb(data) {
+            $tb.table({
+                data:data,
+                cols:columns,
+                fixCols:{left:3, right:1},
+                allowHTML:true
+            });
+        }
+        //获取查询条件json对象
+        function getQueryObj() {
+            var queryObj = {};
+
+            $qo.find('input').each(function (i,el) {
+                var $el = $(el);
+                var name = $el.attr('name');
+                queryObj[name] = $el.val().trim();
+                if(name == 'crimeTime'){
+                    var crimeTimeArr = queryObj.crimeTime.split(',');
+//                    queryObj.crimeTimeBegin = crimeTimeArr[0]?crimeTimeArr[0].asCnTime():'';
+//                    queryObj.crimeTimeEnd = crimeTimeArr[1]?crimeTimeArr[1].asCnTime():'';
+                    queryObj.crimeTimeBegin = crimeTimeArr[0];
+                    queryObj.crimeTimeEnd = crimeTimeArr[1];
+                }
+//                if(name == 'alarmTime'){
+//                    queryObj.alarmTime = queryObj.alarmTime?queryObj.alarmTime.asCnTime():'';
+//                }
+
+            });
+            return queryObj;
+        }
+        //关联(现场查询)
+        function relateWithScene(pcId) {
+            $post(connectAlarmSceneAction,{
+                "id": pcId,
+                "investigationId": investId
+            },function() {
+                toast('关联成功！').ok();
+                $opener.queryForScene();
+                $opener.$select();
+            });
+        }
+
+        //转换操作列
+        $filter('asReuseBtn',function (item,i) {
+            return $('#pc-reuse-table-opt').html().format({id:this.valueOf()});
+        });
+        //展开、隐藏查询条件
+        $('.more-condition').on('click', function(){
+            //点击展开更多条件栏
+            $('.query-condition-hide').slideToggle();
+            $(this).find('i').toggleClass('icon-angle-down');
+            if($(this).find('i').is('.icon-angle-down')){
+                $(this).attr('title', '展开查询条件栏');
+            }else{
+                $(this).attr('title', '隐藏查询条件栏');
+            }
+        });
+        //重置
+        $('#pcr-reset-btn').on('click',function () {
+            $qo.find('input:text').val('');
+            $qo.find('.dict').children().first().trigger('click');
+        });
+        //查询
+        $('#pcr-query-btn').on('click',function () {
+            $qr.children('.paging').data('currentPage',0);
+            loadListData();
+        });
+        //复用
+        $tb.on('click','.pc-reuse-link',function () {
+            var $this = $(this),
+                pcId = '';
+            if(investId){
+                pcId = $this.attr('paramId');
+                relateWithScene(pcId);
+            }else{
+//                .closest('tr').index()
+                var currentData = $tb.data('current-data');
+                var data = currentData.length && currentData[$this.closest('tr').index()];
+                var timeArr = ['alarmTime','crimeTimeBegin','crimeTimeEnd','dispatchTime'];
+                timeArr.forEach(function (el,i) {
+                    data[el] = data[el].asDate16();
+                });
+                $opener.fillData($opener.$('#add-scene-aqxx'),{sceneInvestigationDispatch:data});
+                $opener.fillData($opener.$('#add-scene-ckxx'),{sceneHandleInfo:{"caseLon": data.caseLon,"caseLat": data.caseLat}});
+                $opener.$select();
+            }
+        });
+        
+        init();
+    })
+</script>
+</html>

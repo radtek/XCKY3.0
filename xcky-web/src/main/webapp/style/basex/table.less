@@ -1,0 +1,103 @@
+.typical-tb{
+  width: 100%;
+  border-collapse:collapse;
+  margin: 0 auto;
+  /*border: 1px solid #cdcdcd;*/
+
+  tr{
+    /*min-height: 36px;*/
+    border-right: 1px solid #ddd;
+  }
+
+  &>thead tr{
+    background: #f1f1f1;
+
+    th{
+      height: 36px;
+      color: #666;
+      border-left: 1px solid #ddd;
+      //border-bottom: 1px solid #999;
+      //border-left: 2px solid #eaeaea;
+      border-top:1px solid @ui-border-color;
+      border-bottom: 1px solid @ui-border-color;//#555;
+      text-align: center;
+      /*font-size: 14px;*/
+      /*background:#f5f5f5;*/
+      /*background:linear-gradient(#f7f7f7, #f1f1f1, #efefef);*/
+    }
+  }
+
+  &>tbody tr{
+
+    background-color: #fff;
+
+    &.nth-even, &:nth-child(even){
+      background-color:@tr-even-bg; //#f9f9f9;
+    }
+
+    &:hover,
+    &.hover-like,
+    &:hover td.need-fix,
+    &:hover td.need-fix-end,
+    td.need-fix.hover-like,
+    td.need-fix-end.hover-like{
+      background-color: @tr-hover-bg;
+      //background: #ffef85;
+    }
+
+    &.checked,&.checked>td{
+      background-color: @tr-checked-bg!important;
+    }
+    td{
+      text-align: center;
+      /*border-bottom: 1px dotted #a9a9a9;*/
+      height: 28px;
+      line-height: 28px;
+      font-size: 12px;
+      color:#666;
+      border-left: 1px solid @ui-border-color;// #ddd;
+      border-bottom: 1px solid @ui-border-color;// #d9d9d9;
+      //border-left: 2px solid #eaeaea;
+      //border-bottom: 2px solid #eaeaea;
+      padding: 7px;
+
+      td{
+        border:none;
+        text-align: left;
+      }
+
+      a{
+        color: #0066cc;
+      }
+    }
+  }
+
+  &>thead>tr ,
+  &>tbody>tr {
+    td.td-left, th.th-left {
+      padding-left: 10px;
+    }
+  }
+
+  &.tleft{
+    &>tbody>tr>td,
+    &>thead>tr>th{
+      text-align: left;
+      padding: 7px 7px 7px 10px;
+    }
+    &>tbody>tr>td.tcenter,
+    &>thead>tr>th.tcenter{
+      padding: 7px;
+    }
+  }
+
+}
+
+
+//table.nth2-tb>tbody>tr:nth-child(odd),
+//table>tbody>tr:nth-child(odd){
+//  background: #f8f8f8!important;
+//}
+.typical-tb.no-nth>tbody>tr:nth-child(even){
+  background: #fff;
+}

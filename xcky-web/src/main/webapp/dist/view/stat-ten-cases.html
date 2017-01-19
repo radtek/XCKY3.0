@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>十类案件统计</title>
+    <link rel="stylesheet" type="text/css" href="../css/base-plus.css?version=0.92">
+    <link rel="stylesheet" type="text/css" href="../css/query-scene.css?version=0.92">
+</head>
+<body>
+<div class="stat-ten-cases body-agent">
+    <div class="query-block-tabs">
+        <div>
+            <div class="common-panel-heading">
+                <ul class="clearfix">
+                    <li class="active">查询条件</li>
+                    <li>已保存条件</li>
+                </ul>
+            </div>
+            <div class="query-block cq-condition">
+                <div class="query-condition-hide hider">
+                    <div class="query-block-row">
+                        <div>
+                            <span class="qc-label-m">统计时间项：</span>
+                            <span id="query-sjlx" data-name="dateType" class="option">
+                                <u val="1" class="query-block-active query-block-init">勘验时间</u>
+                                <u val="2">录入时间</u>
+                                <u val="3">提交时间</u>
+                            </span>
+                        </div>
+                    </div>
+                    <div widget="date-options"  data-label="统计时间" data-labelcls="qc-label-m" data-inputer="query-filterDate" data-name="filterDate" data-fname="filterDateFrom" data-tname="filterDateTo" data-selecter="query-tjsj" data-default="month"></div>
+                    <div class="query-block-row">
+                        <div>
+                            <span class="qc-label-m fl">统计单位：</span>
+                            <div id="query-dict-tjdw" dict-id="query-tjdw" dict-name="unit" data-name="unit" dict-type="tree" dict-common="true" empty="true" class="dict unready option inline-block -w125 ml5"></div>
+                        </div>
+                    </div>
+                    <div class="query-block-row">
+                        <div class="fl qc-group-l">
+                            <span class="qc-label-m">是否统计下级：</span>
+                            <span id="query-xj" data-name="isIncludeLowerLevel" class="option">
+                                <u val="1" class="query-block-init query-block-active">是</u>
+                                <u val="0">否</u>
+                            </span>
+                        </div>
+                        <div class="fl">
+                            <span class="qc-label-xxxl">是否当月勘查当月录入：</span>
+                            <span id="query-dylr" data-name="isSameMonInvAndInp" class="option">
+                                <u val="1" class="query-block-init query-block-active">是</u>
+                                <u val="0">否</u>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <p widget="query-btns"></p>
+                <!--<hr class="cm-dash" />
+                <p class="query-reset">
+                    <b class="cm-query-btn" id="ten-case-query-btn"></b>
+                    <b class="cm-reset-btn" id="ten-case-reset-btn"></b>
+                </p>-->
+            </div>
+            <div class="cq-condition al-save-condition"></div>
+        </div>
+        <div widget="more-condition"></div>
+    </div>
+    <div widget="query-result"
+         data-id="stat-ten-cases-q-r"
+         data-title="十类案件录入数统计"
+         data-emcls="hide"
+         data-table="stat-ten-cases-tb"
+         data-btns="excel">
+    </div>
+</div>
+</body>
+<script src="../js/base.js?version=0.91"></script>
+<script src="../js/saved-condition.js?version=0.91"></script>
+<script>
+    importing('dict', function(){
+        var tenCasesQueryAct = makeAct('statistics/tenSceneInputAmount/query'), //统计
+                tenCasesExportAct = makeAct('statistics/tenSceneInputAmount/export'), //导出
+                tenCasesFaqhAct = makeAct('sys/sysOrganization/dict_unit'); //查询发案区划字典
+
+        var columns = [
+            {title:'序号',                 map:'$rownum',                  cls:'mem4'},
+            {title:'上级单位',             map:'parentUnitName',           cls:'mem10'},
+            {title:'统计单位',             map:'unitName',                 cls:'mem6'},
+            {title:'杀人',                 map:'killCount.toString',       cls:'mem6'},
+            {title:'伤害',                 map:'injureCount.toString',     cls:'mem6'},
+            {title:'强奸',                 map:'rapeCount.toString',       cls:'mem6'},
+            {title:'绑架',                 map:'kidnapCount.toString',     cls:'mem6'},
+            {title:'抢劫',                 map:'robCount.toString',        cls:'mem6'},
+            {title:'放火',                 map:'fireCount.toString',       cls:'mem6'},
+            {title:'爆炸',                 map:'bombCount.toString',       cls:'mem6'},
+            {title:'劫持',                 map:'hijackCount.toString',     cls:'mem6'},
+            {title:'投毒',                 map:'poisoningCount.toString',  cls:'mem6'},
+            {title:'入室盗窃',             map:'stealCount.toString',      cls:'mem6'},
+            {title:'其他命案',             map:'otherCount.toString',      cls:'mem6'},
+            {title:'破坏（危害）公共安全', map:'destroyCount.toString',    cls:'mem12'}
+        ];
+
+        $('.dict').dict();
+        //初始化 发案区划 自定义字典
+        function getFaqhDict(){
+            $get(tenCasesFaqhAct, {}, function(res){
+                $('#query-dict-tjdw').dict(res.data);
+            }, false, false);
+        }
+
+        //定时器
+        function timing(){
+            var timer = setInterval(function(){
+                if($('.unready').length == 0){
+                    clearInterval(timer);
+                    saveCondition(true, '.cq-condition', '.al-save-condition', '3', queryForTenCasesStat);
+                    queryForTenCasesStat();
+                }
+            }, 20);
+        }
+
+        //结果列表查询
+        function queryForTenCasesStat(saveQueryObj){
+            var tjsj = $('#query-filterDate').val();
+            $post(tenCasesQueryAct, {
+                dateType:$('#query-sjlx').children('.query-block-active').attr('val'),
+                filterDateFrom: tjsj ? tjsj.split(',')[0] : null,
+                filterDateTo: tjsj ? tjsj.split(',')[1] : null,
+                unit:$('#query-tjdw').val(),
+                isSameMonInvAndInp:$('#query-xj').children('.query-block-active').attr('val'),
+                isIncludeLowerLevel:$('#query-dylr').children('.query-block-active').attr('val')
+            }, function(res){
+                var data = res.data;
+                var hj = data.TenSceneInputTotal;
+                var hjObj = {};
+                hjObj.parentUnitName = '合计';
+                hjObj.unitName = '--';
+                hjObj.killCount = hj.killTotal;
+                hjObj.injureCount = hj.injureTotal;
+                hjObj.rapeCount = hj.rapeTotal;
+                hjObj.kidnapCount = hj.kidnapTotal;
+                hjObj.robCount = hj.robTotal;
+                hjObj.fireCount = hj.fireTotal;
+                hjObj.bombCount = hj.bombTotal;
+                hjObj.hijackCount = hj.hijackTotal;
+                hjObj.stealCount = hj.stealTotal;
+                hjObj.destroyCount = hj.destroyTotal;
+                hjObj.poisoningCount = hj.poisoningTotal;
+                hjObj.otherCount = hj.otherTotal;
+                data.TenSceneInputAmount.push(hjObj);
+                $('#stat-ten-cases-tb').table({
+                    data:data.TenSceneInputAmount,
+                    cols:columns,
+                    helper:function(item){
+
+                    }
+                });
+            });
+        }
+
+        timing();
+        getFaqhDict();
+//        queryForTenCasesStat();
+
+        //查询区域点击事件
+        $('.query-block-tabs').on('click', 'u', function(){
+            $(this).addClass('query-block-active').siblings('u').removeClass('query-block-active');
+        }).on('ex-query', function(){
+            queryForTenCasesStat();
+        }).on('ex-reset', function(){
+            //重置
+            var $div = $('.query-block');
+            //清空查询内容
+            $div.find('input:not(:radio)').val('');
+            $div.find('u').removeClass('query-block-active');
+            $div.find('.query-block-init').addClass('query-block-active');
+            $div.find(':radio').parent('div').find('input:first').prop('checked', true);
+            //已选条件修改
+            saveCondition(false, '.cq-condition', '.al-save-condition', '3');
+        });
+
+        //结果列表点击事件
+        $('#stat-ten-cases-q-r').on('click', '.cm-excel-btn', function(){
+            var tjsj = $('#query-filterDate').val();
+            $post(tenCasesExportAct, {
+                dateType:$('#query-sjlx').children('.query-block-active').attr('val'),
+                filterDateFrom: tjsj ? tjsj.split(',')[0] : null,
+                filterDateTo: tjsj ? tjsj.split(',')[1] : null,
+                unit:$('#query-tjdw').val(),
+                isSameMonInvAndInp:$('#query-xj').children('.query-block-active').attr('val'),
+                isIncludeLowerLevel:$('#query-dylr').children('.query-block-active').attr('val')
+            }, function(res){
+                location.href = top.sysParams.fileServerPath+res.data.filePath+'?attname=十类案件录入数统计.xls';
+            });
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>简单查询</title>
+    <link rel="stylesheet" type="text/css" href="../css/base-plus.css?version=0.92">
+    <link rel="stylesheet" type="text/css" href="../css/info-query.css">
+</head>
+<body>
+<div class="body-agent">
+    <div class="query-block">
+        <div class="query-block-row">
+            <div>
+                <span class="qc-label-l">常用查询：</span>
+                <ul id="usual-search" class="clearfix">
+
+                </ul>
+            </div>
+        </div>
+        <div class="query-condition-hide hider">
+            <hr class="cm-dash">
+            <!--<div class="query-block-row">
+                <div>
+                    <span class="qc-label-l">查询结果排序：</span>
+                    <span dict-name="" class="option">
+                    </span>
+                </div>
+            </div>-->
+            <div class="query-block-row">
+                <div class="fl qc-group-l">
+                    <span class="qc-label-l">现场勘验号：</span>
+                    <input name="investigationNo" type="text" class="cm-input">
+
+                </div>
+                <div class="fl qc-group-l">
+                    <span class="qc-label-l">案件编号：</span>
+                    <input name="caseNo" type="text" class="cm-input">
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div class="fl qc-group-l">
+                    <span class="qc-label-l">案(事)件受理号：</span>
+                    <input name="alarmAcceptNo" type="text" class="cm-input">
+                </div>
+                <div class="fl qc-group-l pr">
+                    <span class="qc-label-l">勘验人员：</span>
+                    <select name="duty" id="duty" class="cm-select mr10">
+                        <option value="">不限</option>
+                        <option value="2">主堪</option>
+                        <option value="11">辅勘</option>
+                    </select>
+                    <input id="investigator" name="investigatorId" type="text" class="cm-input" style="width: 148px">
+                    <ul id="kyry" class="kyry hider"></ul>
+                    <!--<span><u>主堪</u><u>辅勘</u></span>-->
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div>
+                    <span class="qc-label-l">案件类别：</span>
+                    <dict class="dict unready" dict-id="query-ajlb" dict-multiple="true" dict-name="caseType" dict-type="tree" dict-root="AJLBDM" dict-common="true" empty="true" ></dict>
+                </div>
+            </div>
+            <div class="query-block-row">
+                <!--<div class="fl qc-group-l">
+                    <span class="qc-label-l">是否破案：</span>
+                    <span dict-name="" class="option">
+                    </span>
+                </div>-->
+                <div class="fl qc-group-l">
+                    <span class="qc-label-l">是否刑案：</span>
+                    <dict class="dict unready" dict-name="criminalFlag" dict-type="radio" dict-root="SFDM" empty="true" ></dict>
+                </div>
+                <div class="fl qc-group-l">
+                    <span class="qc-label-l">是否命案：</span>
+                    <dict class="dict unready" dict-name="murderFlag" dict-type="radio" dict-root="SFDM" empty="true" ></dict>
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div class="fl qc-group-l">
+                    <span class="qc-label-l">现场录入时间：</span>
+                    <input name="createTime" type="text" value="" class="cm-input date-range-picker">
+                </div>
+                <div class="fl qc-group-l">
+                    <span class="qc-label-l">发案时间：</span>
+                    <input name="crimeTime" type="text" class="cm-input date-range-picker">
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div class="fl qc-group-l">
+                    <span class="qc-label-l">勘验时间：</span>
+                    <input name="investigationDate" type="text" class="cm-input date-range-picker">
+                </div>
+                <div class="fl qc-group-l">
+                    <span class="qc-label-l">提交时间：</span>
+                    <input name="lastSubmitDatetime" type="text" class="cm-input date-range-picker">
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div>
+                    <span class="qc-label-l">发案区划：</span>
+                    <dict class="unready" id="faqh" dict-id="query-faqh" dict-multiple="true" dict-name="caseRegionalism" dict-type="tree" dict-root="caseRegionalism" dict-common="true" empty="true" ></dict>
+
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div>
+                    <span class="qc-label-l">案件性质：</span>
+                    <dict class="dict unready" dict-id="query-ajxz" dict-multiple="true" dict-name="caseNature" dict-type="tree" dict-root="AJXZDM" dict-common="true" empty="true" ></dict>
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div>
+                    <span class="qc-label-l">选择对象：</span>
+                    <dict class="dict unready" dict-id="query-xzdx" dict-multiple="true" dict-name="chooseObject" dict-type="tree" dict-root="XZDXFLDM" dict-common="true" empty="true" ></dict>
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div>
+                    <span class="qc-label-l">选择处所：</span>
+                    <dict class="dict unready" dict-id="query-xzcs" dict-multiple="true" dict-name="choosePlace" dict-type="tree" dict-root="XZCSFLXLDM" dict-common="true" empty="true" ></dict>
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div>
+                    <span class="qc-label-l">作案进出口：</span>
+                    <dict class="dict unready" dict-id="query-zajck" dict-multiple="true" dict-name="crimeInOut" dict-type="tree" dict-root="ZACRKDM" dict-common="true" empty="true" ></dict>
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div>
+                    <span class="qc-label-l">作案时机：</span>
+                    <dict class="dict unready" dict-id="query-zasj" dict-multiple="true" dict-name="crimeTime" dict-type="tree" dict-root="ZASJDFLDM" dict-common="true" empty="true" ></dict>
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div>
+                    <span class="qc-label-l">侵入方式：</span>
+                    <dict class="dict unready" dict-id="query-jrfs" dict-multiple="true" dict-name="invasionType" dict-type="tree" dict-root="QRFSFLDM" dict-common="true" empty="true" ></dict>
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div>
+                    <span class="qc-label-l">作案特点：</span>
+                    <dict class="dict unready" dict-id="query-zatd" dict-multiple="true" dict-name="crimeFeature" dict-type="tree" dict-root="ZATDFLDM" dict-common="true" empty="true" ></dict>
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div>
+                    <span class="qc-label-l">作案手段：</span>
+                    <dict class="dict unready" dict-id="query-zasd" dict-multiple="true" dict-name="crimeType" dict-type="tree" dict-root="ZASDFLDM" dict-common="true" empty="true" ></dict>
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div>
+                    <span class="qc-label-l">数据来源：</span>
+                    <dict class="dict unready" dict-id="query-sjly" dict-multiple="true" dict-name="source" dict-type="tree" dict-root="SJLYDM" dict-common="true" empty="true" ></dict>
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div>
+                    <span class="qc-label-l">是否已采集基站：</span>
+                    <dict class="dict unready" dict-name="bsCollectFlag" dict-type="radio" dict-root="SFDM" empty="true"></dict>
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div class="fl qc-group-l">
+                    <span class="qc-label-l">经度：</span>
+                    <input name="caseLon" type="text" class="cm-input">
+                </div>
+                <div class="fl qc-group-l">
+                    <span class="qc-label-l">维度：</span>
+                    <input name="caseLat" type="text" class="cm-input">
+                </div>
+                <div class="fl qc-group-l">
+                    <span class="qc-label-l">半径：</span>
+                    <input name="radius" type="text" class="cm-input">
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div>
+                    <span class="qc-label-l">痕迹物证情况：</span>
+                    <dict class="dict unready" dict-id="query-hjwz" dict-multiple="true" dict-name="evidenceType" dict-type="tree" dict-root="XCHJWZLBDM" dict-common="true" empty="true" ></dict>
+                </div>
+            </div>
+        </div>
+        <hr class="cm-dash">
+        <div class="cm-selected-condition">
+            <label>已选条件：</label>
+        </div>
+        <p class="query-reset">
+            <b class="cm-query-btn" id="scene-query-btn"></b>
+            <b class="cm-reset-btn" id="scene-reset-btn"></b>
+            <b class="cm-save-btn" id="scene-save-btn"></b>
+        </p>
+
+    </div>
+    <div class="more-condition" title="展开查询条件栏"><i class="icon-angle-up icon-angle-down"></i></div>
+    <div class="query-result">
+        <div class="new-color-bar">
+            <span class="title"><i class="icon-search pr10 fs14"></i>委托查询结果<span class="result-count-desc">共找到<span class="total-count"></span>条符合的记录</span></span>
+            <select name="" id="show-way" class="fr mr20" style="margin-top: 8px">
+                <option value="">默认</option>
+            </select>
+        </div>
+        <table id="default-table" class="typical-tb has-checkbox"></table>
+        <div class="paging"></div>
+    </div>
+</div>
+
+
+<!--常用查询添加-->
+<div class="alert-window hider" id="save-usual-search">
+    <div class="query-block-row">
+        <div>
+            <span class="qc-label-l">名称：</span>
+            <input name="queryName" type="text" class="cm-input">
+        </div>
+    </div>
+    <div class="query-block-row">
+        <div>
+            <span class="qc-label-l">备注：</span>
+            <textarea name="remark" type="text" class="cm-input" style="height: 60px; vertical-align: top;line-height: 20px;"></textarea>
+        </div>
+    </div>
+    <hr class="cm-dash">
+    <div class="save-box clear" >
+        <button class="btn btn-save save">保存</button>
+        <button class="btn cancel">取消</button>
+    </div>
+</div>
+
+<!--关联模板-->
+<script type="text/template" id="q-r-no-detail">
+    <span class="icon-ok-sign number-exist"></span>
+    <div class="no-show-detail hider">
+        <p class="square"></p>
+        <p class="no">{value}</p>
+    </div>
+</script>
+<!--常用查询模板-->
+<script type="text/template" id="usual-search-li">
+    <li data-id="{id}">
+        <span>{queryName}</span>
+        <div class="comment hider">{remark}</div>
+        <i class="icon-remove"></i>
+    </li>
+</script>
+<!--通用li模板-->
+<script type="text/template" id="util-li">
+    <li>{value}</li>
+</script>
+<!--通用option模板-->
+<script type="text/template" id="util-option">
+    <option value="{key}">{value}</option>
+</script>
+</body>
+<script src="../js/base.js"></script>
+<script src="../js/simple-query.js"></script>
+</html>

@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="-1"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta name="author" content="Xiong Ying" />
+    <meta name="date" content="2016-10-28 13:42:44" />
+    <title>现场查询</title>
+    <!--<link rel="stylesheet" href="../css/base.css?version=0.91">-->
+    <link rel="stylesheet" type="text/css" href="../css/base-plus.css?version=0.92">
+    <link rel="stylesheet" href="../css/query-scene.css">
+</head>
+<body>
+<div class="query-scene body-agent">
+
+    <div class="query-block-tabs mt10" id="query-scene">
+        <div>
+            <ul id="scene-tab-stat" class="title-list clearfix">
+                <li>
+                    <h5>全部 <em class="hider">{allCount.allCount.toString}</em></h5>
+                    <p>单位：<em class="hider">{allCount.allOrganCount.toString}</em> 个人：<em class="hider">{allCount.allPersonCount.toString}</em></p>
+                </li>
+                <li val="1">
+                    <h5>已提交 <em class="hider">{submitCount.allCount.toString}</em></h5>
+                    <p>单位：<em class="hider">{submitCount.allOrganCount.toString}</em> 个人：<em class="hider">{submitCount.allPersonCount.toString}</em></p>
+                </li>
+                <li val="0">
+                    <h5>暂存 <em class="hider">{saveCount.allCount.toString}</em></h5>
+                    <p>单位：<em class="hider">{saveCount.allOrganCount.toString}</em> 个人：<em class="hider">{saveCount.allPersonCount.toString}</em></p>
+                </li>
+                <li val="2">
+                    <h5>不合格 <em class="hider">{unQualityCount.allCount.toString}</em></h5>
+                    <p>单位：<em class="hider">{unQualityCount.allOrganCount.toString}</em> 个人：<em class="hider">{unQualityCount.allPersonCount.toString}</em></p>
+                </li>
+                <li val="3">
+                    <h5>关注 <em class="hider">{followCount.allCount.toString}</em></h5>
+                </li>
+                <li val="wgl">
+                    <h5>未关联 <em class="hider">{unConnectCount.allCount.toString}</em></h5>
+                    <p>单位：<em class="hider">{unConnectCount.allOrganCount.toString}</em> 个人：<em class="hider">{unConnectCount.allPersonCount.toString}</em></p>
+                </li>
+            </ul>
+            <div class="common-panel-heading">
+                <ul class="clearfix">
+                    <li class="active">查询条件</li>
+                    <li>已保存条件</li>
+                </ul>
+            </div>
+            <div class="query-block cq-condition">
+                <div class="query-condition-hide hider">
+                    <div class="query-block-row">
+                        <div>
+                            <span class="qc-label-m">现场范围：</span>
+                            <span id="query-xcfw" data-name="sceneArea" class="option">
+                                <u class="query-block-active query-block-init">不限</u>
+                                <u val="0">个人</u>
+                                <u val="1">本单位</u>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="query-block-row">
+                        <div>
+                            <span class="qc-label-m">现场状态：</span>
+                            <span id="query-xczt" data-name="sceneStatus" class="option">
+                                <u class="query-block-active query-block-init">不限</u>
+                                <u val="0">暂存</u>
+                                <u val="1">已提交</u>
+                                <u val="2">不合格</u>
+                                <!--<u val="3">未关联</u>-->
+                                <u val="3">关注</u>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div widget="date-options"  data-label="勘验时间" data-labelcls="qc-label-m"  data-inputer="query-investigationDate" data-name="investigationDate" data-fname="investigationDateFrom" data-tname="investigationDateTo" data-selecter="query-kysj" data-default="empty"></div>
+
+                    <div class="query-block-row">
+                        <div>
+                            <span class="qc-label-m">是否关联：</span>
+                            <span id="query-sfgl" data-name="relateFlag" class="option">
+                                <u class="query-block-active query-block-init">不限</u>
+                                <u val="0">未关联</u>
+                                <u val="1">已关联</u>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="query-block-row">
+                        <div>
+                            <span class="qc-label-m fl">案件类别：</span>
+                            <div dict-id="query-ajlb" dict-name="caseType" data-name="caseType" dict-type="tree" dict-root="AJLBDM" dict-common="true" empty="true" class="dict unready option inline-block -w120 ml5"></div>
+                        </div>
+                    </div>
+                    <div class="query-block-row">
+                        <div>
+                            <span class="qc-label-m fl">发案区划：</span>
+                            <div id="query-dict-faqh" dict-id="query-faqh" dict-name="caseRegionalism" data-name="caseRegionalism" dict-type="tree" dict-common="true" empty="true" class="dict unready option inline-block -w120 ml5"></div>
+                        </div>
+                    </div>
+                    <div class="query-block-row">
+                        <div>
+                            <span class="qc-label-m fl">勘验检查人员：</span>
+                            <div id="query-kyjcry-dict" dict-id="query-kyjcry" dict-name="sceneInvestigatorId" data-name="sceneInvestigatorId" dict-type="tree" dict-multiple="false"  empty="true" class="dict inline-block unready option -w120 ml5"></div>
+                        </div>
+                    </div>
+                    <div class="query-block-row">
+                        <div class="fl qc-group-m">
+                            <span class="qc-label-m">勘验编号：</span>
+                            <input id="query-kybh" data-name="investigationNo" type="text" class="cm-input">
+                        </div>
+                        <div class="fl qc-group-l">
+                            <span class="qc-label-l">勘验地点：</span>
+                            <input id="query-kydd" data-name="investigationPlace" type="text" class="cm-input">
+                        </div>
+                    </div>
+                    <div class="query-block-row">
+                        <div class="fl qc-group-m">
+                            <span class="qc-label-m">案件编号：</span>
+                            <input id="query-ajbh" data-name="caseNo" type="text" class="cm-input">
+                        </div>
+                        <div class="fl qc-group-l">
+                            <span class="qc-label-l">警情编号：</span>
+                            <input id="query-jqbh" data-name="alarmNo" type="text" class="cm-input">
+                        </div>
+                    </div>
+                    <div class="query-block-row">
+                        <div class="fl qc-group-m">
+                            <span class="qc-label-m">是否制作笔录：</span>
+                            <span id="query-bl" data-name="noteMadeFlag" class="option">
+                                <u class="query-block-active query-block-init">不限</u>
+                                <u val="1">是</u>
+                                <u val="0">否</u>
+                            </span>
+                        </div>
+                        <div class="fl qc-group-l">
+                            <span class="qc-label-l">是否已采基站：</span>
+                            <span id="query-jz" data-name="bsCollectFlag" class="option">
+                                <u class="query-block-active query-block-init">不限</u>
+                                <u val="1">是</u>
+                                <u val="0">否</u>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <p widget="query-btns" data-cls="query-reset"></p>
+            </div>
+            <div class="cq-condition al-save-condition"></div>
+        </div>
+        <p widget="more-condition"></p>
+    </div>
+
+    <div id="scene-query-result" class="query-result">
+        <div class="new-color-bar">
+            <span class="title"><i class="icon-search pr10 fs14"></i>现场信息列表<span class="result-count-desc">共找到<span class="total-count"></span>条符合的记录</span></span>
+            <div class="function-icon mr30">
+                <a class="into-add-scene icon-plus fs16" title="新增现场"></a>
+                <!--<a class="batch-attention icon-star fs16"></a>-->
+                <a class="batch-set-edit icon-magic fs16 hideplus" title="批量设为可修改"></a>
+                <a class="batch-del icon-remove fs16" title="批量删除"></a>
+                <a class="export-excel icon-file-alt fs16" title="excel导出"></a>
+            </div>
+        </div>
+        <table id="scene-table" class="typical-tb has-checkbox"></table>
+        <div class="paging"></div>
+    </div>
+
+</div>
+
+<div id="export-form-div" class="hide-plus">
+    <form id="export-form">
+        <input type="text" name="sceneArea"/>
+        <input type="text" name="sceneStatus"/>
+        <input type="text" name="investigationDateFrom"/>
+        <input type="text" name="investigationDateTo"/>
+        <input type="text" name="caseType"/>
+        <input type="text" name="caseRegionalism"/>
+        <input type="text" name="sceneInvestigatorId"/>
+        <input type="text" name="investigationNo"/>
+        <input type="text" name="investigationPlace"/>
+        <input type="text" name="caseNo"/>
+        <input type="text" name="alarmNo"/>
+        <input type="text" name="noteMadeFlag"/>
+        <input type="text" name="bsCollectFlag"/>
+        <input type="text" name="colName"/>
+    </form>
+</div>
+
+</body>
+<script type="text/template" id="q-b-kyr-input-tp">
+    <div class="query-kyr-input inline-block pr">
+        <input id="query-kyjcry-input-hidden" type="hidden" class="cm-input"/>
+        <input id="query-kyjcry-input" type="text" class="cm-input" placeholder="请输入人员姓名进行查询"/>
+        <ul class="kyr-res stp-hide">
+            {{data: #<li paramId="{id}" username="{username}">{trueName}</li>#}}
+        </ul>
+    </div>
+</script>
+<script type="text/template" id="q-r-table-opt">
+    <div class="tleft w-100">
+        <a class="into-link icon-link fs16" paramId="{id}" saveFlag="{saveFlag}" href="javascript:void(0);" title="关联现场"></a>
+        <a class="into-attention {gzClass} fs16" paramId="{id}" attentionFlag="{followId}" href="javascript:void(0);" title="{gzTitle}"></a>
+        <a class="into-set-edit icon-magic fs16 hideplus{allowSetEdit} {setClass}" paramId="{id}" href="javascript:void(0);" title="{setEditTitle}"></a>
+        <a class="into-edit icon-edit fs16 hideplus{allowEdit}" investigationNo="{investigationNo}"  paramId="{id}" data-casetype="{caseType}" data-casenature="{caseNature}" href="javascript:void(0);" title="修改"></a>
+        <a class="into-iteration icon-copy fs16 hideplus{allowIteration}" paramId="{id}" data-casetype="{caseType}" data-casenature="{caseNature}" href="javascript:void(0);" title="复勘"></a>
+        <a class="into-del icon-remove fs16 hideplus{allowDel}" paramId="{id}" href="javascript:void(0);" title="删除"></a>
+    </div>
+</script>
+<script type="text/template" id="q-r-no-detail">
+    <div class="no-show-detail hider">
+        <p class="square"></p>
+        <p class="no">{0}</p>
+    </div>
+</script>
+<script src="../js/base.js?version=0.91"></script>
+<script src="../js/saved-condition.js?version=0.91"></script>
+<script>
+    importing('dict', function(){
+
+        var sceneQueryAct = makeAct('sceneCollecting/sceneInvestigation/query', ''), //列表查询
+                sceneAddAttentionAct = makeAct('sceneCollecting/sceneFollow/add', ''), //关注
+                sceneDelAttentionAct = makeAct('sceneCollecting/sceneFollow/del', ''), //取消关注
+                sceneDelAct = makeAct('sceneCollecting/sceneInvestigation/delAllLogic', ''),//删除/批量删除
+                sceneExportAct = makeAct('sceneCollecting/sceneInvestigation/export',''),//excel导出
+                sceneSetEditAct = makeAct('sceneCollecting/sceneInvestigationStatus/updateModify', ''), //设为可修改
+                scenePersonAct = makeAct('sys/sysUser/queryAll', ''),//查询勘验检查人员 输入框查询
+                sceneTabStatAct = makeAct('sceneCollecting/sceneInvestigation/queryCount', ''), //现场查询tab统计
+                sceneFaqhAct = makeAct('sys/sysOrganization/dict_unit'); //查询发案区划字典
+
+        var columns = [
+            {title:'序号',       map:'rowNum',                          cls:'mem6 check-it'},
+            {title:'现场勘验号', map:'investigationNo.querySceneKLink', cls:'mem20 nowrap td-left'},
+            {title:'案件关联',   map:'caseNo.querySceneIfExist',        cls:'mem6 pr over-v'},
+            {title:'警情关联',   map:'alarmNo.querySceneIfExist',       cls:'mem6 pr over-v'},
+            {title:'勘验时间',   map:'investigationDateFrom.asCnTime',  cls:'mem14'},
+            {title:'勘验单位',   map:'organName',                       cls:'mem18 td-left'},
+            {title:'案件类别',   map:'caseType',                        cls:'mem10 td-left'},
+            {title:'发案地点',   map:'caseLocation',                    cls:'mem22 td-left'},
+            {title:'勘验人',     map:'sceneInvestigator',               cls:'mem16 td-left'},
+            {title:'现场图',     map:'scenePicture',                    cls:'mem6'},
+            {title:'操作',       map:'opt',                             cls:'mem12 opt td-left',  filter:'querySceneOpt'}
+        ];
+
+        //当前用户角色判断
+        var roles = top.roles.select('o=>o.roleEnName'), role = '';
+        if(roles.indexOf('sysManager') > -1){
+            role = 'sysManager'; //管理员
+            $('.batch-set-edit').removeClass('hideplus');
+        }else if(roles.indexOf('investigator') > -1){
+            role = 'investigator'; //勘察员
+        }
+
+        //判断是否存在案件和警情编号
+        $filter('querySceneIfExist', function(){
+            var value = this.valueOf();
+            if(value){
+                return '<span class="icon-ok-sign number-exist"></span>'+$('#q-r-no-detail').text().format(this.valueOf());
+            }else{
+                return '--';
+            }
+        });
+
+        //返回操作列
+        $filter('querySceneOpt', function(item){
+            return $compile('#q-r-table-opt', item, function(utem){
+                if(utem.followId){ //已关注
+                    utem.gzClass = 'icon-star';utem.gzTitle = '取消关注';
+                }else{ //未关注
+                    utem.gzClass = 'icon-star-empty';utem.gzTitle = '关注';
+                }
+                //复勘操作 iterationNo 有值：已复勘 没值：可复勘
+                if(utem.iterationNo==''){
+                    utem.allowIteration = '_iteration';
+                }
+
+                //勘察员
+                if(role == 'investigator'){
+                    //对于 未提交&&自己录入 可以删除
+                    if(utem.saveFlag == '0' && top.currentUser.userId == utem.createUserId){
+                        utem.allowDel = '_del';
+                    }
+                    //是否可以修改 现场的勘验人和录入人可以对该现场进行修改。
+                    if(top.currentUser.userId == utem.createUserId
+                            || (utem.investigationtorId && utem.investigationtorId.indexOf(top.currentUser.userId) > -1)){
+                        utem.allowEdit = '_modify';
+                    }
+                }
+                //管理员
+                if(role == 'sysManager'){
+                    //都可以进行删除
+                    utem.allowDel = '_del';
+                    //都可以进行修改
+                    utem.allowEdit = '_modify';
+                    //已提交的现场 管理员 有设为可修改操作
+                    utem.saveFlag == '1' ? utem.allowSetEdit = '_setEdit' : null;
+                    //判断 是否可以做 设为可修改的操作 1：页面上操作是设为不可修改
+                    utem.allowModify == '1' ? (utem.setClass = 'set-no-edit', utem.setEditTitle = '设为不可修改') : (utem.setClass = 'set-edit', utem.setEditTitle = '设为可修改');
+                }
+            });
+        });
+
+        //现场勘验号的链接
+        $filter('querySceneKLink', function(item){
+            return '<a class="into-xcky-view" kybh="{2}" data-casetype="{3}" data-casenature="{4}" href="javascript:void(0);">{0}<span class="fk {1}">复勘</span></a>'.format(this.valueOf(), item.iterationNo?'':'hide-plus', item.id, item.caseType, item.caseNature);
+        });
+
+        $('.dict').dict();
+
+        //修改侧边栏iconfont样式 TODO ?
+        function changeSidebarStyle(pageNo) {
+            top.rootMenu.find('li>a').removeClass('menu-open menu-open2');
+            top.rootMenu.find('li').each(function () {
+                if ($(this).attr('page-no') == pageNo) {
+                    var a = $(this).children('a');
+                    a.parents('.grade2,.grade3,#root-menu>li').each(function () {
+                        $(this).children('a').eq(0).addClass('menu-open');
+                    });
+                    a[0].click();
+                    a.addClass('menu-open menu-open2');
+                }
+            });
+        }
+
+        //定时器
+        function timing(){
+            var timer = setInterval(function(){
+                if($('.unready').length == 0){
+                    clearInterval(timer);
+                    $('#query-kyjcry-dict').append($('#q-b-kyr-input-tp').html());
+                    saveCondition(true, '.cq-condition', '.al-save-condition', '1', queryForScene);
+                }
+            }, 20);
+        }
+
+        //勘验检查人员常用项
+        function getPersonDict(){
+            var act = makeAct('sceneCollecting/investigatorHistory/queryAll', '');
+            var param = {duty: "0"};
+            $post(act, param, function (res) { //勘验人员字典
+                var d = res.data.select('o => {dictValue: o.investigatorName, dictKey: o.investigatorId}');
+                act = makeAct('sys/sysUser/queryTreeUser');
+                $post(act, {}, function (res) {
+                    $('#query-kyjcry-dict').data('info', res.data);
+                    $('#query-kyjcry-dict').dict(res.data, d);
+                }, false, false);
+            }, false, false);
+        }
+
+        //发案区划 自定义字典初始化
+        function getFaqhDict(){
+            $get(sceneFaqhAct, {}, function(res){
+                $('#query-dict-faqh').dict(res.data);
+            }, false, false);
+        }
+
+        //判断是否全选
+        function judgeCheckAll(){
+            var $input = $('.native-fix-wrap .stp-check-tr');
+            var $checkAll = $('.stp-check-tr-all');
+            var flag = true;
+            $input.each(function(i, item){
+                if(flag){
+                    //checkbox 是否勾选判断
+                    var checked=top.registry.xcgl.checkScene[$(item).attr('tr-rownum')]; //console.info(checked)
+                    flag = checked;
+                }
+            });
+            $checkAll.prop('checked', flag);
+            top.registry.xcgl.checkScene.length == 0 && $checkAll.prop('checked', false);
+        }
+
+        //tab统计
+        function tabStat(){
+            var $tab = $('#scene-tab-stat');
+            $post(sceneTabStatAct,{},function(res){
+                $tab.template(res.data);
+                $tab.find('em').show();
+            },false,false);
+        }
+
+        //查询列表
+        function queryForScene(saveQueryObj){
+            top.registry.xcgl.checkScene=[];
+            top.registry.xcgl.checkSceneIds=[];
+            var $qr = $('#scene-query-result');
+            var $kysj = $('#query-investigationDate');
+            var currentPage;
+            //从已保存条件中点击查询 重置当前页
+            if(typeof saveQueryObj=='object'){
+                currentPage=0;
+            }
+            //直接传入页码数字
+            else if(typeof saveQueryObj=='number'){
+                currentPage=saveQueryObj;
+            }
+            //默认查询后回到当前页
+            else{
+                currentPage=$qr.children('.paging').data('currentPage');
+            }
+            $qr.pagingList({
+                action:sceneQueryAct,
+                currentPage:currentPage,
+//                pageOnce:10,
+                jsonObj:$.extend({
+                    sceneArea:$('#query-xcfw').children('.query-block-active').attr('val'),//现场范围
+                    sceneStatus:$('#query-xczt').children('.query-block-active').attr('val'),//现场状态
+                    investigationDateFrom:$kysj.val() ? $kysj.val().split(',')[0] : null,
+                    investigationDateTo:$kysj.val() ? $kysj.val().split(',')[1] : null,
+                    relateFlag: $('#query-sfgl').children('.query-block-active').attr('val'),
+                    caseType:$('#query-ajlb').val(),//案件类别
+                    caseRegionalism:$('#query-faqh').val(),//发案区划
+                    sceneInvestigatorId:$('#query-kyjcry').val() || $('#query-kyjcry-input-hidden').val(),//勘验检查人员
+                    investigationNo:$('#query-kybh').val(),//勘验编号
+                    investigationPlace:$('#query-kydd').val(),//勘验地点
+                    caseNo:$('#query-ajbh').val(),//案件编号
+                    alarmNo:$('#query-jqbh').val(),//警情编号
+                    noteMadeFlag:$('#query-bl').children('.query-block-active').attr('val'),//是否制作笔录
+                    bsCollectFlag:$('#query-jz').children('.query-block-active').attr('val')//是否已采基站
+                }, saveQueryObj),
+                callback: function(data){
+                    $('#scene-table').table({
+                        data:data,
+                        cols:columns,
+                        fixCols:{left:2, right:1},
+                        helper:function(item){
+                                item._trChecked = !!top.registry.xcgl.checkScene[item.rowNum]
+                        },
+                        allowHTML:true,
+                        check:'id',
+                        //cls:'tleft'
+                    }).data('current-data', data);
+                    //判断全选是否勾上
+                    judgeCheckAll();
+                }
+            });
+        }
+
+        //删除/批量删除 arrId:[{id:''},{id:''}]
+        function delScene(arrId){
+            $post(sceneDelAct, arrId, function(){
+                toast('删除成功！').ok();
+                queryForScene();
+            });
+        }
+
+        //设为可修改/批量设为可修改 //arrId:[{investigationId:'',allowModify:'1'},{investigationId:'',allowModify:'0'}]
+        function setEditScene(arrId){
+            return $post(sceneSetEditAct, arrId, function(res){});
+        }
+
+        timing();//定时器 初始化字典后执行的方法
+        getPersonDict(); //初始化勘验人常用项
+        getFaqhDict();//初始化发案区划字典
+        tabStat();//tab统计
+        queryForScene();//列表查询
+
+        //查询区域注册事件
+        $('.query-block-tabs').on('click', '.title-list li', function(){
+            //tabs切换
+            var param = $(this).attr('param'),
+                    value = $(this).attr('val');
+            var $qb = $('.query-block'),
+                    $more = $('.more-condition');
+            $qb.find('.query-condition-hide').hide();
+            !$more.find('i').hasClass('icon-angle-down') && $more.find('i').addClass('icon-angle-down');
+            $more.attr('title', '展开查询条件栏');$more.find('span').text('展开查询条件');
+            $qb.find('input').val('');
+            $qb.find('u').removeClass('query-block-active');
+            $qb.find('.query-block-init').addClass('query-block-active');
+            value != 'wgl' && $qb.find('#query-xczt').children('u[val="{0}"]'.format(value)).addClass('query-block-active').siblings('u').removeClass('query-block-active');
+            //关注选项卡的时候，默认查询条件为 个人 和 关注
+            value == '3' ? $qb.find('#query-xcfw').children('u[val="0"]').addClass('query-block-active').siblings('u').removeClass('query-block-active') : null;
+            //未关联选项卡
+            value == 'wgl' ? $qb.find('#query-sfgl').children('u[val="0"]').addClass('query-block-active').siblings('u').removeClass('query-block-active') : null;
+            $('#scene-query-result').children('.paging').data('currentPage', 0);
+            queryForScene();
+            saveCondition(false, '.cq-condition', '.al-save-condition', '1');
+        }).on('click', 'u', function(){
+            $(this).addClass('query-block-active').siblings('u').removeClass('query-block-active');
+        })
+        //重置
+        .on('ex-reset',function () {
+            var $qb = $('.query-block');
+            //清空查询内容
+            $qb.find(':text').val('');//所有输入框清空
+            $qb.find('[data-chval]').val('').attr('data-chval', '不限');//字典隐藏域清空
+            $qb.find('u').removeClass('query-block-active');
+            $qb.find('.query-block-init').addClass('query-block-active');
+            $qb.find(':radio').parent('div').find('input:first').prop('checked', true);
+            //已选条件修改
+            saveCondition(false, '.cq-condition', '.al-save-condition', '1');
+        })
+        //查询
+        .on('ex-query',function () {
+            queryForScene(0);
+        })
+        .on('keyup', '#query-kyjcry-input', function(){
+            var value = $(this).val();
+            var $ul = $(this).next('ul');
+            $('#query-kyjcry-input-hidden').val('');//清空输入框对应的勘验检查人员id
+            if(value.isEmpty()){
+                $ul.children('li').remove();
+            }else{
+                $post(scenePersonAct,{trueName:value}, function(res){
+                    if(res.data){
+                        $ul.template(res);
+                    }
+                }, false, false);
+            }
+        }).on('click', '.kyr-res li', function(){
+            var $input = $(this).parent().prev(),
+                    $hidden = $('#query-kyjcry-input-hidden'),
+                    $ul = $(this).parent(),
+                    $dictInput = $('#query-kyjcry');
+            $input.val($(this).text());
+            $hidden.val($(this).attr('paramId'));
+            //当勘验检查人员字典没有选择时，以输入框输入的为主
+            if($dictInput.val().isEmpty()){
+                $dictInput.val($(this).attr('paramId'));
+                $dictInput.attr('data-chval',$(this).text());
+            }
+            $ul.children('li').remove();
+        });
+
+        //列表区域注册点击事件
+        $('#scene-query-result').on('mouseover', '.number-exist', function(){
+            $(this).next().show();
+        }).on('mouseout', '.number-exist', function(){
+            $(this).next().hide();
+        }).on('click', '.into-xcky-view', function(){
+            var investId = $(this).attr('kybh');
+            var caseType = $(this).attr('data-casetype') || '';
+            var caseNature = $(this).attr('data-casenature') || '';
+            $append(getViewPath('add-scene.html?id={0}&caseType={1}&caseNature={2}&searchflag=1'.format(investId,caseType,caseNature),'./view/'),'现场详情');
+        }).on('click', '.into-link', function(){
+            //单条数据的关联
+            //仅可以对未提交的现场进行关联操作 1:提交 0:暂存
+            var saveFlag = $(this).attr('saveFlag'),
+                    investId = $(this).attr('paramId');
+            if(saveFlag == '1'){
+                toast(' 该现场已提交，不允许进行关联操作').css('width','300px').warn();
+            }else{
+                $append(getViewPath('pol-case-reuse.html?investId='+investId,'./view/'),'警情复用');
+            }
+        }).on('click', '.into-attention', function(){
+            //单条数据的关注
+            var $this = $(this);
+            var investigationId = $this.attr('paramId');
+            var attentionFlag = $this.attr('attentionFlag');
+            if(attentionFlag){
+                //已经关注，此操作取消关注
+                $post(sceneDelAttentionAct,investigationId, function(res){
+                    toast('已取消关注').ok();
+                    $this.attr('attentionFlag', '').prop('title', '关注').removeClass('icon-star').addClass('icon-star-empty');
+                }, true, false);
+            }else{
+                //没有关注，此操作添加关注
+                $post(sceneAddAttentionAct,{investigationId:investigationId}, function(res){
+                    toast('已关注').ok();
+                    $this.attr('attentionFlag', 'id').prop('title', '取消关注').removeClass('icon-star-empty').addClass('icon-star');
+                }, true, false);
+            }
+        }).on('click', '.into-set-edit', function(){
+            //设为可修改
+            var $this = $(this);
+            var investigationId = $(this).attr('paramId');
+            var allowModify;
+            if($this.hasClass('set-edit')){ //操作是设为可修改  之后改条数据可修改
+                allowModify = '1';
+            }else if($this.hasClass('set-no-edit')){ //操作是设为不可修改
+                allowModify = '0';
+            }
+            setEditScene([{
+                    investigationId:investigationId,
+                    allowModify:allowModify
+                }]).then(function(){
+                toast('修改成功！').ok();
+                if(allowModify == '1'){
+                    $this.removeClass('set-edit')
+                            .addClass('set-no-edit')
+                            .attr('title','设为不可修改');
+                }else if(allowModify == '0'){
+                    $this.removeClass('set-no-edit')
+                            .addClass('set-edit')
+                            .attr('title','设为可修改');
+                }
+            });
+        }).on('click', '.into-edit', function(){
+//            toast('进入现场修改页面，开发中...').warn();
+            var $this = $(this);
+            var investId = $this.attr('paramid');
+            var caseType = $this.attr('data-casetype');
+            var caseNature = $this.attr('data-casenature');
+            var investigationNo = $this.attr('investigationNo');
+            $append(getViewPath('add-scene.html?id={0}&caseType={1}&caseNature={2}&investigationNo={3}'.format(investId,caseType,caseNature,investigationNo),'./view/'),investigationNo);
+        }).on('click', '.into-iteration', function(){
+            //复勘
+            var investigationId = $(this).attr('paramId');
+            var caseType = $(this).attr('data-casetype');
+            var caseNature = $(this).attr('data-casenature');
+            $append(getViewPath('add-scene.html?id={0}&caseType={1}&caseNature={2}&iteration=1'.format(investigationId,caseType,caseNature),'./view/'),'新增现场');
+            /*$get(sceneIterationAct+'/'+investigationId, {}, function(res){
+                var addScene = $append(getViewPath('add-scene.html?iteration=1','./view/'),'新增现场');
+                var iframe = addScene[0].getElementsByTagName('iframe');
+                iframe.onload = function(){
+                    var win = iframe[0].contentWindow;
+                    win.fillData(win.$('#add-scene-aqxx'),res.data);
+                }
+            });*/
+        }).on('click', '.into-del', function(){
+            //删除单条数据
+            var id = $(this).attr('paramId');
+            delScene([{id:id}]);
+        }).on('click', '.into-add-scene', function(){
+            changeSidebarStyle('add-scene');
+        }).on('click', '.batch-set-edit', function(){
+            var beforeArr = top.registry.xcgl.checkSceneIds.where('o=>o!=undefined');
+            var arr = [];
+            if(beforeArr.length == 0){
+                toast(' 请选择要设为可修改的现场！').css('width', '280px').warn();
+            }else{
+                arr = beforeArr.where('o=>o.saveFlag=="1"');
+                if(arr.length == 0){
+                    toast(' 所选现场未提交，请重新选择！').width(280).warn();
+                }else if(arr.length == beforeArr.length){
+                    setEditScene(arr.select('o=>{investigationId:o.id, allowModify:(o.allowModify == "0" ? "1" : "0")}'))
+                            .then(function(){
+                                toast('修改成功！').ok();
+                                queryForScene();
+                            });
+                }else{
+                    $confirm('所选现场有未提交现场，是否修改其他选中的现场？', function(bol){
+                        if(bol){
+                            setEditScene(arr.select('o=>{investigationId:o.id, allowModify:(o.allowModify == "0" ? "1" : "0")}'))
+                                    .then(function(){
+                                        toast('修改成功！').ok();
+                                        queryForScene();
+                                    });
+                        }
+                    });
+                }
+            }
+        }).on('click', '.batch-del', function(){
+            //批量删除
+            var beforeDelArr = top.registry.xcgl.checkSceneIds.where('o=>o!=undefined');
+            var delArr = [];
+
+            if(beforeDelArr.length == 0){
+                toast(' 请选择要删除的现场！').warn();
+            }else{
+                //勘察员 删除时 需要做判断
+                if(role == 'investigator') {
+                    //从勾选要删除的现场中，筛选出 未提交&&自己录入 的现场
+                    delArr = beforeDelArr.where('o=>o.saveFlag=="0" && o.createUserId == "{0}"'.format(top.currentUser.userId));
+                    if (delArr.length == 0) {
+                        //没有 未提交&&自己录入的现场
+                        toast(' 所选现场不允许删除，请重新选择').css('width', '290px').warn();
+                    } else if (delArr.length == beforeDelArr.length) {
+                        //都是 未提交&&自己录入的现场
+                        delScene(delArr.select('o=>{id:o.id}'));
+                    } else {
+                        //部分是 未提交&&自己录入的现场
+                        $confirm('所选现场有已提交现场，不允许删除，是否删除其他选中的现场？', function (bol) {
+                            if (bol) {
+                                delScene(delArr.select('o=>{id:o.id}'));
+                            }
+                        });
+                    }
+                }
+                //管理员 都可以删除
+                if(role == 'sysManager'){
+                    $confirm('确定要删除所选现场吗？', function(bol){
+                        if(bol){
+                            delScene(beforeDelArr.select('o=>{id:o.id}'));
+                        }
+                    });
+                }
+            }
+        }).on('click', '.export-excel', function(){
+            var $form = $('#export-form');
+            var tb = $('#scene-table');
+            var kysj = $('#query-investigationDate').val(), //勘验时间
+                    person = $('#query-kyjcry').val(), //勘验检查人员
+                    colnames = tb.find('>thead>tr>th:visible').toArray().select('th => th.className.split(" ")[0].replace("stp-scene-table-th-","")'); //列名
+            $('.query-block').find('[data-name]').each(function(i, item){
+                if(item.tagName == 'INPUT'){
+                    $form.children('[name="{0}"]'.format($(item).data('name')))
+                            .val($(item).val());
+                }else if(item.tagName == 'SPAN'){
+                    $form.children('[name="{0}"]'.format($(item).data('name')))
+                            .val($(item).children('.query-block-active').attr('val'));
+                }else if($(item).hasClass('dict')){
+                    var $input = $('#'+$(this).attr('dict-id'));
+                    $form.children('[name="{0}"]'.format($(item).data('name')))
+                            .val($input.val());
+                }
+            });
+            $form.children('[name="investigationDateFrom"]').val(kysj ? kysj.split(',')[0] : null);
+            $form.children('[name="investigationDateTo"]').val(kysj ? kysj.split(',')[1] : null);
+            $form.children('[name="sceneInvestigatorId"]').val(person ? person : $('#query-kyjcry-input-hidden').val());
+            $form.children('[name="colName"]').val(colnames);
+
+            $post(sceneExportAct, $form.serializeObject(), function(res){
+                console.log(res)
+                location.href = top.sysParams.fileServerPath+res.data.filePath;
+//                location.href=res.data.filePath;
+//                var len = res.data.filePath.split('/').length;
+//                location.href = 'http://192.168.1.143:8888/xcky3/tempFile/'+res.data.filePath.split('/')[len-1];
+            }, null, false);
+//            $form.attr('action', action2link(sceneExportAct));
+//            $form.submit();
+        }).on('click', '.stp-check-tr-all', function(){
+            var checked=this.checked;
+            $('#scene-table .stp-check-tr').each(function(i,item){
+                checkTrFn(checked,i,item);
+            });
+        }).on('click', '.stp-check-tr', function(e){
+            checkTrFn(this.checked,$(this).closest('tr').index(),this);
+            judgeCheckAll();
+        });
+
+        function checkTrFn(checked,i,item){
+            var rownum = $(item).attr('tr-rownum');
+
+            if(checked){
+                var rowid  = $(item).attr('tr-param');
+                var theObj = $('#scene-table').data('current-data')[i]//.where('o => o.id=="{0}"'.format(rowid))[0];
+                //warn(theObj==$(item).closest('tr').data('current-data'))
+                top.registry.xcgl.checkScene[rownum] = true;
+
+                top.registry.xcgl.checkSceneIds[rownum] = {
+                    id: rowid,
+                    saveFlag :theObj.saveFlag,
+                    createUserId : theObj.createUserId,
+                    allowModify : theObj.allowModify
+                };
+            }
+
+            else{
+                top.registry.xcgl.checkScene[rownum] = false;
+                top.registry.xcgl.checkSceneIds[rownum] = undefined;
+            }
+
+        }
+    });
+</script>
+</html>

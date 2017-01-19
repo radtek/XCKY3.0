@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>痕迹物证查询列表</title>
+    <link rel="stylesheet" href="../css/base-plus.css">
+    <link rel="stylesheet" href="../css/pol-case-reuse.css">
+</head>
+<body>
+<div class="body-agent">
+    <div class="query-block query-block-inner">
+        <div class="query-condition-hide hider">
+            <div class="query-block-row">
+                <div class="fl qc-group-full">
+                    <span class="qc-label-s">送检状态：</span>
+                    <dict id="inspect-status" dict-type="radio" dict-root="SFDM" dict-name="storageFlag" empty="true"></dict>
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div class="fl qc-group scope">
+                    <span name="sfzp" class="qc-label-s">案件类别：</span>
+                    <dict dict-type="tree" dict-root="AJLBDM" dict-common="true" dict-name="caseType" dict-id="case-type" class="dict" empty="true"></dict>
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div class="fl qc-group scope">
+                    <span name="sfzp" class="qc-label-s">发案区划：</span>
+                    <dict dict-type="tree" dict-root="GXSDM" dict-common="true" dict-name="caseRegionalism" dict-id="case-regionalism" class="dict" empty="true"></dict>
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div class="fl qc-group-xxl">
+                    <span class="qc-label-s">勘验地点：</span>
+                    <input name="investigationPlace" type="text" class="cm-input cl-input">
+                </div>
+            </div>
+            <div class="query-block-row">
+                <div widget="date-options2"  data-label="勘验时间" data-labelcls="qc-label-s"  data-inputer="query-investigation-date" data-name="investigationDate" data-selecter="query-kysj" data-default="week"></div>
+            </div>
+            <div class="query-block-row">
+                <div widget="date-options2"  data-label="发案时间" data-labelcls="qc-label-s"  data-inputer="query-crime-time" data-name="crimeTime" data-selecter="query-fasj" data-default="week"></div>
+            </div>
+            <div class="query-block-row">
+                <div class="fl qc-group-l">
+                    <span class="qc-label-s">现场勘验号：</span>
+                    <input name="investigationNo" type="text" class="cm-input">
+                </div>
+            </div>
+        </div>
+        <p widget="query-btns"></p>
+    </div>
+    <p widget="more-condition"></p>
+    <div id="teq-query-result" class="query-result">
+        <div class="new-color-bar">
+            <span class="title"><i class="icon-search pr10 fs14"></i>现场数据列表<span class="result-count-desc">共找到<span class="total-count"></span>条符合的记录</span></span>
+        </div>
+        <table id="trace-evidence-table" class="typical-tb mem">
+            <thead class="need-fix">
+                <tr>
+                    <th class="cell-xs need-fix">序号</th>
+                    <th class="mem18 need-fix">现场勘验号</th>
+                    <th class="mem18">痕迹物证编号</th>
+                    <th class="mem12">物证名称</th>
+                    <th class="mem8">物证类别</th>
+                    <th class="mem8">遗留部位</th>
+                    <th class="mem6">提取方法</th>
+                    <th class="mem8">案件类别</th>
+                    <th class="mem20">发案区划</th>
+                    <th class="mem18">勘验时间</th>
+                    <th class="mem20">勘验地点</th>
+                    <th class="mem12">勘验人</th>
+                    <th class="mem6">提取人</th>
+                    <th class="mem6">送检状态</th>
+                    <th class="mem4 need-fix-end">操作</th>
+                </tr>
+            </thead>
+            <tbody tpsource="#trace-evidence-list-tp"></tbody>
+        </table>
+        <div class="paging"></div>
+    </div>
+</div>
+</body>
+<script type="text/template" id="trace-evidence-list-tp">
+    <tr class="white f9{bg}">
+        <td rowspan="{rowSpan}" class="hide{rowSpan}">
+            {{rowSpan && #{rowNum}#}}
+        </td>
+        <td rowspan="{rowSpan}" class="hide{rowSpan}">
+            {{rowSpan && #<input id="{investigationNo}" type="checkbox" class="hider{investigationNo}"><label for="{investigationNo}">{investigationNo}</label>#}}
+        </td>
+        <td><input id="{materialEvidenceNo}" type="checkbox" class="hider{materialEvidenceNo}"><label for="{materialEvidenceNo}">{materialEvidenceNo}</label></td>
+        <td>{materialEvidenceName}</td>
+        <td>{category}</td>
+        <td>{leftPosition}</td>
+        <td>{collectionMode}</td>
+        <td>{caseType}</td>
+        <td>{caseRegionalism}</td>
+        <td>{investigationDateFrom.asDate16} <em class="hider{investigationDateTo}">~</em> {investigationDateTo.asDate16}</td>
+        <td>{investigationPlace}</td>
+        <td>{sceneInvestigator}</td>
+        <td>{sceneCollectedPerson}</td>
+        <td>{storageFlag}</td>
+        <td rowspan="{rowSpan}" class="hide{rowSpan}">
+            {{rowSpan && #<a class="teq-inspect-link" href="javascript:void(0);" paramid="{id}">送检</a>#}}
+        </td>
+    </tr>
+</script>
+<script src="../js/base.js"></script>
+<script>
+    importing('dict',function (scope) {
+        var listAct = makeAct('sceneQuery/sceneMaterialEvidence/query');
+
+        var $qr = $('#teq-query-result');
+        var $qb = $('.query-block');
+        var $tb = $('#trace-evidence-table');
+        var $tbb= $tb.children('tbody');
+
+        //重置
+        var resetTeq = function () {
+            $qb.find('input:not(:checkbox,:radio)').val('');
+            $qb.find('[dict-type]').dict();
+        };
+        //查询
+        var queryTeq = function () {
+            $qr.children('.paging').data('currentPage',0);
+            loadListData();
+        };
+
+        function init() {
+            var $inspectStatus = $('#inspect-status');
+            $inspectStatus.dict(function () {
+                $inspectStatus.dictSelect('0');
+                loadListData();
+            });
+            $('.dict').dict();
+//            saveCondition('.cq-condition', '.al-save-condition');
+        }
+        //加载列表数据
+        function loadListData() {
+            var queryObj = getQueryObj();
+            $qr.pagingList({
+                action:listAct,
+                currentPage: $qr.children('.paging').data('currentPage'),
+                jsonObj:queryObj,
+                callback:loadListDataCb
+            });
+        }
+        //加载列表数据回调
+        function loadListDataCb(data) {
+            //$tb.children('tbody').template(data);
+            var jointData = [];
+            data.each(function (item,j) {
+                item.evidenceList.each(function (childItem,i) {
+                    var itemObj = $.extend({},item,childItem);
+                    j%2==0 && (itemObj.bg = 'no-bg');
+                    i==0?jointData.push(itemObj):jointData.push($.extend(itemObj,{rowSpan:''}))
+                });
+            });
+            scope.set('listData',jointData);
+
+//
+//
+//            data[i].name='hehe'
+//
+//            scope.update('listData',data=> data[i].type='hehe');
+//
+//
+//
+//            data.forEach(function(item){
+//                item.rownum=''
+//            });
+//
+//            scope.update('listData',function(item){
+//                item.rownum=''
+//            },true);
+
+//            setTimeout(function(){
+//                scope.update('listData',function(data){  data.name=234234 });
+//            },900);
+//
+//            setTimeout(function(){
+//                scope.update('listData',function(item){  item.rowNum='hehe' },true);
+//            },1900);
+
+        }
+        //获取查询条件json对象
+        function getQueryObj() {
+            var queryObj = {};
+
+            $qb.find('input').each(function (i,el) {
+                var $el = $(el);
+                var name = $el.attr('name') || $el.attr('data-name') ;
+                var tempArr = [];
+                queryObj[name] = $el.val().trim();
+                if(name == 'crimeTime'){
+                    tempArr = queryObj[name].split(',');
+                    queryObj[name+'Begin'] = tempArr[0];
+                    queryObj[name+'End'] = tempArr[1];
+                }
+                if(name=='investigationDate'){
+                    tempArr = queryObj[name].split(',');
+                    queryObj[name+'From'] = tempArr[0];
+                    queryObj[name+'To'] = tempArr[1];
+                }
+//                if(name == 'alarmTime'){
+//                    queryObj.alarmTime = queryObj.alarmTime?queryObj.alarmTime.asCnTime():'';
+//                }
+
+            });
+            return queryObj;
+        }
+
+        $qb.on('ex-query',queryTeq).on('ex-reset',resetTeq);
+
+
+        //送检
+        $tb.on('click','.teq-inspect-link',function () {
+            var $this = $(this);
+            //TODO:调用实验室接口
+            $alert('该功能正在开发中……');
+        });
+
+        scope.bind('listData',$tbb);
+
+        init();
+    })
+</script>
+</html>

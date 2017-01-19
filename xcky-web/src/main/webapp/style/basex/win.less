@@ -1,0 +1,50 @@
+//$open弹窗底部固定按钮
+.open-win-fix-btn{
+  position: absolute;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  padding: 10px 0!important;
+  margin: 0!important;
+  background: #f9f9f9;
+  border-top: 1px solid #ebebeb;
+  z-index: 1;
+}
+.win-fix-bar {
+  position: absolute;
+  left:0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  margin: 0!important;
+  padding: 5px 0 !important;
+  background: #fff;
+}
+.window.has-fix-bar{
+  padding-bottom: 42px;
+  background: #fff;
+}
+//use full wrap
+.open-win-fix-btn>b:hover{
+  transform: none;
+}
+body.in-full-wrap,body.in-sb-l-m-full-wrap{
+  background: transparent!important;
+  overflow: hidden!important;
+}
+body.in-full-wrap>.body-agent{
+  position: absolute;
+  //overflow: hidden!important;
+  /*width: calc(100vw - 200px)!important;*/   //after less get it back
+  /*height: calc(100vh - 90px)!important;*/   //after less get it back
+  bottom: 0;
+  right: 0;
+}
+body.in-sb-l-m-full-wrap>.body-agent{
+  position: absolute;
+  //overflow: hidden!important;
+  /*width: calc(100vw - 60px)!important;*/   //after less get it back
+  /*height: calc(100vh - 90px)!important;*/   //after less get it back
+  bottom: 0;
+  right: 0;
+}

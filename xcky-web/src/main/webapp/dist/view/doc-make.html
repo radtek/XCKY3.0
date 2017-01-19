@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>资料制作</title>
+    <link rel="stylesheet" type="text/css" href="../css/base-plus.css?version=0.92">
+    <link rel="stylesheet" href="../css/query-scene.css">
+</head>
+<body>
+<div class="body-agent">
+    <div class="query-block-tabs">
+        <div>
+            <div class="common-panel-heading">
+                <ul class="clearfix">
+                    <li class="active">查询条件</li>
+                    <!--<li>已保存条件</li>-->
+                </ul>
+            </div>
+            <div class="query-block cq-condition">
+                <div class="query-condition-hide hider">
+                    <div class="query-block-row">
+                        <div>
+                            <span class="qc-label-m">现场范围：</span>
+                            <span id="query-xcfw" data-name="sceneArea" class="option">
+                                <u class="query-block-active query-block-init">不限</u>
+                                <u val="0">个人</u>
+                                <u val="1">本单位</u>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="query-block-row">
+                        <div>
+                            <span class="qc-label-m">现场勘验号：</span>
+                            <input id="query-kybh" data-name="investigationNo" type="text" class="cm-input"/>
+                        </div>
+                    </div>
+                    <div class="query-block-row">
+                        <div class="fl">
+                            <span class="qc-label-m">是否制作笔录：</span>
+                            <span id="query-bl" data-name="noteMadeFlag" class="option">
+                                <u class="query-block-active query-block-init">不限</u>
+                                <u val="1">是</u>
+                                <u val="0">否</u>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="query-block-row">
+                        <div>
+                            <span class="qc-label-m fl">发案区划：</span>
+                            <div id="query-dict-faqh" dict-id="query-faqh" dict-name="caseRegionalism" data-name="caseRegionalism" dict-type="tree" dict-common="true" empty="true" class="dict unready option inline-block -w125 ml5"></div>
+                        </div>
+                    </div>
+                    <div class="query-block-row">
+                        <div>
+                            <span class="qc-label-m fl">案件类别：</span>
+                            <div dict-id="query-ajlb" dict-name="caseType" data-name="caseType" dict-type="tree" dict-root="AJLBDM" dict-common="true" empty="true" class="dict unready option inline-block -w125 ml5"></div>
+                        </div>
+                    </div>
+                    <div widget="date-options"  data-label="勘验时间" data-labelcls="qc-label-m"  data-inputer="query-investigationDate" data-name="investigationDate" data-fname="investigationDateFrom" data-tname="investigationDateTo" data-selecter="query-kysj" data-default="month"></div>
+                    <div class="query-block-row">
+                        <div>
+                            <span class="qc-label-m">勘验地点：</span>
+                            <input id="query-kydd" data-name="investigationPlace" type="text" class="cm-input"/>
+                        </div>
+                    </div>
+                </div>
+                <p widget="query-btns"></p>
+                <!--<hr class="cm-dash" />
+                <p class="query-reset">
+                    <b class="cm-query-btn" id="doc-make-query-btn"></b>
+                    <b class="cm-reset-btn" id="doc-make-reset-btn"></b>
+                </p>-->
+            </div>
+            <div class="cq-condition al-save-condition"></div>
+        </div>
+        <div widget="more-condition"></div>
+    </div>
+    <div id="doc-make-query-result" class="query-result">
+        <div class="new-color-bar">
+            <span class="title"><i class="icon-search pr10 fs14"></i>结果列表<span class="result-count-desc">共找到<span class="total-count"></span>条符合的记录</span></span>
+        </div>
+        <table id="doc-make-tb" class="typical-tb"></table>
+        <div class="paging"></div>
+    </div>
+</div>
+</body>
+<script type="text/template" id="doc-make-table-opt">
+    <a class="into-make icon-leaf fs16 hideplus{_doBtn}" investigationId="{id}" href="javascript:void(0);" title="制作"></a>
+    <a class="into-download icon-download fs16 hideplus{_download}" filepath="{fileServicePath}" investigationNo="{investigationNo}" href="javascript:void(0);" title="下载"></a>
+</script>
+<script src="../js/base.js?version=0.91"></script>
+<script src="../js/saved-condition.js?version=0.91"></script>
+<script>
+    importing('dict', function(){
+        var docMakeListAct = makeAct('sceneCollecting/sceneInvestigation/query'),//结果列表查询action
+                docMakeDoAct = makeAct('sceneCollecting/sceneInfoWord/createInvestigationNote'),//制作笔录action
+                docFaqhAct = makeAct('sys/sysOrganization/dict_unit'); //查询发案区划字典
+
+        var columns = [
+            {title:'序号',     map:'rowNum',                         cls:'mem6 th-center pl10'},
+            {title:'现勘编号', map:'investigationNo.docMakeCaseNo',  cls:'mem16 td-left'},
+            {title:'案件编号', map:'caseNo.docMakeCaseNo',           cls:'mem16 td-left'},
+            {title:'案件类别', map:'caseType',                       cls:'mem8'},
+            {title:'发案区划', map:'caseRegionalism',                cls:'mem16'},
+            {title:'勘验时间', map:'investigationDateFrom.asCnTime', cls:'mem14'},
+            {title:'勘验地点', map:'investigationPlace',             cls:'mem18'},
+            {title:'勘验人',   map:'sceneInvestigator',              cls:'mem10'},
+            {title:'勘验笔录', map:'noteMadeFlag.docMakeWd',         cls:'mem10'},
+            {title:'操作',     map:'opt.docMakeOpt',                 cls:'mem4'}
+        ];
+
+        $('.dict').dict();
+        //初始化 发案区划 自定义字典
+        function getFaqhDict(){
+            $get(docFaqhAct, {}, function(res){
+                $('#query-dict-faqh').dict(res.data);
+            }, false, false);
+        }
+
+        $filter('docMakeCaseNo', function(item){
+            var value = this.valueOf();
+            if(value) {
+                return value;
+            }else{
+                return '--';
+            }
+        });
+        $filter('docMakeWd', function(){
+            var value = this.valueOf();
+            if(value == '0'){
+                return '未制作';
+            }else if(value == '1'){
+                return '<img width="30px" src="../img/icon/wd.png"/>';
+            }
+        });
+        $filter('docMakeOpt', function(item){
+            return $compile($('#doc-make-table-opt').html(), item, function(){
+                if(item.noteMadeFlag == '0'){
+                    //未制作 显示制作操作
+                    item._doBtn = '_do';
+                }else if(item.noteMadeFlag == '1'){
+                    //已制作 显示下载按钮
+                    item._download = '_download';
+                }
+            });
+        });
+
+        //定时器
+        function timing(){
+            var timer = setInterval(function(){
+                if($('.unready').length == 0){
+                    clearInterval(timer);
+                    saveCondition(true, '.cq-condition', '', '', queryForList);
+                }
+            }, 20);
+        }
+        //结果列表查询
+        function queryForList(saveQueryObj){
+            var $qr = $('#doc-make-query-result'),
+                    kysj = $('#query-investigationDate').val();
+            $qr.pagingList({
+                action:docMakeListAct,
+                currentPage:$qr.children('.paging').data('currentPage'),
+                jsonObj:$.extend({
+                    sceneArea: $('#query-xcfw').children('.query-block-active').attr('val'),
+                    investigationNo: $('#query-kybh').val(),
+                    noteMadeFlag: $('#query-bl').children('.query-block-active').attr('val'),
+                    caseRegionalism: $('#query-faqh').val(),
+                    caseType: $('#query-ajlb').val(),
+                    investigationDateFrom:kysj ? kysj.split(',')[0] : null,
+                    investigationDateTo:kysj ? kysj.split(',')[1] : null,
+                    investigationPlace: $('#query-kydd').val()
+                },saveQueryObj),
+                callback:function(data){
+                    $('#doc-make-tb').table({
+                        data:data,
+                        cols:columns,
+                        fixCols:{left:2, right:1},
+                        helper:function(item){
+
+                        },
+                        allowHTML:true
+                    }).data('current-data', data);
+                }
+            });
+        }
+
+//        timing();
+        getFaqhDict();
+        queryForList();
+
+        //查询区域点击事件
+        $('.query-block-tabs').on('click', 'u', function(){
+            $(this).addClass('query-block-active').siblings('u').removeClass('query-block-active');
+        }).on('ex-query', function(){
+            $('#doc-make-query-result').children('.paging').data('currentPage', 0);
+            queryForList();
+        }).on('ex-reset', function(){
+            //重置
+            var $div = $('.query-block');
+            //清空查询内容
+            $div.find('input:not(:radio)').val('');
+            $div.find('u').removeClass('query-block-active');
+            $div.find('.query-block-init').addClass('query-block-active');
+            $div.find(':radio').parent('div').find('input:first').prop('checked', true);
+            //已选条件修改
+//            saveCondition(false, '.cq-condition', '', '');
+        });
+
+        //结果列表点击事件
+        $('#doc-make-query-result').on('click', '.into-make', function(){
+            var investigationId = $(this).attr('investigationId');
+            $get(docMakeDoAct+'/'+investigationId,{}, function(){
+                queryForList();
+                toast('制作笔录成功！').ok();
+            });
+        }).on('click', '.into-download', function(){
+            var filepath = $(this).attr('filepath'),
+                    investigationNo = $(this).attr('investigationNo');
+            location.href = top.sysParams.fileServerPath+filepath+'?attname=现场勘验笔录（'+investigationNo+'）.doc';
+        });
+    });
+</script>
+</html>

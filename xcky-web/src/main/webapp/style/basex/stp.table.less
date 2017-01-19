@@ -1,0 +1,80 @@
+
+//.typical-tb>thead{
+//  border-top:none //1px solid #ccc;
+//}
+//.head-fix-wrap thead{
+//  border-top:none //1px solid #ccc;
+//}
+//.new-color-bar + .typical-tb > thead,
+//.new-color-bar + .all-fix-wrap > .head-fix-wrap thead,
+//.cross-fix-cols-head-end>thead,
+//.cross-fix-cols-head>thead {
+//  border-top: none;
+//}
+
+//默认thead无顶部边框, 需要时候手动加此类
+thead.bt1{
+  border-top:1px solid #ccc;
+}
+
+body table.stp-table{
+  //table-layout:fixed!important;
+  th:first-child{
+    padding-left: 7px;
+  }
+}
+
+[type=checkbox].stp-check-tr,
+[type=checkbox].stp-check-tr-all{
+  left:5px;
+  margin-left: 8%;//单元格越宽,左边距越大
+  margin-right: 6px;
+}
+
+[class$="-td-rownum"],[class$="-th-rownum"],[class$="-td-$rownum"],[class$="-th-$rownum"]{
+  text-align: left!important;
+}
+
+
+//固定单元格高宽,溢出隐藏
+.fixed-table,.layout-fixed{
+  table-layout: fixed;
+}
+.fixed-cell{
+  table-layout: fixed;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+//固定单元格宽度, 强制换行
+.fixed-cell2{
+  table-layout: fixed;
+  word-break: break-all;
+  word-wrap:break-word;
+}
+
+//width helpers
+.cell-xxs{
+  min-width: 3.5em!important;
+}
+.cell-xs{
+  min-width: 5em!important;
+}
+.cell-s{
+  min-width: 7.5em!important;
+}
+.cell-m{
+  min-width: 12em!important;
+}
+.cell-xm{
+  min-width: 18em!important;
+}
+.cell-l{
+  min-width: 24em!important;
+}
+.cell-xl{
+  min-width: 36em!important;
+}
+.cell-xxl{
+  min-width: 55em!important;
+}

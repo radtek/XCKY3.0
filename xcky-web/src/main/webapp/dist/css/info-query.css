@@ -1,0 +1,176 @@
+@charset "UTF-8";
+/*简单查询 simple-query.html*/
+.over-v {
+  overflow: visible !important; }
+
+.query-block .dict-radio + label:after {
+  width: 0; }
+
+.query-block .dict-radio:checked + label:after {
+  width: 0; }
+
+.query-block .dict-radio + label:before {
+  content: none; }
+
+.query-block .dict-checkbox:checked + label {
+  background: none;
+  color: #4A89DC;
+  font-weight: bold; }
+
+.query-block .dict-checkbox + label, .query-block .dict-radio + label {
+  padding-left: 0; }
+
+.query-reset [class^="cm-"] {
+  border-radius: 3px; }
+
+.cm-save-btn:before {
+  content: ''; }
+.cm-save-btn:after {
+  content: '保存为常用查询'; }
+
+.qc-group-l {
+  width: 340px; }
+
+.query-block-row dict, .query-block-row ul {
+  width: calc(100% - 240px); }
+#usual-search {
+  display: inline-block;
+  vertical-align: top; }
+  #usual-search li {
+    float: left;
+    line-height: 25px;
+    height: 25px;
+    margin-top: 8px;
+    margin-right: 10px;
+    border: 1px solid #FD9827;
+    position: relative; }
+    #usual-search li span:hover + .comment {
+      display: block; }
+  #usual-search .comment {
+    position: absolute;
+    top: 35px;
+    background: #F9F9F9;
+    border: 1px solid #ccc;
+    padding: 15px;
+    width: 200px;
+    left: -70px; }
+  #usual-search span {
+    cursor: default;
+    color: #666; }
+  #usual-search i.icon-remove {
+    display: inline-block;
+    height: 100%;
+    vertical-align: top;
+    line-height: 23px;
+    padding: 0 5px;
+    width: auto;
+    cursor: pointer;
+    color: #fff;
+    background: #FD9827; }
+.query-block-row .cm-input {
+  width: 210px; }
+
+.alert-window .query-block-row {
+  margin: 10px 0; }
+.alert-window .qc-label-l {
+  width: 80px; }
+.alert-window .save-box {
+  text-align: center; }
+.alert-window button {
+  height: 30px;
+  border-radius: 3px;
+  line-height: 30px;
+  padding: 0 20px;
+  background: #fff;
+  border: 1px solid #ccc; }
+.alert-window .btn-save {
+  background: #EEAC57;
+  color: #fff; }
+
+.icon-ok-sign {
+  font-size: 25px;
+  color: #1CAF9A;
+  vertical-align: middle; }
+  .icon-ok-sign:hover + .no-show-detail {
+    display: block; }
+
+.no-show-detail {
+  position: absolute;
+  /*top: 30px;*/
+  top: calc(50% + 11px);
+  left: calc(50% - 21px);
+  height: 50px;
+  width: 200px;
+  z-index: 1; }
+
+.no-show-detail .square:before,
+.no-show-detail .square:after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  z-index: 1;
+  height: 0;
+  width: 0; }
+
+#default-table tbody tr:not(:last-child) .no-show-detail .square:before {
+  top: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 13px solid #ccc; }
+#default-table tbody tr:not(:last-child) .no-show-detail .square:after {
+  top: 1px;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 14px solid #f7f2ea; }
+
+.no-show-detail .no {
+  position: absolute;
+  top: 12px;
+  padding: 5px;
+  width: 200px;
+  height: 30px;
+  line-height: 20px;
+  font-size: 13px;
+  overflow: hidden;
+  color: #000;
+  border: 1px solid #ccc;
+  text-align: center;
+  background: #f7f2ea;
+  box-shadow: 0 0 1px #aaa; }
+
+#default-table tbody tr:last-child .no-show-detail {
+  /*top: -45px;*/
+  top: calc(50% - 63px); }
+  #default-table tbody tr:last-child .no-show-detail .square:before {
+    top: 42px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 13px solid #ccc; }
+  #default-table tbody tr:last-child .no-show-detail .square:after {
+    top: 40px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 14px solid #f7f2ea; }
+
+.kyry {
+  position: absolute;
+  left: 183px;
+  background: #fff;
+  z-index: 110;
+  border: 1px solid #ccc;
+  width: 148px !important;
+  top: 32px;
+}
+.kyry li {
+  cursor: pointer;
+  line-height: 20px;
+}
+.kyry li:hover {
+  background: #eeeeee;
+}
+/*# sourceMappingURL=info-query.cssap */
+/*--------------end---------------*/
+
+/*全文检索 full-text-search.html*/
+
+/*--------------end-------------*/

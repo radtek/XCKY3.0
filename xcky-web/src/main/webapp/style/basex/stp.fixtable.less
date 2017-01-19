@@ -1,0 +1,92 @@
+thead.need-fix>tr>th{
+  //padding:10px 7px;
+  //border-bottom-color: #666;
+}
+//thead>tr{white-space: nowrap}
+div.all-fix-wrap{
+  //在一定版本chrome下,overflow设置影响了其他滚动条的正常显示,需要注释掉下句的代码, 而添加到更上层容器上, 一般是query-result,设置overflow-x:hidden;
+  overflow-x: hidden;
+}
+div.all-fix-wrap,
+div.col-fix-wrap > table,
+div.col-end-fix-wrap>table,
+div.head-fix-wrap > table {
+  position: relative;
+}
+div.native-fix-wrap > table > thead th,
+div.col-fix-wrap > table > thead th,
+div.col-end-fix-wrap>table>thead th,
+div.head-fix-wrap > table > thead th,
+table.cross-fix-cols-head > thead th,
+table.cross-fix-cols-head-end > thead th{
+  white-space: nowrap!important;
+}
+div.native-fix-wrap {
+  overflow-x: auto;
+  overflow-y: auto;
+  padding-bottom: 1px;
+  //border-bottom: 1px solid #555;
+}
+div.col-fix-wrap,
+div.head-fix-wrap,
+div.col-end-fix-wrap{
+  position:absolute;
+  top:0;
+  overflow:hidden;
+  background:#fff;
+}
+div.col-end-fix-wrap{
+  right:0px;
+}
+div.head-fix-wrap {
+  background: transparent;
+  min-width: 100%;
+}
+div.head-fix-wrap>table{
+  min-width: 100%;
+}
+table.cross-fix-cols-head,table.cross-fix-cols-head-end{
+  position: absolute;
+  top: 0;
+  z-index: 2;
+}
+table.cross-fix-cols-head{
+  left:0;
+}
+table.cross-fix-cols-head-end{
+  right:0;
+}
+//.native-fix-wrap table{
+//  min-width:100%;
+//}
+/*
+table.no-need-fix-anycol th.need-fix, th.need-fix-end ,
+table.no-need-fix-anycol td.need-fix, td.need-fix-end{
+  background:#fff ;//transparent;//@td-default-bgcolor
+}
+*/
+td.need-fix, td.need-fix-end  {
+  //background: @need-fix-cell-bgcolor;
+}
+th.need-fix, th.need-fix-end ,
+td.need-fix, td.need-fix-end  {
+  //background: @need-fix-cell-bgcolor;
+}
+.need-fix>tr>th,.need-fix>th{
+  white-space: nowrap;
+}
+//实现滚动条光标
+.native-fix-wrap td {
+  cursor: default;
+}
+.native-fix-wrap {
+  cursor: move;
+}
+
+.head-fix-wrap th,
+.col-fix-wrap .need-fix,
+.col-end-fix-wrap .need-fix,
+table.cross-fix-cols-head .need-fix,
+table.cross-fix-cols-head-end .need-fix{
+  //min-width:auto; //固定cell的宽度是算出来的,不需要min-width,取消去除冲突
+}

@@ -1,0 +1,30 @@
+.stp-hide{
+  visibility: hidden!important;
+  //font-size:0!important;
+  opacity: 0!important;
+  background:transparent!important;
+  z-index: -99999!important;
+}
+
+
+.query-result.changing{
+  &>div,&>table{
+    visibility: hidden;
+  }
+  &>.new-color-bar{
+    visibility: visible;
+  }
+}
+
+
+
+@import "stp.table.less";
+
+@import "stp.fixtable.less";
+
+@import "stp.customcol.less";
+
+@import "sortable.less";
+
+
+

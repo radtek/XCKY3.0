@@ -1,0 +1,183 @@
+@dark-bg: #30363e; //  #44484a;
+@dark-bg2:#3b3f4f; // #4c4e4f;
+@dark-bg3:#282d33; // #3c3d3f;
+@dark-bg4:#22262c;//#313339;
+
+//针对原来admin-degisn模板里原有元素的一些样式改写
+//导航和主容器
+.sidebar-menu>li>a{
+  font-size: 14px;
+}
+#admin-design-main {
+  position: relative;
+  min-height: 100%;
+  background: #eee;
+}
+#admin-design-main:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: #eeeeee;
+}
+#content_wrapper {
+  overflow: hidden;
+}
+#sidebar_left {
+  padding-top: 90px;
+}
+.navbar{
+  box-shadow: none;
+}
+#toggle_sidemenu_l, #toggle_sidemenu_t{
+  color:#fff;
+}
+.navbar-branding a.navbar-brand {
+  padding-left: 5px;
+}
+.navbar .navbar-branding {
+  background: #3078d7!important;
+  //background: #306490!important;
+  /*background: #3B5F7D!important;*/
+}
+.navbar .navbar-brand,
+.navbar .nav > li > a,
+.navbar .nav > li.open > a {
+  color:#444;// #4A89DC!important;
+}
+.navbar .nav > li.open > a,
+.navbar .nav > li:focus > a,
+.navbar .nav > li.active > a,
+.navbar .nav > li > a:focus {
+  background: #4A89DC;
+}
+.navbar .nav > li:hover > a,
+.navbar .nav > li > a:hover {
+  background: #79A8D0;
+}
+header.navbar-fixed-top {
+  background: #fff!important;//#4A89DC!important;
+  /*background: linear-gradient(to right, #173752, steelblue 70%)!important;*/
+}
+header .caret.caret-tp {
+  border-top-color: #fff;
+}
+#admin-info-area {
+  position: relative;
+  top: -2px;
+}
+#power-off-btn {
+  position: relative;
+  top: 1px;
+}
+.sidebar-menu > li > ul > li > ul li a {
+  padding: 10px 15px 9px 50px;
+}
+.sidebar-menu > li > ul > li > ul li a span{
+  padding-right: 7px;
+}
+body.sb-l-m .sidebar-menu li > ul > li > ul > li a {
+  padding: 8px 10px 8px 35px;
+  color: #eee;
+}
+.sidebar-menu > li > ul > li > a > span:nth-child(1) {
+  margin-right: 5px;
+  font-size: 11px;
+}
+body.sb-l-m .sidebar-menu li > ul > li > a {
+  padding: 8px 8px 8px 20px;
+}
+
+//修复左侧菜单溢出
+body.sb-l-o #sidebar_left {
+  overflow: scroll;
+  overflow-x: hidden;
+  padding-top:170px;
+}
+body.sb-l-m  #sidebar_left {
+  overflow: visible;
+  padding-top:45px;
+}
+body{
+  overflow-y:hidden;
+}
+
+/*左侧菜单宽度调整*/
+.sb-l-o #content_wrapper {
+  margin-left: 200px;
+}
+.navbar-branding, #sidebar_left,.sidebar-menu > li > ul{
+  width: 200px;
+}
+.navbar-branding {
+  margin-right: 0px;
+}
+/*解决因为scrollIntoView导致的#content_wraper padding-top失效BUG*/
+#admin-design-main{
+  height:100vh;
+}
+#content_wrapper > .tabs-panels{
+  /*height:calc(100% - 30px)!important;*/ /*after less get it back*/
+}
+#content_wrapper > .tabs-panels > .epanel,
+#content_wrapper > .tabs-panels > .epanel > .epanel-body {
+  height: 100%!important;
+}
+
+#content_wrapper {
+  padding-top: 0!important;
+  /*width: calc( 100% - 200px);*/ /*after less get it back*/
+  /*height:calc(100% - 60px)!important;*/ /*after less get it back*/
+  position: absolute;
+  top: 60px;
+}
+body.sb-l-m #content_wrapper{
+  /*width: calc( 100% - 60px);*/ /*after less get it back*/
+}
+#sidebar_left,body.sb-l-m #sidebar_left {
+  height: 100vh;
+}
+/*当前项 ICON高亮*/
+.sidebar-menu li > a.menu-open > span.glyphicons {
+  color: #4a89dc;
+}
+.sb-l-m #sidebar_left .sidebar-header{display:none}
+#sidebar_left .sidebar-header{
+  width:200px;
+  height:125px;
+  .yahei;
+  position: fixed;
+  top:60px;
+  left:0;
+  background-color:@dark-bg;
+  padding-top: 40px;
+  z-index:1032;/*因为admin-design nav z-index过高 1031*/
+}
+#sidebar_left .sidebar-header .media-author{color:#fff}
+#sidebar_left .sidebar-header .text-muted{color:#999}
+#sidebar_left .sidebar-header .sidebar-img{width:80px;height:80px;border:2px solid #999;border-radius:50%;position:fixed;top:15px;left:60px;z-index:2000}
+#sidebar_left .sidebar-header .sidebar-img img{width:100%;height:100%;border-radius:50%;cursor: pointer;}
+#sidebar_left .sidebar-header .btn-sm{padding:4px 8px;margin: 0 1px;border: 1px solid #666;}
+
+/* Top Level Menu Title */
+.sidebar-menu > li > a > span:nth-child(2) {
+  font-weight: 400!important;
+  .yahei;
+}
+#sidebar_left.sidebar-light .sidebar-menu > li > a > span:nth-child(2) {
+  font-weight: 400!important;
+  .yahei;
+}
+
+//默认focus背景色
+.navbar .nav > li:hover > a, .navbar .nav > li > a:hover {
+  background: #eee;
+}
+.navbar .nav > li.open > a,
+.navbar .nav > li:focus > a,
+.navbar .nav > li.active > a,
+.navbar .nav > li > a:focus {
+  background: #f9f9f9;
+}

@@ -1,0 +1,168 @@
+  @charset "utf-8";
+
+
+  //@import url("adminds/themes-simple");
+  //@import url("theme");
+  @import url("adminds/themes-override-xk3-index");
+  @import url("business/index-business");
+
+
+
+  @top-nav-height:90px;
+  @slide-menu-width:200px;
+  @scroll-bar-width:5px;
+
+
+  .yahei{
+    font-family:"Microsoft YaHei",monospace, Arial, Helvetica, sans-serif;
+  }
+
+  .help-mask(@zindex:9002){
+    display: none;
+    position: fixed;
+    left: 0;
+    z-index: @zindex;/*因为admindesign nav z-index过高 1031*/
+  }
+
+
+
+  //辅助遮罩
+  #top-mask {
+    .help-mask(10001);
+    top:0;
+    height:@top-nav-height;
+    width: 100vw;
+    //display: none!important;
+  }
+  #left-mask {
+    .help-mask();
+    top:@top-nav-height;
+    height: 100vh;
+    width: @slide-menu-width;
+    //display: none!important;
+  }
+  #right-mask {
+    .help-mask();
+    top:@top-nav-height;
+    right:0;
+    left:auto;
+    height: 100vh;
+    width: @scroll-bar-width;
+    //display: none!important;
+  }
+
+
+  #admin-design-main.help-mask-mode {
+    & > #top-mask,& > #left-mask,& > #right-mask {
+      display: block;
+    }
+  }
+
+
+  //菜单样式
+  #root-menu {
+    margin-top: 30px;
+
+    li:last-child ul {
+      top: -16px;
+    }
+
+    li:last-child .sidebar-title {
+      top: -56px;
+    }
+    & > li:hover > a > span:first-child,
+    & > li.current > a > span:first-child {
+      /*color: #81C4FA;*/
+      color: #4a89dc;
+      /*transform: scale(1.2);*/
+    }
+
+    li.fix-bug-temp-css-last2 .sidebar-title{
+      top: -205px;
+    }
+    li.fix-bug-temp-css-last2 ul{
+      top: -155px;
+    }
+    li.fix-bug-temp-css-last .sidebar-title{
+      top: -155px;
+    }
+    li.fix-bug-temp-css-last ul{
+      top: -110px;
+    }
+  }
+
+
+
+
+  //主内容区frame自适应
+  #content_wrapper.tabs-container{
+
+      border:none!important;
+
+      //tab头样式
+      &>.tabs-header {
+        width: 100%!important;
+        border-color: #bbb;
+        letter-spacing: 0.5px;
+        font-family: sans-serif;
+        font-weight: 400;
+        color: steelblue;
+
+        & > .tabs-wrap{
+          width: 100%!important;
+        }
+
+        & > .tabs-wrap > ul.tabs {
+          border-color: #afafaf;
+
+          & > li > a {
+            border-color: #afafaf #afafaf #fff #afafaf;
+          }
+
+          li.tabs-selected  a.tabs-inner{
+            font-weight: 400;
+            color: #555;
+          }
+
+        }
+      }
+
+
+      //tab区样式
+      &>.tabs-epanels {
+
+        &>.epanel>.epanel-body{
+          width:100%!important;
+        }
+
+        #main-wrap {
+          /*width: 100% !important;*/ /*#main-wrap也是.tabs-panels .epanel-body一员*/
+          /*height:calc(100vh - 90px)!important;*/  /*after less get it back*/
+
+          &.full-wrap, &.full-panel-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            z-index: 1033;
+            background: transparent !important;
+          }
+        }
+
+        .tab-content-frame{
+          width: 100%;
+          /*height: calc(100% - 55px);*/ /*after less get it back*/
+          height: 100%;
+          display: block;
+        }
+
+      }
+
+  }
+
+
+
+
+
+//end 参考实施平台主框架页可使用 @import url("index-imms-style.less");  其他全部不要

@@ -1,0 +1,116 @@
+.e-win-wrap iframe{
+  height:99.5%;
+  width:99.5%;
+  margin:0 auto;
+  border:none;
+}
+
+.window{
+  border-radius:1px;
+}
+
+.messager-window{
+
+  left: 50%!important;
+  transform: translateX(-50%)!important;
+  -webkit-transform: translateX(-50%)!important;
+    //-webkit-transform: scale(1.18);
+
+  .window-header{
+    width:100%!important;
+  }
+  .epanel-title{
+    font-size:13px;
+  }
+  .messager-body{
+    width:100%!important;
+    font-size:13px;
+    line-height: 1.5;
+  }
+  .epanel-tool{
+    display:none;
+  }
+  .messager-button>a{
+    border-radius:1px;
+  }
+  .messager-icon+div{
+    padding-left: 43px;
+  }
+
+}
+
+
+
+.corner-msg {
+  border: 1px solid #aaa;
+  //background:#888;
+  background: -webkit-linear-gradient(top,#049cdb,rgb(233,244,255)) ;
+  border-radius: 5px 5px 0 0;
+  padding: 5px 3px 3px 3px;
+  /*box-shadow: 0 0 5px 7px rgba(15,15,15, 0.3);*/
+}
+.corner-msg .epanel-header{
+  background: transparent;
+}
+.corner-msg .epanel-title {
+  font-size: 14px;
+  letter-spacing: 1px;
+  white-space: pre;
+  font-weight: 400;
+  color: #fff;
+}
+.corner-msg.messager-window .epanel-tool{
+  display:block;
+}
+.corner-msg .epanel-tool a {
+  opacity: 1;
+  background-color: #e2e2e2;
+  border-radius: 3px;
+}
+.corner-msg .arrow{
+  color:#049cdb;
+}
+//针对admin-design主页body类设置弹窗z-index，确保其位于顶层，高于my97日期插件
+body.sb-l-o .epanel.window.messager-window {
+  z-index: 123456!important;
+}
+
+//eui 弹窗样式更改
+@window-header-height:36px;
+
+.window:not(.messager-window){
+  padding:0;
+
+  .window-body{
+    padding:0;
+  }
+
+  .window-header{
+    background: #fbfbfb;
+    height: @window-header-height;
+
+    .epanel-tool {
+      right: 5px;
+      top: 22px;
+    }
+
+    .epanel-title{
+      height:@window-header-height;
+      line-height:@window-header-height;
+      font-size:14px;
+      text-indent:15px;
+    }
+  }
+}
+
+
+
+//.window.messager-window{
+//
+//  padding: 5px;
+//
+//  .messager-body{
+//    padding: 10px;
+//  }
+//
+//}

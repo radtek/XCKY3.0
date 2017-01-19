@@ -1,0 +1,55 @@
+{
+  "name": "xcky3",
+  "cname": "现勘3.0",
+  "description": "this the project for xcky3",
+  "license": "NO-COPY",
+  "repository": "todo",
+  "author": {
+    "name": "北京海鑫科金高科技股份有限公司",
+    "email": "",
+    "url": ""
+  },
+  "main": "dist/login.html",
+  "version": "0.9.2",
+  "updateServer": "http://localhost:3000",
+  "serverPath": "http://172.16.0.54:8080/xcky3/",
+  "webkit": {
+    "page-cache": true
+  },
+  "window": {
+    "show": true,
+    "title": "现勘3.0",
+    "debug": 0,
+    "toolbar": false,
+    "width": 1200,
+    "height": 720,
+    "min_width": 800,
+    "min_height": 480,
+    "resizable": false,
+    "position": "center",
+    "frame": true
+  },
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp": "*",
+    "gulp-browserify": "^0.5.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-include": "^2.3.1",
+    "gulp-less": "^3.3.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-shell": "^0.5.2",
+    "gulp-sourcemaps": "^1.9.1",
+    "gulp-uglify": "^2.0.0",
+    "run-sequence": "^1.2.2"
+  },
+  "scripts": {
+    "start": "gulp"
+  },
+  "dependencies": {
+    "hnotify": "^0.2.3",
+    "hupdater": "^1.4.1",
+    "regedit": "2.2.6"
+  }
+}

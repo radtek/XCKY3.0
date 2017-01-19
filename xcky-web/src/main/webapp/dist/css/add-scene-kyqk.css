@@ -1,0 +1,7 @@
+#add-scene-kyqk .stir ul {  display: inline-block;  vertical-align: middle; }
+#add-scene-kyqk .stir ul li {  padding: 0 12px;  margin-right: 5px;  float: left;  height: 26px;
+    line-height: 26px;  cursor: pointer;  border: 1px solid #ffffff;}
+#add-scene-kyqk .stir ul li:hover{border: 1px solid #ababab}
+#add-scene-kyqk .stir ul li:nth-child(5):hover{border: 1px solid #ffffff}
+#add-scene-kyqk .stir ul li:hover{border: 1px solid #ababab}
+#add-scene-kyqk .stir ul li.active {  background: #4a89dc;  color: #fff;border: 1px solid #4A89DC }

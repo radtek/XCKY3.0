@@ -1,0 +1,15 @@
+.multi-select{display: inline-block;background: #FFFFFF;border: 1px solid #FFFFFF;height: 26px;line-height: 26px;
+    padding: 0 12px;margin-right: 5px;color: #4a89dc;cursor: pointer}
+.mcb-form .protect-step{width: 100%}
+.mcb-form .temperature{width: 20%}
+.temperature .humidity{width: 25%}
+.total{margin-left: 20px}
+.money{margin: 0 10px;font-weight: bolder;}
+.dividing{margin: 0 7px}
+.people{width: 15px;color: #4A89DC;margin: 0 5px;}
+.mcb-form .stir{width: 100%}
+#add-scene-xctj .stir ul {  display: inline-block;  vertical-align: middle; margin-bottom: 0px }
+#add-scene-xctj .stir ul li {  padding: 0 12px;  margin-right: 5px;  float: left;  height: 26px;
+    line-height: 26px;  cursor: pointer;  border: 1px solid #ffffff;}
+#add-scene-xctj .stir ul li:hover{border: 1px solid #ababab}
+#add-scene-xctj .stir ul li.active {  background: #4a89dc;  color: #fff;border: 1px solid #4A89DC }

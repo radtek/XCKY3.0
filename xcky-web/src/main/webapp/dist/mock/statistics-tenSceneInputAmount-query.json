@@ -1,0 +1,55 @@
+{
+  "flag": 1,
+  "totalCount": 1,
+  "msg": "",
+  "data": {
+      "TenSceneInputAmount":[
+          {
+          "parentUnitName":"XXX分县局",
+          "unitName":"XXX派出所",
+          "killCount":"0",
+          "injureCount":"22",
+          "rapeCount":"6",
+          "kidnapCount":"0",
+          "robCount":"22",
+          "fireCount":"6",
+          "bombCount":"0",
+          "hijackCount":"22",
+          "stealCount":"6",
+          "destroyCount":"0",
+          "poisoningCount":"22",
+          "otherCount":"6"
+        },
+        {
+          "parentUnitName":"XXX分县局",
+          "unitName":"XXX派出所",
+          "killCount":"0",
+          "injureCount":"22",
+          "rapeCount":"6",
+          "kidnapCount":"0",
+          "robCount":"22",
+          "fireCount":"6",
+          "bombCount":"0",
+          "hijackCount":"22",
+          "stealCount":"6",
+          "destroyCount":"0",
+          "poisoningCount":"22",
+          "otherCount":"6"
+        }
+      ],
+      "TenSceneInputTotal":{
+        "killTotal":"5",
+        "injureTotal":"51",
+        "rapeTotal":"22",
+        "kidnapTotal":"5",
+        "robTotal":"51",
+        "fireTotal":"22",
+        "bombTotal":"5",
+        "hijackTotal":"51",
+        "stealTotal":"22",
+        "destroyTotal":"5",
+        "poisoningTotal":"51",
+        "otherTotal":"22"
+    }
+  }
+}

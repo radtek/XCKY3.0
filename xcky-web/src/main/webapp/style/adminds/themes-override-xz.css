@@ -1,0 +1,410 @@
+/*预制主色梯次等*/
+
+.f1color{color:#444!important;} /*主标题*/
+.f2color{color:#666!important;} /*主内容,次标题*/
+.f3color{color:#888!important;} /*次内容*/
+.f4color{color:#aaa!important;} /*辅助信息,提示,备注*/
+
+.m1color{color:#3498db;}/*主亮色*/ /*#69B3E4*/
+.m1color.active{color:#1d6fa5;}/*主亮色 活动态*/
+
+.m2color{color:#70ca63;}/*辅亮色*/
+.m2color.active{color:#56c046;}/*辅亮色 活动态*/
+
+.m3color{color:#df5640;}/*辅亮色2*/
+.m3color.active{color:#d53c24;}/*辅亮色2 活动态*/
+
+label.col-md-4,label.col-md-3,label.col-md-2{
+    padding-left: 3px;
+    padding-right: 3px;
+    font-size: 13px;
+}
+.radio-custom label {
+    padding-left: 20px;
+}
+.radio-custom label:before {
+    top: 2px!important;
+    width: 15px!important;
+    height: 15px!important;
+    border-radius: 50%!important;
+}
+.radio-custom, .checkbox-custom {
+    height: 24px;
+}
+.radio-custom input[type=radio]:checked + label:after, .radio-custom input[type=checkbox]:checked + label:after {
+    top: 5px!important;
+    left: 3px!important;
+    border-radius: 50%!important;
+    width: 9px!important;
+    height: 9px!important;
+}
+.form-control  .col-md-11 {
+    width: 91.66666667%;
+}
+.form-control.col-md-10 {
+    width: 83.33333333%;
+}
+.form-control.col-md-9 {
+    width: 75%;
+}
+.form-control.col-md-8 {
+    width: 66.66666667%;
+}
+.form-control.col-md-7 {
+    width: 58.33333333%;
+}
+.form-control.col-md-6 {
+    width: 50%;
+}
+.form-control.col-md-5 {
+    width: 41.66666667%;
+}
+.form-control.col-md-4 {
+    width: 33.33333333%;
+}
+.form-control.col-md-3 {
+    width: 25%;
+}
+.form-control.col-md-2 {
+    width: 16.66666667%;
+}
+.form-control.col-md-1 {
+    width: 8.33333333%;
+}
+.current-page-name{
+    font-size: 12px!important;
+}
+.form-input-row{
+    overflow: hidden;
+    padding: 0!important;
+}
+.stp-hide{visibility: hidden!important;}
+
+/*配合max-width实现菜单文本字数显示限制,避免无限制撑框*/
+.ellipsis{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+
+.navbar-nav.navbar-right, .navbar-nav.navbar-right:last-child {
+    float: right;
+    margin: 0px 0px 0 0;
+}
+/*重定义头部高度 和 侧边栏菜单宽度*/
+#main .navbar{
+    background: linear-gradient(to right, #535B77 ,#3B8AC4 30%);
+    height: 50px;
+    min-height: 50px;
+}
+
+.navbar-branding{
+    height: 50px;
+    line-height: 48px;
+    background: url("../../../image/jinghui.png");/*这里为警徽png的路径*/
+    background-repeat: no-repeat;
+    background-size: 28px;
+    background-position-y: 6px;
+    background-position-x: 21px;
+}
+.navbar-branding {
+    background-position-x: 15px;
+    width: 60px!important;
+}
+
+#toggle_sidemenu_l {
+    /* display: none; */
+    float: left;
+    width: 26px;
+    min-height: 30px;
+    /*height: 30px;*/
+    line-height: 52px;
+    color: #aaa!important;
+}
+#toggle_sidemenu_l:hover{
+    transform: scale(1.05);
+}
+.navbar-brand {
+    height: 50px;
+    line-height: 48px;
+    padding-left: 0;
+}
+
+.navbar-btn {
+    margin-top: 13px;
+    margin-bottom: 15px;
+}
+.navbar-btn>.btn-sm{
+    padding: 2px 10px;
+    color:#eee!important;
+}
+.navbar-btn>.btn-sm:hover{
+    transform: scale(1.03);
+}
+.navbar[class*='bg-'] .navbar-brand {
+    font-size: 26px;
+    text-shadow: 3px 4px 3px #444;
+}
+#sidebar_left{
+    /*width: 180px;*/
+    padding-top: 45px;
+}
+.sb-l-o #content_wrapper {
+    /*margin-left: 180px;*/
+}
+/*侧边栏菜单底色*/
+#sidebar_left {
+    background-color: #f5f5f5;
+}
+.sidebar-menu > li > a {
+    color: #444;
+}
+.sb-l-m #sidebar_left{
+    background-color: #f5f5f5!important;
+}
+.sb-l-m .sidebar-menu > li > a > span:nth-child(1) {
+    color: #666!important;
+}
+.sb-l-m #sidebar_left > li > a {
+    background: #dfdfdf;
+    color: #444!important;
+}
+.sb-l-m .sidebar-menu > li > a > .sidebar-title {
+    background: #ededed!important;
+    border-left: none!important;
+    color:#666!important;
+}
+.sb-l-m .sidebar-menu > li > a:hover .sidebar-title {
+    background: #dfdfdf!important;
+}
+.sb-l-m .sidebar-menu > li > a:hover > .fa{
+    color: #0776C7!important;
+}
+.sb-l-m .sidebar-menu > li > a > .sidebar-title {
+    top: 0px!important;
+    min-width: 120px!important;
+    height: 38px!important;
+    line-height: 38px!important;
+}
+.sb-l-m .sidebar-menu > li > a {
+    border-top: 1px solid #e5e5e5;
+}
+/*侧边栏菜单当前项高亮*/
+.sidebar-menu > li > a:hover, .sidebar-menu > li > a:focus, .sidebar-menu > li > a:active {
+    /*color: #6CB6EC;*/
+    /*background-color: #444;*/
+    color: #0776C7;
+    /*background: #ececec;*/
+}
+.sidebar-toggle-mini{
+    display: none;
+}
+.sidebar-toggle-mini a{
+    background: #e3e3e3!important;
+    border-radius: 3px 0 0 3px;
+}
+.sidebar-toggle-mini:hover span {
+    color: #666;
+}
+/*首页窗口tab条高度调整*/
+.content-tabs {
+    height: 34px;
+    line-height: 34px;
+}
+/*tab栏左右箭头*/
+.tabcommon {
+    line-height: 29px;
+    border-left: none;
+}
+/*首页窗口tab条选项卡颜色*/
+.page-tabs-content a.J_menuTab{
+    color: #888;
+    height: 33px!important;
+    border-right: 1px solid #ddd;
+}
+/*首页窗口tab条当前项*/
+.page-tabs-content a.J_menuTab.active {
+    background: #fff;
+    color: #1d6fa5;;
+    font-weight: 600;
+    border-color: #cecece;
+    box-shadow: inset 0 0 2px 1px rgba(3, 169, 244, 0.24);
+}
+.J_menuTab span{
+    max-width:12em;
+    display: inline-block;
+}
+.J_menuTab .fa{
+    vertical-align: top;
+    line-height: 34px;
+}
+/*整个主tab条底色*/
+.content-tabs {
+    position: relative;
+    background: #fafafa;
+    /*border-bottom: 2px solid #69B3E4;*/
+    border-bottom: 1px solid #bebebf;
+}
+/*主内容区padding-top也根据头部高度和侧边菜单同步调整*/
+.navbar.navbar-fixed-top + #sidebar_left + #content_wrapper {
+    padding-top: 50px;
+    /*margin-left: 180px;*/
+}
+
+/*减弱不可用按钮的显示*/
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+    opacity: 0.95;
+    filter: alpha(opacity=95);
+    background: #ccc!important;
+    border-color: #ccc!important;
+}
+/*减弱placeholder的颜色*/
+input::-webkit-input-placeholder {
+    color: #aaa!important;
+}
+
+/*减弱查询区域顶部的边框粗细 和 留白*/
+.panel.panel-border.top {
+    border-top-width: 2px;
+}
+/*查询区域和查询结果区域*/
+.panel-body,.panel-body.query-area{
+    padding: 10px;
+}
+.query-area .btn-wrap{
+    float: right;
+    margin-right: -3px;
+}
+.query-area .btn-wrap button{
+    width: 53px;
+}
+.query-area, .query-result-area {
+    border-top:none!important;
+    /*border-left: 2px solid #3498db!important;!*蓝色侧边*!*/
+    border-top: 2px solid #C0C0ce!important;/*灰色顶边*/
+    border-radius:3px;
+}
+.query-result-area .fixed-table-container {
+    border-radius: 3px;
+}
+.query-result-area>.panel-heading{
+    border-top-left-radius: 1px;
+}
+/*直接更改当前所有的*/
+#pageContent>.panel-primary.panel-border {
+    border-color: #C0C0ce;
+}
+#pageContent>.panel-primary.panel-border + .panel {
+    border-top:2px solid #C0C0ce;
+}
+/*个人中心*/
+.navbar .nav > li > a{
+    height: 50px;
+    min-height: 50px;
+}
+/* 需要改动为如下查询区域结构
+<div class="form-body">
+    <div class="row col-md-9">
+        <div class="col-md-6 col-sm-12">
+            <div class="row form-group">
+                <label for="_zbbpzId" class="col-md-4 control-label">表</label>
+                <div class="col-md-8">
+                    <input class="form-control" type="text" id="_zbbpzId" name="zbbpzId" placeholder="请输入表">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="row form-group">
+                <label for="_zbbpzMc" class="col-md-4 control-label">表名称</label>
+                <div class="col-md-8">
+                    <input class="form-control" type="text" id="_zbbpzMc" name="zbbpzMc" placeholder="请输入表名称">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-3" style="float: right;margin-right: -3px;">
+        <div class="col-md-12 col-sm-12">
+            <div class="row form-group">
+                 <div class="pull-right">
+                     <button type="button" onclick="query();" class="btn btn-info" style="width: 53px;">查询</button>
+                     <button type="button" onclick="reset();" class="btn btn-default" style="width: 53px;">重置</button>
+                 </div>
+             </div>
+        </div>
+    </div>
+</div>
+*/
+
+/*案件详情*/
+.media-body {
+    color: #666;
+}
+/*案件概况等tab项*/
+ul.panel-tabs>li>a {
+    color: #666;
+}
+/*
+  将案件编号，身份证号等label上加上text-muted类，案件编号，身份证号的内容上去掉text-mute类，两者颜色互换
+  现在：
+    <label class="col-md-4 control-label">身份证号码</label>
+    <p class="form-control-static text-muted">123456789012345678</p>
+  改为：
+    <label class="col-md-4 control-label text-muted">身份证号码</label>
+    <p class="form-control-static">123456789012345678</p>
+*/
+.toast{
+  display:none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  width:240px;
+  line-height:1.5;
+  margin:-60px 0 0 -130px;
+  transform:translateY(-40px);
+  padding:30px 5px;
+  text-align:left;
+  background-color:#555;
+  color:#fff;
+  font-size:14px;
+  word-spacing: 2px;
+  letter-spacing: 1px;
+  word-break: break-all;
+  white-space: pre-wrap;
+  z-index: 99999999;
+  border-radius:5px;
+  background-color:rgba(88,88,88,0.86);
+}
+
+/*QQ蓝风格*/
+.toast.qqblue{
+  background: #f1f1f1;
+  border-color: steelblue;
+  border-width: 9px 2px 2px 2px;
+  border-style: solid;
+  box-shadow: 0 0 32px #666;
+  color: #333;
+  border-radius: 3px;
+}
+.toast p{
+  padding-left:12px;
+  padding-right:12px;
+}
+.toast.ok p::before{
+  content: "√";
+  font-family: "宋体",Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  color:lightgreen;
+}
+.toast.err p::before{
+  content: "ㄨ ";
+  font-weight: 600;
+  font-size: 16px;
+  color:red;
+}
+.fixed-table-toolbar{
+    position: absolute;
+    top: -6px;
+    background: transparent;
+    width: 100%;
+    z-index: 1;
+}

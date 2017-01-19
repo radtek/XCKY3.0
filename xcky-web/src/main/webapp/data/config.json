@@ -1,0 +1,83 @@
+
+{
+  //配置部分
+  "prjName":"xcky3",
+  "version":"0.9.2",
+  "maxTabCount":9,
+  "scrollBarWidth":5,
+  "indexStyle":"adds",
+  "useFullWrap":false,
+  "tabLength":null,
+  "holdToken":false,
+  "mapVersion":2.0,
+  "autoCustomCol":1,
+  "mapServerPath":"http://192.168.1.168:8101",
+  "mock":0,//设置为0关闭模拟接口
+  "test":0,//设置为test模式时info和log输出,否则不输出
+  "useLocalAgent":1,
+  "plugins":{
+    "hsmap":"hsmap/hsmap.js",
+    "fullscreen":"fullscreen/jquery.fullscreen.js",
+    "autocomplete":"autocomplete/autocomplete.js",
+    "mappicker":"mappicker/mappicker.js",
+    "datepicker":"my97/datepicker.js",
+    "ztree":"ztree/ztree.js",
+    "echarts":"echarts/echarts3110.js",
+    "echarts2":"echarts/echarts225.js",
+    "echarts3":"echarts/echarts3110.js",
+    "china":"echarts/china.js",
+    "jqgrid":"jqgrid/jquery.jqGrid.min.js",
+    "dataTable":"dataTable/jquery.dataTables.js",
+    "fixDataTable":"dataTable/dataTables.fixedColumns.js",
+    "dict":"dict/dict.js",
+    "socket":"socket/socket.io.js",
+    "ckeditor":"ckeditor/ckeditor.js",
+    "datepicker2":"daterangepicker/daterangepicker.js",
+    "daterangepicker":"daterangepicker/daterangepicker.2.12.4.js",
+    "currentDate":"currentDate.js",
+    "bs-popover":"bootstrap/bs-popover.js",//依赖bootstrap.css
+    "bs-tooltip":"bootstrap/bs-tooltip.js",//依赖bootstrap.css
+    "bootstrap":"bootstrap/bootstrap.3.31.js",//会自动引入bootsrap.css
+    "bootstrap-js":"bootstrap/bootstrap.only.js",
+    "bootstrap-css":"bootstrap/bootstrap.3.31.css",
+    "datetimepicker":"bs.datetimepicker/bootstrap-datetimepicker.min.js",
+    "colorBox":"admindesign/colorbox.js",
+    "panelCtrls":"admindesign/panel.ctrls.js",
+    "slick":"slick/slick.min.js",
+    "bowser":"bowser.min.js",
+    "tooltips":"tooltips/tooltipster.bundle.min.js",
+    "jui":"jui/jquery-ui.js",
+    "popover":"popover/jquery.webui-popover.min.js"
+  },
+  ////获取其他所有服务地址更新的基础服务地址
+  //baseRestful:'http://localhost:8888/xcky/api',
+  ////各模块服务地址
+  //restfuls:{
+  //    //基础系统接口 登入登出
+  //    'base-sys':'http://localhost:8022/xcky/api/',
+  //    //系统配置模块
+  //    'sys':'http://localhost:8022/xcky/api/',
+  //    //新增现场
+  //    'newScene':'http://localhost:8023/xcky/api/'
+  //},
+  //restful服务器根路径 目前只写一个,由nginx配置, 可以写一组, 前台多选一
+  "restfuls":[
+    "http://192.168.1.211:8888"
+  ],
+  "restDesc":"上方为restful服务器路径,会自动加上项目名对应到xcky3,下方为具体的业务action登记,登记后使用makeAct('login')就可以得到完整的服务url, 如未登记,则用makeAct('sys/login/login')也能生成全路径",
+  //具体的业务action登记, 登记后使用makeAct('login')就可以得到完整的服务url, 如未登记,则用makeAct('sys/login/login')也能生成全路径
+  "actions":{
+    "login":"sys/login/login",
+    "logout":"sys/login/logout",
+    "sysUserUpd":"sys/sysUser/upd"
+    //"login":"http://localhost:8022/xcky/api/login/login",
+    //"logout":"http://localhost:8022/xcky/api//login/logout"
+  },
+  //模拟接口
+  "mockActions":{
+      "login":"",
+      "logout":"",
+      "sysUserUpd":"sys/sysUser/upd",
+      "message/list":""
+  }
+}

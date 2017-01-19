@@ -1,0 +1,35 @@
+{
+  "flag": 1,
+  "totalCount": 0,
+  "msg": null,
+  "data": {
+    "unQualityCount": {
+      "allCount": 2,
+      "allPersonCount": 2,
+      "allOrganCount": 2
+    },
+    "allCount": {
+      "allCount": 8,
+      "allPersonCount": 8,
+      "allOrganCount": 8
+    },
+    "submitCount": {
+      "allCount": 0,
+      "allPersonCount": 0,
+      "allOrganCount": 0
+    },
+    "followCount": {
+      "allCount": 3
+    },
+    "unConnectCount": {
+      "allCount": 8,
+      "allPersonCount": 8,
+      "allOrganCount": 8
+    },
+    "saveCount": {
+      "allCount": 8,
+      "allPersonCount": 8,
+      "allOrganCount": 8
+    }
+  }
+}
